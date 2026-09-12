@@ -1,0 +1,1657 @@
+/* T2Editor/plugin/image/image.css  */
+
+/* ===== 이미지 에디터 모달 ===== */
+.t2-image-editor-modal {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  width: 94%;
+  max-width: 440px;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.t2-image-editor-modal h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.3px;
+}
+
+/* ===== 업로드 영역 ===== */
+.t2-image-editor-modal .t2-image-upload-area {
+  border: 1.5px dashed #d1d5db;
+  border-radius: 12px;
+  padding: 24px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 12px;
+  position: relative;
+  flex-shrink: 0;
+  background: #fafafa;
+}
+
+.t2-image-editor-modal .t2-image-upload-area:active {
+  transform: scale(0.99);
+}
+
+.t2-image-editor-modal .t2-image-upload-area:hover {
+  border-color: #0187FE;
+  background: #f8fbff;
+}
+
+.t2-image-editor-modal .t2-image-upload-area.drag-over {
+  border-color: #0187FE;
+  background: #f0f8ff;
+  border-style: solid;
+}
+
+.t2-image-editor-modal .t2-image-upload-area .material-icons {
+  font-size: 34px;
+  color: #c4cdd8;
+  margin-bottom: 9px;
+  display: block;
+}
+
+.t2-image-editor-modal .t2-image-upload-text {
+  font-size: 13.5px;
+  color: #374151;
+  font-weight: 500;
+  margin-bottom: 5px;
+  letter-spacing: -0.15px;
+}
+
+.t2-image-editor-modal .t2-image-upload-hint {
+  font-size: 11.5px;
+  color: #adb5c8;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+.t2-image-editor-modal input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* ===== 드래그 힌트 ===== */
+.t2-preview-drag-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  color: #5a5a5a;
+  font-size: 12px;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #f3f4f6;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: all 0.25s ease;
+}
+
+.t2-preview-drag-hint.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.t2-preview-drag-hint .material-icons {
+  font-size: 16px;
+  color: #7a7a7a;
+}
+
+/* ===== 미리보기 그리드 ===== */
+.t2-image-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: min-content;
+  align-content: start;
+  gap: 8px;
+  padding: 0;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  max-height: 420px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  contain: layout style;
+}
+
+.t2-image-preview-grid:empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+  background: #fafafa;
+  border: 1px solid #f3f4f6;
+}
+
+.t2-image-preview-grid:empty::before {
+  content: '이미지 추가';
+  color: #d1d5db;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.t2-image-preview-grid::-webkit-scrollbar {
+  width: 6px;
+}
+
+.t2-image-preview-grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.t2-image-preview-grid::-webkit-scrollbar-thumb {
+  background: #e5e7eb;
+  border-radius: 3px;
+}
+
+.t2-image-preview-grid::-webkit-scrollbar-thumb:hover {
+  background: #d1d5db;
+}
+
+/* ===== 미리보기 아이템 ===== */
+.t2-preview-item {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
+  background: #ffffff;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  min-width: 0;
+  min-height: 0;
+  isolation: isolate;
+}
+
+.t2-preview-item:active {
+  cursor: grabbing;
+}
+.t2-preview-item.is-drag-intent {
+  cursor: grab;
+}
+
+.t2-preview-item:hover,
+.t2-preview-item:focus-within {
+  border-color: #0187FE;
+  box-shadow: 0 4px 12px rgba(1, 135, 254, 0.15);
+}
+
+.t2-preview-item.dragging {
+  opacity: 0.5;
+  transform: scale(0.95);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  cursor: grabbing;
+}
+
+.t2-preview-item.drag-over {
+  border-color: #0187FE;
+  border-width: 2px;
+  background: rgba(1, 135, 254, 0.03);
+}
+
+.t2-preview-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  /* 모바일 브라우저 이미지 상호작용 메뉴(저장·공유·복사 등) 방지.
+     pointer-events:none → 터치가 img 대신 부모 div에 전달되므로
+     브라우저가 이미지 요소 전용 컨텍스트 메뉴를 띄우지 않음.
+     -webkit-touch-callout:none → iOS Safari 롱프레스 콜아웃 차단.
+     -webkit-user-drag:none    → 크롬/사파리 네이티브 이미지 드래그 차단. */
+  pointer-events: none;
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ===== 순서 배지 ===== */
+.t2-preview-order {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  z-index: 2;
+  pointer-events: none;
+  letter-spacing: -0.2px;
+}
+
+/* ===== 삭제 버튼 ===== */
+.t2-preview-remove {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 26px;
+  height: 26px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  border: none;
+  border-radius: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  opacity: 0;
+  z-index: 2;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.t2-preview-item:hover .t2-preview-remove,
+.t2-preview-item:focus-within .t2-preview-remove {
+  opacity: 1;
+}
+
+.t2-preview-remove:hover {
+  background: rgba(239, 68, 68, 0.9);
+  transform: scale(1.05);
+}
+
+.t2-preview-remove:active {
+  transform: scale(0.95);
+}
+
+.t2-preview-remove .material-icons {
+  font-size: 16px;
+}
+
+/* ===== 업로드 인디케이터 ===== */
+.t2-upload-indicator {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+}
+
+.t2-upload-indicator .material-icons {
+  font-size: 14px;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* === NSFW 미리보기 상태 (활성화 시에만 표시) === */
+.t2-nsfw-preview-status {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: auto;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 6px 0 0 0;
+    padding: 3px 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+    z-index: 3;
+    pointer-events: none;
+    min-width: 40px;
+    box-sizing: border-box;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    opacity: 0.7;
+}
+
+/* 안전 상태 - 초록색 */
+.t2-nsfw-preview-status.safe {
+    background: rgba(46, 204, 113, 0.9);
+}
+
+/* 위험/의심 상태 - 빨간색 */
+.t2-nsfw-preview-status.warning {
+    background: rgba(231, 76, 60, 0.9);
+}
+
+/* 로딩 상태 - 회색/노란색 아이콘 */
+.t2-nsfw-preview-status.loading {
+    background: rgba(0, 0, 0, 0.8);
+    color: #f1c40f;
+}
+
+/* 오류 상태 - 노란색/주황색 */
+.t2-nsfw-preview-status.error {
+    background: rgba(243, 156, 18, 0.9);
+    color: #fff;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-preview-status.safe {
+    background: rgba(39, 174, 96, 0.95);
+}
+html[data-t2editor-theme="dark"] .t2-nsfw-preview-status.warning {
+    background: rgba(192, 57, 43, 0.95);
+}
+html[data-t2editor-theme="dark"] .t2-nsfw-preview-status.loading {
+    background: rgba(0, 0, 0, 0.85);
+    color: #f39c12;
+}
+html[data-t2editor-theme="dark"] .t2-nsfw-preview-status.error {
+    background: rgba(211, 84, 0, 0.95);
+}
+
+.t2-nsfw-preview-status .material-icons {
+    font-size: 11px;
+}
+.t2-nsfw-preview-status .material-icons.loading {
+    animation: spin 1s linear infinite;
+}
+
+@media (max-width: 480px) {
+    .t2-nsfw-preview-status {
+        padding: 2px 6px;
+        font-size: 9px;
+        min-width: 36px;
+        border-radius: 5px 0 0 0;
+        gap: 3px;
+    }
+    .t2-nsfw-preview-status .material-icons {
+        font-size: 10px;
+    }
+}
+
+/* ===== NSFW 상태바 ===== */
+.t2-nsfw-status-bar-simple {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 6px 10px;
+  margin-top: 8px;
+  background: transparent;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-status-bar-simple {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* 메인 행 (아이콘 + 텍스트 + 배지) */
+.t2-nsfw-sb-main-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.t2-nsfw-status-icon-simple {
+  font-size: 13px;
+  color: #b0b8c4;
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+
+/* 스피닝 상태 */
+.t2-nsfw-status-icon-simple.t2-nsfw-sb-spinning {
+  animation: t2NsfwIconSpin 0.9s linear infinite;
+  color: #0187FE;
+}
+
+/* 완료 상태 */
+.t2-nsfw-status-icon-simple.t2-nsfw-sb-ready {
+  color: #16a34a;
+  animation: t2NsfwIconPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes t2NsfwIconSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes t2NsfwIconPop {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.t2-nsfw-status-text-simple {
+  flex: 1;
+  color: #9ca3af;
+  font-size: 11px;
+  transition: color 0.2s ease;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-status-text-simple {
+  color: #6b7280;
+}
+
+.t2-nsfw-status-badge-simple {
+  background: #f3f4f6;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 500;
+  color: #9ca3af;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-status-badge-simple {
+  background: #333;
+  color: #888;
+}
+
+/* 로딩 배지 (모델 로드 퍼센트) */
+.t2-nsfw-status-badge-simple.t2-nsfw-sb-badge--loading {
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-variant-numeric: tabular-nums;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-status-badge-simple.t2-nsfw-sb-badge--loading {
+  background: #1e3a5f;
+  color: #93c5fd;
+}
+
+/* 이미지 검사 로딩 */
+.t2-nsfw-status-badge-simple.loading {
+  background: #fef9e7;
+  color: #b7950b;
+  animation: pulse 1.2s infinite;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-status-badge-simple.loading {
+  background: #665c00;
+  color: #ffecb3;
+}
+
+/* 안전 상태 */
+.t2-nsfw-status-badge-simple.safe {
+  background: #dcfce7;
+  color: #166534;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-status-badge-simple.safe {
+  background: #14532d;
+  color: #86efac;
+}
+
+/* 위험/의심 상태 */
+.t2-nsfw-status-badge-simple.warning {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-status-badge-simple.warning {
+  background: #5a1e1e;
+  color: #ffab91;
+}
+
+/* 오류 상태 */
+.t2-nsfw-status-badge-simple.error {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-status-badge-simple.error {
+  background: #6c5a1e;
+  color: #fef3c7;
+  border: 1px solid #b45309;
+}
+
+/* ===== 모델 로드 프로그레스 바 ===== */
+.t2-nsfw-model-bar {
+  height: 0;
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.06);
+  margin-top: 0;
+  transition: height 0.25s ease, margin-top 0.25s ease, opacity 0.35s ease;
+  opacity: 1;
+}
+
+.t2-nsfw-model-bar--active {
+  height: 3px;
+  margin-top: 7px;
+}
+
+.t2-nsfw-model-bar--complete {
+  opacity: 0;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-model-bar {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.t2-nsfw-model-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: #0187FE;
+  border-radius: 2px;
+  transition: width 0.4s ease, background 0.5s ease;
+}
+
+.t2-nsfw-model-bar--done .t2-nsfw-model-bar-fill {
+  background: #34c759;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+@media (max-width: 480px) {
+  .t2-nsfw-status-text-simple {
+    width: 100%;
+  }
+}
+
+/* ===== 다크모드 ===== */
+html[data-t2editor-theme="dark"] .t2-image-editor-modal {
+  background: #1f1f1f;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+html[data-t2editor-theme="dark"] .t2-image-editor-modal h3 {
+  color: #f5f5f5;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-editor-modal .t2-image-upload-area {
+  border-color: #404040;
+  background: #2a2a2a;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-editor-modal .t2-image-upload-area:hover {
+  border-color: #0187FE;
+  background: #1a2332;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-editor-modal .t2-image-upload-area.drag-over {
+  border-color: #0187FE;
+  background: #1a2838;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-editor-modal .t2-image-upload-area .material-icons {
+  color: #6b7280;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-editor-modal .t2-image-upload-text {
+  color: #d1d5db;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-editor-modal .t2-image-upload-hint {
+  color: #6b7280;
+}
+
+html[data-t2editor-theme="dark"] .t2-preview-drag-hint {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+  color: #9a9a9a;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-preview-grid:empty {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-preview-grid:empty::before {
+  color: #4b5563;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-preview-grid::-webkit-scrollbar-thumb {
+  background: #404040;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-preview-grid::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;
+}
+
+html[data-t2editor-theme="dark"] .t2-preview-item {
+  border-color: #3a3a3a;
+  background: #2a2a2a;
+}
+
+html[data-t2editor-theme="dark"] .t2-preview-item:hover {
+  border-color: #0187FE;
+  box-shadow: 0 4px 12px rgba(1, 135, 254, 0.25);
+}
+
+html[data-t2editor-theme="dark"] .t2-preview-item.drag-over {
+  background: rgba(1, 135, 254, 0.08);
+}
+
+html[data-t2editor-theme="dark"] .t2-preview-order {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+html[data-t2editor-theme="dark"] .t2-preview-remove {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+html[data-t2editor-theme="dark"] .t2-preview-remove:hover {
+  background: rgba(239, 68, 68, 0.9);
+}
+
+html[data-t2editor-theme="dark"] .t2-upload-indicator {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ===== 모바일 최적화 ===== */
+@media (max-width: 480px) {
+  .t2-image-editor-modal {
+    width: 96%;
+    padding: 16px;
+    border-radius: 20px;
+    max-height: 92vh;
+  }
+
+  .t2-image-editor-modal h3 {
+    font-size: 17px;
+    margin-bottom: 14px;
+  }
+
+  .t2-image-editor-modal .t2-image-upload-area {
+    padding: 20px 12px;
+    margin-bottom: 10px;
+  }
+
+  .t2-image-editor-modal .t2-image-upload-area .material-icons {
+    font-size: 32px;
+    margin-bottom: 6px;
+  }
+
+  .t2-image-editor-modal .t2-image-upload-text {
+    font-size: 13px;
+  }
+
+  .t2-image-editor-modal .t2-image-upload-hint {
+    font-size: 11px;
+  }
+
+  .t2-preview-drag-hint {
+    font-size: 11px;
+    padding: 6px 10px;
+    margin-bottom: 8px;
+  }
+
+  .t2-preview-drag-hint .material-icons {
+    font-size: 14px;
+  }
+
+  .t2-image-preview-grid {
+    gap: 6px;
+    max-height: calc(92vh - 240px);
+    min-height: 160px;
+    margin-bottom: 14px;
+  }
+
+  .t2-preview-order {
+    min-width: 20px;
+    height: 20px;
+    padding: 0 5px;
+    border-radius: 10px;
+    font-size: 10px;
+    top: 5px;
+    left: 5px;
+  }
+
+  .t2-preview-remove {
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    top: 5px;
+    right: 5px;
+    opacity: 1;
+  }
+
+  .t2-preview-remove .material-icons {
+    font-size: 15px;
+  }
+
+  .t2-upload-indicator {
+    padding: 3px 7px;
+    font-size: 10px;
+    border-radius: 10px;
+  }
+
+  .t2-upload-indicator .material-icons {
+    font-size: 13px;
+  }
+}
+
+/* ===== 모바일 Medium ===== */
+@media (min-width: 481px) and (max-width: 640px) {
+  .t2-image-editor-modal {
+    width: 95%;
+    padding: 18px;
+  }
+
+  .t2-preview-remove {
+    opacity: 1;
+  }
+}
+
+/* ===== 터치 디바이스 최적화 ===== */
+@media (hover: none) and (pointer: coarse) {
+  .t2-preview-item {
+    border-width: 1px;
+  }
+
+  .t2-preview-item:active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease;
+  }
+
+  .t2-preview-remove {
+    opacity: 1;
+    width: 28px;
+    height: 28px;
+  }
+
+  .t2-image-upload-area:active {
+    transform: scale(0.985);
+  }
+}
+
+/* ===== 데스크톱 최적화 ===== */
+@media (min-width: 768px) {
+  .t2-image-editor-modal {
+    max-width: 480px;
+    padding: 24px;
+  }
+
+  .t2-image-editor-modal h3 {
+    font-size: 19px;
+    margin-bottom: 18px;
+  }
+
+  .t2-image-preview-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    max-height: 450px;
+  }
+
+  .t2-preview-order {
+    min-width: 24px;
+    height: 24px;
+    padding: 0 7px;
+    font-size: 12px;
+  }
+
+  .t2-preview-remove {
+    width: 28px;
+    height: 28px;
+  }
+
+  .t2-preview-remove .material-icons {
+    font-size: 17px;
+  }
+}
+
+/* ===== 가로 모드 모바일 ===== */
+@media (max-width: 896px) and (orientation: landscape) {
+  .t2-image-editor-modal {
+    max-height: 96vh;
+  }
+
+  .t2-image-preview-grid {
+    max-height: calc(96vh - 200px);
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .t2-image-editor-modal .t2-image-upload-area {
+    padding: 16px 12px;
+  }
+
+  .t2-preview-drag-hint {
+    padding: 6px 10px;
+    margin-bottom: 8px;
+  }
+}
+
+/* ===== 접근성 개선 ===== */
+@media (prefers-reduced-motion: reduce) {
+  .t2-preview-item,
+  .t2-preview-drag-hint,
+  .t2-preview-remove,
+  .t2-image-upload-area {
+    transition: none;
+  }
+  
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(0deg); }
+  }
+}
+
+/* ===== 고대비 모드 지원 ===== */
+@media (prefers-contrast: high) {
+  .t2-preview-item {
+    border-width: 2px;
+  }
+  
+  .t2-image-upload-area {
+    border-width: 2px;
+  }
+  
+  html[data-t2editor-theme="dark"] .t2-preview-order,
+  html[data-t2editor-theme="dark"] .t2-preview-remove,
+  html[data-t2editor-theme="dark"] .t2-upload-indicator {
+    background: rgba(255, 255, 255, 0.25);
+  }
+}
+
+
+/* ===== 추가 접근성 / 상태 구분 ===== */
+.t2-preview-remove:focus-visible {
+  outline: 2px solid #0187FE;
+  outline-offset: 2px;
+}
+
+.t2-nsfw-preview-status.suspect {
+    background: rgba(243, 156, 18, 0.92);
+    color: #fff;
+}
+
+.t2-nsfw-preview-status.unsafe {
+    background: rgba(231, 76, 60, 0.96);
+    color: #fff;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-preview-status.suspect {
+    background: rgba(243, 156, 18, 0.96);
+}
+html[data-t2editor-theme="dark"] .t2-nsfw-preview-status.unsafe {
+    background: rgba(192, 57, 43, 0.98);
+}
+
+.t2-nsfw-status-bar-simple {
+  flex-wrap: wrap;
+}
+
+.t2-nsfw-status-badge-simple.suspect {
+  background: #fff3cd;
+  color: #8a5a00;
+}
+
+.t2-nsfw-status-badge-simple.unsafe {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-status-badge-simple.suspect {
+  background: #66521a;
+  color: #ffd978;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-status-badge-simple.unsafe {
+  background: #5a1e1e;
+  color: #ffb4a9;
+}
+
+@media (max-width: 480px) {
+  .t2-nsfw-status-text-simple {
+    width: 100%;
+  }
+}
+
+/* ===== SafeAI 법적 고지 버튼 (모달 외부 하단 우측) ===== */
+.t2-safeai-notice-btn {
+  position: fixed;
+  bottom: 12px;
+  right: 14px;
+  z-index: 999995;
+  display: none;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 10px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 400;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  letter-spacing: 0;
+  line-height: 1;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+.t2-safeai-notice-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.72);
+  border-color: rgba(255, 255, 255, 0.24);
+}
+.t2-safeai-notice-btn:active {
+  transform: scale(0.97);
+}
+.t2-safeai-notice-btn .material-icons {
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+body.t2-image-upload-modal-open .t2-safeai-notice-btn {
+  display: inline-flex;
+}
+
+
+/* ===== SafeAI 법적 고지 모달 ===== */
+@keyframes t2LegalOverlayIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes t2LegalModalIn {
+  from { opacity: 0; transform: translate(-50%, -46%) scale(0.95); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+.t2-safeai-legal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px) saturate(120%);
+  -webkit-backdrop-filter: blur(4px) saturate(120%);
+  z-index: 999996;
+  animation: t2LegalOverlayIn 0.20s ease forwards;
+}
+
+.t2-safeai-legal-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999997;
+  width: min(520px, 90vw);
+  max-height: 82vh;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.22), 0 4px 16px rgba(0, 0, 0, 0.10);
+  display: flex;
+  flex-direction: column;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+  animation: t2LegalModalIn 0.28s cubic-bezier(0.34, 1.40, 0.64, 1) forwards;
+  overflow: hidden;
+}
+
+html[data-t2editor-theme="dark"] .t2-safeai-legal-modal {
+  background: #1e1e1e;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.50), 0 4px 16px rgba(0, 0, 0, 0.30);
+}
+
+.t2-safeai-legal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid #f0f0f0;
+  flex-shrink: 0;
+}
+
+html[data-t2editor-theme="dark"] .t2-safeai-legal-header {
+  border-bottom-color: #2e2e2e;
+}
+
+.t2-safeai-legal-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.t2-safeai-legal-icon {
+  width: 34px;
+  height: 34px;
+  background: linear-gradient(135deg, #e8f4fd 0%, #d0eafa 100%);
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+html[data-t2editor-theme="dark"] .t2-safeai-legal-icon {
+  background: linear-gradient(135deg, #1a3a50 0%, #0e2a40 100%);
+}
+
+.t2-safeai-legal-icon .material-icons {
+  font-size: 18px;
+  color: #0187FE;
+}
+
+.t2-safeai-legal-title {
+  font-size: 14px;
+  font-weight: 650;
+  color: #1a1a1a;
+  letter-spacing: -0.3px;
+  line-height: 1.2;
+}
+
+html[data-t2editor-theme="dark"] .t2-safeai-legal-title {
+  color: #f0f0f0;
+}
+
+.t2-safeai-legal-version {
+  font-size: 10px;
+  color: #9ca3af;
+  font-weight: 400;
+  margin-top: 2px;
+  letter-spacing: 0;
+}
+
+.t2-safeai-legal-close {
+  width: 28px;
+  height: 28px;
+  background: #f3f4f6;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.16s;
+  color: #6b7280;
+}
+
+.t2-safeai-legal-close:hover {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+html[data-t2editor-theme="dark"] .t2-safeai-legal-close {
+  background: #2a2a2a;
+  color: #9ca3af;
+}
+
+html[data-t2editor-theme="dark"] .t2-safeai-legal-close:hover {
+  background: #333;
+  color: #e0e0e0;
+}
+
+.t2-safeai-legal-close .material-icons {
+  font-size: 16px;
+}
+
+.t2-safeai-legal-body {
+  overflow-y: auto;
+  padding: 16px 20px 20px;
+  flex: 1;
+  color: #374151;
+  font-size: 12.5px;
+  line-height: 1.75;
+}
+
+html[data-t2editor-theme="dark"] .t2-safeai-legal-body {
+  color: #c0c0c0;
+}
+
+.t2-safeai-legal-body::-webkit-scrollbar { width: 5px; }
+.t2-safeai-legal-body::-webkit-scrollbar-track { background: transparent; }
+.t2-safeai-legal-body::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 3px; }
+html[data-t2editor-theme="dark"] .t2-safeai-legal-body::-webkit-scrollbar-thumb { background: #333; }
+
+.t2-safeai-legal-section {
+  margin-bottom: 16px;
+}
+
+.t2-safeai-legal-section:last-child {
+  margin-bottom: 0;
+}
+
+.t2-safeai-legal-section-title {
+  font-size: 12px;
+  font-weight: 660;
+  color: #111827;
+  letter-spacing: -0.2px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+html[data-t2editor-theme="dark"] .t2-safeai-legal-section-title {
+  color: #e5e7eb;
+}
+
+.t2-safeai-legal-section-title::before {
+  content: '';
+  display: inline-block;
+  width: 3px;
+  height: 13px;
+  background: #0187FE;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.t2-safeai-legal-section p {
+  margin: 0 0 6px;
+}
+
+.t2-safeai-legal-section p:last-child {
+  margin-bottom: 0;
+}
+
+.t2-safeai-legal-section ul {
+  margin: 4px 0;
+  padding-left: 16px;
+}
+
+.t2-safeai-legal-section li {
+  margin-bottom: 3px;
+}
+
+.t2-safeai-legal-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.t2-safeai-legal-chip {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 7px 12px;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 9px;
+  font-size: 11px;
+}
+
+html[data-t2editor-theme="dark"] .t2-safeai-legal-chip {
+  background: #2a2a2a;
+  border-color: #333;
+}
+
+.t2-safeai-legal-chip-name {
+  font-weight: 640;
+  color: #1a1a1a;
+  font-size: 11.5px;
+}
+
+html[data-t2editor-theme="dark"] .t2-safeai-legal-chip-name {
+  color: #e5e7eb;
+}
+
+.t2-safeai-legal-chip-meta {
+  color: #9ca3af;
+  font-size: 10px;
+}
+
+.t2-safeai-legal-divider {
+  height: 1px;
+  background: #f3f4f6;
+  margin: 14px 0;
+}
+
+html[data-t2editor-theme="dark"] .t2-safeai-legal-divider {
+  background: #2a2a2a;
+}
+
+.t2-safeai-legal-footer {
+  padding: 10px 20px 12px;
+  border-top: 1px solid #f0f0f0;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+html[data-t2editor-theme="dark"] .t2-safeai-legal-footer {
+  border-top-color: #2e2e2e;
+}
+
+.t2-safeai-legal-footer-note {
+  font-size: 11px;
+  font-weight: 500;
+  color: #0187FE;
+  flex: 1;
+  letter-spacing: -0.1px;
+}
+
+html[data-t2editor-theme="dark"] .t2-safeai-legal-footer-note {
+  color: #4fa8f7;
+}
+
+.t2-safeai-legal-confirm-btn {
+  padding: 7px 18px;
+  background: #0187FE;
+  color: #fff;
+  border: none;
+  border-radius: 9px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: -0.2px;
+  transition: background 0.16s, transform 0.1s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.t2-safeai-legal-confirm-btn:hover {
+  background: #006ee0;
+}
+
+.t2-safeai-legal-confirm-btn:active {
+  transform: scale(0.97);
+}
+
+@media (max-width: 480px) {
+  .t2-safeai-notice-btn {
+    bottom: 8px;
+    right: 10px;
+    font-size: 9px;
+    padding: 3px 7px;
+  }
+  .t2-safeai-legal-modal {
+    width: 92vw;
+    border-radius: 14px;
+  }
+  .t2-safeai-legal-header {
+    padding: 14px 16px 12px;
+  }
+  .t2-safeai-legal-body {
+    padding: 12px 16px 16px;
+    font-size: 12px;
+  }
+  .t2-safeai-legal-footer {
+    padding: 8px 16px 10px;
+    flex-direction: column-reverse;
+    gap: 6px;
+    align-items: stretch;
+  }
+  .t2-safeai-legal-confirm-btn {
+    text-align: center;
+  }
+}
+/* ===== 이미지 블록 레이아웃 보정 =====
+   core.css 의 공통 .t2-media-block 패딩/라인박스가 이미지 상하 공백으로
+   보이는 문제를 image 플러그인 블록에만 제한해서 제거한다. */
+.t2-editor .t2-media-block.t2-image-block {
+  padding: 0;
+  line-height: 0;
+  font-size: 0;
+  overflow: visible;
+}
+
+.t2-editor .t2-media-block.t2-image-block > .t2-image-container {
+  display: block;
+  max-width: 100%;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  line-height: 0;
+  font-size: 0;
+}
+
+.t2-editor .t2-media-block.t2-image-block > .t2-image-container > img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin: 0;
+  vertical-align: top;
+}
+
+.t2-editor .t2-media-block.t2-image-block .t2-media-controls,
+.t2-editor .t2-media-block.t2-image-block .t2-move-controls,
+.t2-editor .t2-media-block.t2-image-block .t2-upload-indicator {
+  font-size: 12px;
+  line-height: normal;
+}
+
+/* ===== 미리보기 확대 힌트 아이콘 ===== */
+.t2-preview-zoom-hint {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  width: 22px;
+  height: 22px;
+  background: rgba(0, 0, 0, 0.60);
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  opacity: 0;
+  -webkit-transition: opacity 0.18s ease;
+          transition: opacity 0.18s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+.t2-preview-item:hover .t2-preview-zoom-hint,
+.t2-preview-item:focus-within .t2-preview-zoom-hint {
+  opacity: 1;
+}
+/* 터치 환경: 상시 약하게 표시 */
+@media (hover: none) {
+  .t2-preview-zoom-hint {
+    opacity: 0.55;
+  }
+}
+.t2-preview-zoom-hint .material-icons {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.92);
+}
+html[data-t2editor-theme="dark"] .t2-preview-zoom-hint {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* ===== 이미지 전체보기(확대 뷰) ===== */
+.t2-image-full-view {
+  display: none;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  min-height: 0;
+  min-width: 0;
+  margin-bottom: 16px;
+}
+.t2-image-full-view.active {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+/* 전체보기 상단 조작 바 */
+.t2-fv-topbar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 8px;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+.t2-fv-back-btn {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 3px;
+  padding: 5px 10px 5px 7px;
+  background: #f5f5f5;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  color: #374151;
+  font-family: inherit;
+  -webkit-transition: background 0.15s, -webkit-transform 0.1s;
+          transition: background 0.15s, transform 0.1s;
+  white-space: nowrap;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+.t2-fv-back-btn:hover { background: #e8e8e8; }
+.t2-fv-back-btn:active { background: #e0e0e0; -webkit-transform: scale(0.97); transform: scale(0.97); }
+.t2-fv-back-btn .material-icons { font-size: 15px; line-height: 1; }
+
+.t2-fv-counter {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  text-align: center;
+  font-size: 12px;
+  color: #6b7280;
+  white-space: nowrap;
+  pointer-events: none;
+  font-variant-numeric: tabular-nums;
+}
+.t2-fv-nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 4px;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+.t2-fv-nav-btn {
+  width: 30px;
+  height: 30px;
+  background: #f5f5f5;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  color: #374151;
+  -webkit-transition: background 0.15s, -webkit-transform 0.1s;
+          transition: background 0.15s, transform 0.1s;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+.t2-fv-nav-btn:hover:not(:disabled) { background: #e8e8e8; }
+.t2-fv-nav-btn:active:not(:disabled) { -webkit-transform: scale(0.94); transform: scale(0.94); }
+.t2-fv-nav-btn:disabled { opacity: 0.32; cursor: default; pointer-events: none; }
+.t2-fv-nav-btn .material-icons { font-size: 18px; line-height: 1; }
+
+/* 이미지 표시 영역 */
+.t2-fv-image-area {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  min-height: 0;
+  min-width: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background: #f3f4f6;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+.t2-fv-image-area img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  -o-object-fit: contain;
+     object-fit: contain;
+  border-radius: 4px;
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
+  -webkit-touch-callout: none;
+}
+
+/* 이미지 정보 바 (얇은 띠) */
+.t2-fv-info-bar {
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  margin-top: 7px;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 6px 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  gap: 4px 10px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  min-width: 0;
+  overflow: hidden;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.t2-fv-info-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 4px;
+  min-width: 0;
+  max-width: 100%;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+.t2-fv-info-label {
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #6b7280;
+  background: #e9ecef;
+  padding: 1px 5px;
+  border-radius: 4px;
+  white-space: nowrap;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+  line-height: 1.6;
+}
+.t2-fv-info-value {
+  font-size: 11px;
+  color: #374151;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  line-height: 1.4;
+  font-weight: 500;
+}
+/* 파일명은 최대 너비 제한 (말줄임) */
+.t2-fv-info-name {
+  max-width: 140px;
+}
+
+/* 모바일: 정보 바 아이템 줄바꿈 최적화 */
+@media (max-width: 400px) {
+  .t2-fv-info-bar {
+    padding: 5px 8px;
+    gap: 4px 8px;
+  }
+  .t2-fv-info-label {
+    font-size: 8.5px;
+    padding: 1px 4px;
+  }
+  .t2-fv-info-value {
+    font-size: 10px;
+  }
+  .t2-fv-info-name {
+    max-width: 110px;
+  }
+}
+@media (max-width: 320px) {
+  .t2-fv-info-item {
+    width: calc(50% - 4px);
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 calc(50% - 4px);
+            flex: 0 0 calc(50% - 4px);
+  }
+  .t2-fv-info-name {
+    max-width: 90px;
+  }
+}
+
+/* 다크모드 - 전체보기 */
+html[data-t2editor-theme="dark"] .t2-fv-back-btn {
+  background: #383838;
+  border-color: #555;
+  color: #e0e0e0;
+}
+html[data-t2editor-theme="dark"] .t2-fv-back-btn:hover { background: #505050; }
+html[data-t2editor-theme="dark"] .t2-fv-nav-btn {
+  background: #383838;
+  border-color: #555;
+  color: #e0e0e0;
+}
+html[data-t2editor-theme="dark"] .t2-fv-nav-btn:hover:not(:disabled) { background: #505050; }
+html[data-t2editor-theme="dark"] .t2-fv-counter { color: #9ca3af; }
+html[data-t2editor-theme="dark"] .t2-fv-image-area { background: #252525; }
+html[data-t2editor-theme="dark"] .t2-fv-info-bar {
+  background: #2d2d2d;
+  border-color: #444;
+}
+html[data-t2editor-theme="dark"] .t2-fv-info-label {
+  background: #383838;
+  color: #9ca3af;
+}
+html[data-t2editor-theme="dark"] .t2-fv-info-value { color: #d0d0d0; }

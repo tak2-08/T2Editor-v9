@@ -1,0 +1,163 @@
+/* Path: T2Editor/plugin/video/video.css */
+
+.t2-video-editor-modal { background: #fff; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,.12); padding: 24px; width: min(480px, calc(100vw - 32px)); max-width: calc(100vw - 32px); box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui; }
+.t2-video-editor-modal h3 { font-size: 20px; font-weight: 600; color: #1a1a1a; margin: 0 0 20px 0; }
+
+/* Modal-local reset: 외부 테마/공통 버튼 CSS가 비디오 모달 레이아웃을 밀어내지 않도록 격리 */
+.t2-video-editor-modal button {
+    appearance: none;
+    -webkit-appearance: none;
+    font: inherit;
+    box-shadow: none;
+}
+.t2-video-editor-modal .t2-tab-content { width: 100%; }
+.t2-video-editor-modal .t2-tab-pane { display: none; }
+.t2-video-editor-modal .t2-tab-pane.active { display: block; }
+.t2-video-editor-modal .t2-tab {
+    border: 0;
+    border-bottom: 3px solid transparent;
+    border-radius: 0;
+    background: transparent;
+    color: #6b7280;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    min-width: 130px;
+    height: 44px;
+    padding: 0 12px;
+    margin: 0 0 -11px 0;
+    font-size: 15px;
+    line-height: 1;
+    white-space: nowrap;
+    text-align: center;
+}
+.t2-video-editor-modal .t2-tab.active {
+    color: #2563eb;
+    border-bottom-color: #2563eb;
+}
+.t2-video-editor-modal .t2-tab:hover {
+    color: #2563eb;
+}
+
+.t2-video-editor-modal .t2-tab:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: -2px;
+    border-radius: 4px;
+}
+
+.t2-video-editor-modal .t2-youtube-url { box-sizing: border-box; width: 100%; padding: 12px 16px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 15px; transition: all 0.2s; margin-bottom: 8px; }
+.t2-video-editor-modal .t2-youtube-url:focus { border-color: #2563eb; outline: none; box-shadow: 0 0 0 3px rgba(37,99,235,.1); }
+.t2-video-editor-modal .t2-video-type-info { font-size: 13px; color: #6b7280; margin-bottom: 20px; }
+.t2-video-editor-modal .t2-btn-group {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    margin-top: 24px;
+}
+.t2-video-editor-modal .t2-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 64px;
+    height: 40px;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    gap: 0;
+}
+.t2-video-editor-modal .t2-btn[data-action="cancel"] { color: #4b5563; background: #f3f4f6; }
+.t2-video-editor-modal .t2-btn[data-action="cancel"]:hover { background: #e5e7eb; color: #374151; }
+.t2-video-editor-modal .t2-btn[data-action="insert"] { color: #fff; background: #2563eb; min-width: 80px; }
+.t2-video-editor-modal .t2-btn[data-action="insert"]:hover:not(:disabled) { background: #1d4ed8; color: #fff; }
+/* 해상도 분석 중 버튼 상태 */
+.t2-video-editor-modal .t2-btn[data-action="insert"]:disabled, .t2-video-editor-modal .t2-btn[data-action="insert"]:disabled:hover { background: #93c5fd; color: #fff; cursor: wait; opacity: 1; }
+
+.t2-video-tabs { display: flex; align-items: flex-end; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; }
+.t2-video-upload-area { border: 2px dashed #e5e7eb; border-radius: 8px; padding: 32px 16px; text-align: center; cursor: pointer; transition: all 0.2s; margin-bottom: 20px; position: relative; }
+.t2-video-upload-area:hover, .t2-video-upload-area.drag-over { border-color: #2563eb; background: rgba(37,99,235,.05); }
+.t2-video-upload-area .material-icons { font-size: 48px; color: #6b7280; margin-bottom: 12px; }
+.t2-video-upload-text { font-size: 15px; color: #4b5563; margin-bottom: 4px; }
+.t2-video-upload-hint { font-size: 13px; color: #6b7280; }
+.t2-video-upload-area input[type="file"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+.t2-video-preview-container { margin-bottom: 20px; }
+.t2-video-preview { background: #f9fafb; border-radius: 8px; padding: 10px; }
+.t2-video-preview video { border-radius: 6px; margin-bottom: 10px; }
+.t2-video-info { display: flex; justify-content: space-between; font-size: 13px; color: #6b7280; gap: 10px; }
+.t2-video-file-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 70%; }
+.t2-video-file-size { flex-shrink: 0; }
+.t2-upload-progress { margin-top: 15px; padding: 10px; }
+.t2-progress-bar { width: 100%; height: 20px; background: #f0f0f0; border-radius: 10px; overflow: hidden; }
+.t2-progress-fill { height: 100%; background: #4a86e8; width: 0; transition: width 0.3s ease; }
+.t2-progress-text { text-align: center; margin-top: 5px; font-size: 14px; }
+
+/* ── fallback anchor (저장 HTML 내 URL 보존용, 화면에서 완전히 숨김) ── */
+.t2-video-source {
+    position: absolute !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    user-select: none !important;
+    display: block !important; /* display:none 은 일부 CMS 가 삭제하므로 block 유지 */
+}
+
+/* Dark Mode */
+html[data-t2editor-theme="dark"] .t2-video-editor-modal { background-color: #2d2d2d; color: #e0e0e0; box-shadow: 0 4px 24px rgba(0,0,0,.3); border-color: #444; }
+html[data-t2editor-theme="dark"] .t2-video-editor-modal h3 { color: #e0e0e0; }
+html[data-t2editor-theme="dark"] .t2-video-editor-modal .t2-tab { color: #bdbdbd; }
+html[data-t2editor-theme="dark"] .t2-video-editor-modal .t2-tab.active,
+html[data-t2editor-theme="dark"] .t2-video-editor-modal .t2-tab:hover { color: #4ea1ff; border-bottom-color: #4ea1ff; }
+html[data-t2editor-theme="dark"] .t2-youtube-url { background-color: #1e1e1e; border-color: #444; color: #e0e0e0; }
+html[data-t2editor-theme="dark"] .t2-youtube-url:focus { border-color: #0187fe; box-shadow: 0 0 0 3px rgba(1,135,254,.2); }
+html[data-t2editor-theme="dark"] .t2-upload-progress { background-color: #383838; }
+html[data-t2editor-theme="dark"] .t2-progress-bar { background-color: #444; }
+html[data-t2editor-theme="dark"] .t2-progress-text { color: #aaa; }
+html[data-t2editor-theme="dark"] .t2-video-editor-modal .t2-btn[data-action="cancel"] { background: #444; color: #e5e7eb; }
+html[data-t2editor-theme="dark"] .t2-video-editor-modal .t2-btn[data-action="cancel"]:hover { background: #555; color: #fff; }
+html[data-t2editor-theme="dark"] .t2-video-editor-modal .t2-btn[data-action="insert"]:disabled,
+html[data-t2editor-theme="dark"] .t2-video-editor-modal .t2-btn[data-action="insert"]:disabled:hover { background: #1e40af; color: #dbeafe; }
+
+@media (max-width: 480px) {
+    .t2-video-editor-modal {
+        padding: 20px;
+        width: calc(100vw - 32px);
+        max-width: calc(100vw - 32px);
+    }
+
+    .t2-video-editor-modal .t2-video-tabs {
+        gap: 6px;
+    }
+
+    .t2-video-editor-modal .t2-tab {
+        min-width: 0;
+        flex: 1 1 0;
+        padding: 0 8px;
+        font-size: 14px;
+    }
+
+    .t2-video-editor-modal .t2-btn-group {
+        gap: 8px;
+    }
+
+    .t2-video-editor-modal .t2-btn {
+        height: 42px;
+        min-width: 64px;
+        padding: 0 14px;
+    }
+
+    .t2-video-editor-modal .t2-btn[data-action="insert"] {
+        min-width: 76px;
+    }
+}
