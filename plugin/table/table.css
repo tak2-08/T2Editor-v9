@@ -1,0 +1,85 @@
+/* Path: T2Editor/plugin/table/table.css */
+
+.t2-table-editor-modal { background: #fff; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); padding: 28px; width: 500px; max-width: 90vw; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui; border: 1px solid rgba(0,0,0,0.05); }
+.t2-table-editor-modal h3 { font-size: 22px; font-weight: 600; color: #1a1a1a; margin: 0 0 24px 0; letter-spacing: -.02em; }
+.t2-table-size-selector { display: flex; gap: 24px; margin-bottom: 28px; align-items: flex-start; }
+.t2-table-size-inputs { flex: 1; }
+.t2-table-input-group { margin-bottom: 18px; }
+.t2-table-input-group label { display: block; margin-bottom: 8px; font-size: 14px; color: #4b5563; font-weight: 500; }
+.t2-table-editor-modal .t2-input-with-controls { display: flex; align-items: center; gap: 8px; background: #f9fafb; border-radius: 8px; padding: 4px; border: 1px solid #e5e7eb; }
+.t2-table-editor-modal .t2-input-with-controls input { width: 60px; text-align: center; padding: 8px 0; border: none; background: transparent; font-size: 16px; color: #1f2937; font-weight: 500; }
+.t2-table-editor-modal .t2-input-with-controls input:focus { outline: none; }
+.t2-table-editor-modal .t2-table-control-btn { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 6px; border: none; background: #fff; color: #6b7280; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,.05); transition: all 0.2s ease; }
+.t2-table-editor-modal .t2-table-control-btn:hover { background: #f3f4f6; color: #4b5563; }
+.t2-table-editor-modal .t2-table-control-btn .material-icons { font-size: 18px; }
+.t2-table-preview-container { width: 160px; height: 160px; overflow: hidden; border-radius: 8px; background: #f9fafb; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: center; padding: 10px; }
+.t2-table-preview { transform-origin: top left; }
+.t2-preview-table { border-collapse: separate; border-spacing: 0; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,.05); }
+.t2-preview-table th, .t2-preview-table td { border: 1px solid #e5e7eb; }
+.t2-preview-table th { background: #f3f4f6; }
+.t2-table-style-options { background: #f9fafb; border-radius: 12px; padding: 16px; margin-bottom: 28px; border: 1px solid #e5e7eb; }
+.t2-table-editor-modal .t2-table-style-option { display: flex; align-items: center; margin-bottom: 12px; }
+.t2-table-editor-modal .t2-table-style-option:last-child { margin-bottom: 0; }
+.t2-table-editor-modal .t2-table-style-option label { font-size: 14px; color: #4b5563; font-weight: 500; width: 120px; flex-shrink: 0; }
+.t2-table-editor-modal .t2-table-style-option select { flex: 1; padding: 8px 12px; border-radius: 6px; border: 1px solid #e5e7eb; background: #fff; font-size: 14px; color: #1f2937; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 32px; }
+.t2-table-editor-modal .t2-custom-width-container { display: flex; align-items: center; margin-left: 12px; }
+.t2-table-editor-modal .t2-custom-width-container input { width: 60px; padding: 8px 12px; border-radius: 6px; border: 1px solid #e5e7eb; background: #fff; font-size: 14px; text-align: right; }
+.t2-table-editor-modal .t2-custom-width-container span { margin-left: 4px; color: #6b7280; }
+.t2-table-warning { display: flex; align-items: center; gap: 8px; color: #f59e0b; margin-top: 12px; font-size: 13px; background: rgba(245,158,11,.1); padding: 8px 12px; border-radius: 6px; }
+.t2-table-editor-modal .t2-btn-group { display: flex; justify-content: flex-end; gap: 12px; }
+.t2-table-editor-modal .t2-btn { padding: 10px 18px; border-radius: 8px; font-size: 14px; font-weight: 500; transition: all 0.2s ease; cursor: pointer; border: none; }
+.t2-table-editor-modal .t2-btn[data-action="cancel"] { color: #4b5563; background: #f3f4f6; border: 1px solid #e5e7eb; }
+.t2-table-editor-modal .t2-btn[data-action="cancel"]:hover { background: #e5e7eb; }
+.t2-table-editor-modal .t2-btn[data-action="insert"] { color: #fff; background: #0187fe; box-shadow: 0 1px 2px rgba(1,135,254,.1); }
+.t2-table-editor-modal .t2-btn[data-action="insert"]:hover { background: #0069d9; }
+
+.t2-table { width: 100%; border-collapse: separate; border-spacing: 0; margin: 16px 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; box-shadow: 0 2px 6px rgba(0,0,0,.08); border-radius: 10px; overflow: hidden; }
+.t2-table th, .t2-table td { border: 1px solid #eaeaea; padding: 10px 12px; vertical-align: top; position: relative; }
+.t2-table th { background-color: #f5f7fa; font-weight: 600; color: #334155; text-align: left; border-bottom: 2px solid #e2e8f0; }
+.t2-table tr:last-child td:first-child { border-bottom-left-radius: 10px; }
+.t2-table tr:last-child td:last-child { border-bottom-right-radius: 10px; }
+.t2-table tr:hover { background-color: rgba(1,135,254,.03); }
+.t2-table td:hover, .t2-table th:hover { background-color: rgba(1,135,254,.06); }
+.t2-table-wrapper { position: relative; margin: 25px 0; padding: 8px; border-radius: 12px; background-color: #fff; transition: box-shadow 0.2s ease; }
+.t2-table-wrapper:hover { box-shadow: 0 4px 12px rgba(0,0,0,.06); }
+.t2-table-controls { position: absolute; top: -50px; right: 10px; background: #fff; border-radius: 10px; padding: 8px 16px; display: flex; align-items: center; gap: 16px; box-shadow: 0 4px 12px rgba(0,0,0,.1); z-index: 99999; opacity: 0; transform: translateY(10px); transition: all 0.3s ease; white-space: nowrap; overflow-x: auto; overflow-y: hidden; max-width: calc(100vw - 20px); height: auto; }
+.t2-table-wrapper:hover .t2-table-controls { opacity: 1; transform: translateY(0); }
+.t2-table-control-counter { background: rgba(1,135,254,.1); color: #0187fe; padding: 4px 10px; border-radius: 20px; font-size: 13px; font-weight: 500; }
+.t2-table-control-group { display: flex; align-items: center; gap: 6px; }
+.t2-table-control-group span { font-size: 13px; color: #6b7280; white-space: nowrap; }
+.t2-table-delete-btn { width: 28px; height: 28px; padding: 0; display: flex; align-items: center; justify-content: center; margin-left: 5px; color: #777; border-radius: 50%; background: rgba(239,68,68,.1); border: none; cursor: pointer; transition: all 0.2s ease; }
+.t2-table-delete-btn:hover { background: rgba(239,68,68,.2); }
+.t2-table-scroll-wrapper { max-width: 100%; overflow-x: auto; border-radius: 10px; background: #fff; margin: 0; padding: 0; }
+.t2-table td:focus, .t2-table th:focus { outline: 2px solid #0187fe; outline-offset: -2px; z-index: 1; box-shadow: 0 0 0 1px rgba(1,135,254,.1); }
+.t2-table th:after, .t2-table td:after { content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: 5px; cursor: col-resize; background: rgba(0,0,0,0); transition: background 0.2s ease; }
+.t2-table th:hover:after, .t2-table td:hover:after { background: rgba(1,135,254,.2); }
+.t2-table-download-btn { position: absolute; bottom: -15px; right: -7.5px; padding: 10px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: #fff; border: 1px solid #e5e7eb; color: #0187fe; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,.1); transition: all 0.2s ease; opacity: 0; transform: translateY(5px); }
+.t2-table-wrapper:hover .t2-table-download-btn { opacity: 1; transform: translateY(0); }
+.t2-table-download-btn:hover { background: #f3f4f6; border-color: #2563eb; color: #2563eb; }
+.t2-table-download-btn .material-icons { font-size: 25px; }
+
+/* Dark Mode */
+html[data-t2editor-theme="dark"] .t2-table-editor-modal { background-color: #2d2d2d; color: #e0e0e0; box-shadow: 0 4px 24px rgba(0,0,0,.3); border-color: #444; }
+html[data-t2editor-theme="dark"] .t2-table-editor-modal h3 { color: #e0e0e0; }
+html[data-t2editor-theme="dark"] .t2-table { color: #e0e0e0; box-shadow: 0 2px 6px rgba(0,0,0,.3); }
+html[data-t2editor-theme="dark"] .t2-table th, html[data-t2editor-theme="dark"] .t2-table td { border-color: #444; }
+html[data-t2editor-theme="dark"] .t2-table th { background-color: #383838; color: #e0e0e0; border-bottom-color: #555; }
+html[data-t2editor-theme="dark"] .t2-table tr:hover { background-color: rgba(38,79,120,.1); }
+html[data-t2editor-theme="dark"] .t2-table td:hover, html[data-t2editor-theme="dark"] .t2-table th:hover { background-color: rgba(38,79,120,.2); }
+html[data-t2editor-theme="dark"] .t2-table-wrapper { background-color: #2d2d2d; box-shadow: 0 4px 12px rgba(0,0,0,.2); }
+html[data-t2editor-theme="dark"] .t2-table-controls { background-color: #383838; box-shadow: 0 4px 12px rgba(0,0,0,.3); color: #e0e0e0; }
+html[data-t2editor-theme="dark"] .t2-table-control-counter { background-color: rgba(1,135,254,.2); color: #0187fe; }
+html[data-t2editor-theme="dark"] .t2-table-control-group span { color: #aaa; }
+html[data-t2editor-theme="dark"] .t2-table-control-btn { background-color: #2d2d2d; box-shadow: 0 1px 3px rgba(0,0,0,.2); color: #aaa; }
+html[data-t2editor-theme="dark"] .t2-table-control-btn:hover { background-color: #444; color: #e0e0e0; }
+html[data-t2editor-theme="dark"] .t2-table-delete-btn { background-color: rgba(239,68,68,.2); color: #ef4444; }
+html[data-t2editor-theme="dark"] .t2-table-delete-btn:hover { background-color: rgba(239,68,68,.3); }
+html[data-t2editor-theme="dark"] .t2-table-scroll-wrapper { background-color: #2d2d2d; }
+html[data-t2editor-theme="dark"] .t2-table td:focus, html[data-t2editor-theme="dark"] .t2-table th:focus { outline-color: #0187fe; box-shadow: 0 0 0 1px rgba(1,135,254,.3); }
+html[data-t2editor-theme="dark"] .t2-table-style-options { background-color: #383838; border-color: #444; }
+html[data-t2editor-theme="dark"] .t2-table-style-option label { color: #e0e0e0; }
+html[data-t2editor-theme="dark"] .t2-table-style-option select { background-color: #1e1e1e; border-color: #444; color: #e0e0e0; }
+html[data-t2editor-theme="dark"] .t2-table-preview-container { background-color: #383838; border-color: #444; }
+html[data-t2editor-theme="dark"] .t2-preview-table th { background-color: #444; }
+html[data-t2editor-theme="dark"] .t2-preview-table th, html[data-t2editor-theme="dark"] .t2-preview-table td { border-color: #555; }
+html[data-t2editor-theme="dark"] .t2-input-with-controls input, html[data-t2editor-theme="dark"] .t2-custom-width-value { background-color: #1e1e1e; border-color: #444; color: #e0e0e0; }

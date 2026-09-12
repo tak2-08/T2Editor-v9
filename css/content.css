@@ -1,0 +1,57 @@
+.t2-media-block{position:relative;margin:10px 0;padding:10px}.t2-media-block img,.t2-media-block iframe,.t2-media-block video{border-radius:15px!important;border:none!important;margin:0 auto!important}.t2-code-block{background:#f5f5f5;padding:15px;border-radius:4px;font-family:'Consolas','Monaco',monospace;position:relative;margin:10px 0}.t2-code-block .code-placeholder{color:#888;cursor:text}.t2-code-block pre{margin:0;white-space:pre-wrap}.t2-code-block code{outline:none;display:block;min-height:1em;font-family:'Consolas','Monaco',monospace;line-height:1.5}.t2-bullet-block{margin-left:20px;padding-left:10px;border-left:2px solid #ccc}.t2-file-block{margin:10px 0}.file-container{width:100%;min-width:240px;max-width:380px;aspect-ratio:4/1;background:#fff;border-radius:12px;border:1px solid #cdcdcd;padding:0 20px;display:flex;align-items:center;font-family:'Roboto',Arial,sans-serif;transition:all 0.2s ease;box-sizing:border-box}.t2-file-block .file-container:hover{transform:translateY(-1px)}.t2-file-block .file-icon{position:relative;width:36px;height:45px;background-color:#E8B56F;border-radius:6px;margin-right:20px;flex-shrink:0;overflow:hidden}.t2-file-block .file-icon::before{content:'';position:absolute;top:0;right:0;width:33%;height:33%;background:linear-gradient(135deg,rgba(255,255,255,.12) 0%,rgba(255,255,255,0) 100%)}.t2-file-block .file-icon::after{content:'';position:absolute;top:0;right:0;width:0;height:0;border-style:solid;border-width:7px;border-color:#fff #fff transparent transparent}.t2-file-block .file-info{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;overflow:hidden}.t2-file-block .file-name{font-size:17px;font-weight:500;color:rgba(0,0,0,.87);margin:0 0 6px 0;letter-spacing:.15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%}.t2-file-block .file-details{color:rgba(0,0,0,.6);font-size:12px;line-height:1.5;letter-spacing:.25px;display:flex;gap:12px}.t2-file-block .file-details span{display:inline-block;white-space:nowrap}.t2-file-block .file-download{margin-left:20px;color:#4a4a4a;cursor:pointer;text-decoration:none;transition:color 0.2s ease;flex-shrink:0;display:flex;align-items:center}.t2-file-block .file-download:hover{color:#2563eb}.audio-file-container{width:100%;min-width:240px;max-width:380px;aspect-ratio:4/1;background:#fff;border-radius:12px;border:1px solid #cdcdcd;padding:0 20px;display:flex;align-items:center;font-family:'Roboto',Arial,sans-serif;transition:opacity 0.2s ease;box-sizing:border-box;padding-right:12px}.audio-file-container:hover{opacity:.95}.audio-file-icon{width:36px;height:45px;background-color:#7C4DFF;border-radius:6px;margin-right:20px;position:relative;flex-shrink:0;overflow:hidden}.audio-file-icon::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:20px;height:20px;background:#fff;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z'/%3E%3C/svg%3E") center/contain no-repeat;-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z'/%3E%3C/svg%3E") center/contain no-repeat;opacity:.9}.audio-file-icon::after{content:'';position:absolute;top:0;right:0;width:0;height:0;border-style:solid;border-width:7px;border-color:#fff #fff transparent transparent}.audio-file-info{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;overflow:hidden}.audio-file-name{font-size:17px;font-weight:500;color:rgba(0,0,0,.87);margin:0 0 6px 0;letter-spacing:.15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:100%}.audio-file-details{color:rgba(0,0,0,.6);font-size:12px;line-height:1.5;letter-spacing:.25px;display:flex;gap:12px}.audio-file-details span{display:inline-block;white-space:nowrap}.audio-duration{color:#7C4DFF;font-weight:500;min-width:45px;text-align:right;margin-left:auto}.audio-player{display:none}.table-responsive{display:block;width:100%;overflow-x:auto;margin-bottom:1.5rem;-webkit-overflow-scrolling:touch;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.08)}.t2-table.t2-table-large{min-width:800px}.t2-table{width:100%;border-collapse:separate;border-spacing:0;margin:16px 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Open Sans','Helvetica Neue',sans-serif;box-shadow:0 2px 6px rgba(0,0,0,.08);border-radius:10px;overflow:hidden}.t2-table th,.t2-table td{border:1px solid #eaeaea;padding:10px 12px;vertical-align:top;position:relative;min-width:50px}.t2-table th{background-color:#f5f7fa;font-weight:600;color:#334155;text-align:left;border-bottom:2px solid #e2e8f0}.t2-table tr:first-child th:first-child{border-top-left-radius:10px}.t2-table tr:first-child th:last-child{border-top-right-radius:10px}.t2-table tr:last-child td:first-child{border-bottom-left-radius:10px}.t2-table tr:last-child td:last-child{border-bottom-right-radius:10px}
+/* 코드 블록 미디어 스타일 */
+.t2-media-block.t2-code-block {
+    position: relative;
+    margin: 10px 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+
+.t2-media-block.t2-code-block > div:first-child {
+    background: #f5f5f5;
+    padding: 15px;
+    border-radius: 4px;
+    font-family: 'Consolas', 'Monaco', monospace;
+}
+
+.t2-media-block.t2-code-block pre {
+    margin: 0;
+    white-space: pre-wrap;
+}
+
+.t2-media-block.t2-code-block code {
+    outline: none;
+    display: block;
+    min-height: 1em;
+    font-family: 'Consolas', 'Monaco', monospace;
+    line-height: 1.5;
+}
+
+.t2-media-block.t2-code-block .code-placeholder {
+    color: #888;
+    cursor: text;
+}
+
+.t2-media-block.t2-code-block:hover .t2-media-controls {
+    display: flex;
+}
+
+.t2-drawing-block {
+    margin: 15px 0;
+    position: relative;
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+
+.t2-drawing-block > div {
+    width: 100%;
+    text-align: center;
+}
+
+.t2-drawing-block img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
