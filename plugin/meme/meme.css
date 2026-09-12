@@ -1,0 +1,1271 @@
+/* Path: T2Editor/plugin/meme/meme.css */
+
+/* ─── T2Meme: centered long-task modal ───────────────────────────── */
+
+.t2-meme-overlay {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  padding: 16px;
+}
+
+.t2-meme-modal {
+  display: flex;
+  flex-direction: column;
+  width: min(560px, calc(100vw - 32px));
+  height: min(78vh, 680px);
+  max-height: calc(100vh - 32px);
+  margin: 0 auto;
+  overflow: hidden;
+  box-sizing: border-box;
+  background: var(--t2-bg, #fff);
+  border: 1px solid var(--t2-border, #e5e7eb);
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.14);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
+  color: var(--t2-text, #1f2937);
+}
+
+.t2-meme-modal *,
+.t2-meme-modal *::before,
+.t2-meme-modal *::after {
+  box-sizing: border-box;
+}
+
+.t2-meme-modal button,
+.t2-meme-modal input {
+  font: inherit;
+}
+
+.t2-meme-modal button {
+  appearance: none;
+  -webkit-appearance: none;
+  box-shadow: none;
+}
+
+/* ─── Header ─────────────────────────────────────────────────────── */
+
+.t2-meme-header {
+  flex: 0 0 auto;
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid var(--t2-border, #e5e7eb);
+  background: var(--t2-bg, #fff);
+}
+
+.t2-meme-header-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.t2-meme-title-wrap {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.t2-meme-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  color: #1a1a1a;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.2px;
+}
+
+.t2-meme-title-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(37, 99, 235, 0.12);
+  color: #2563eb;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  font-size: 21px;
+}
+
+.t2-meme-desc {
+  margin: 0;
+  padding-left: 46px;
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.t2-meme-powered {
+  width: fit-content;
+  margin-left: 46px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #9ca3af;
+  text-decoration: none;
+  font-size: 11px;
+  line-height: 1.4;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.t2-meme-powered:hover {
+  color: #6b7280;
+}
+
+.t2-meme-powered .material-icons {
+  color: currentColor;
+  font-size: 12px;
+}
+
+.t2-meme-powered b {
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.t2-meme-icon-close {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 999px;
+  background: #f3f4f6;
+  color: #6b7280;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.t2-meme-icon-close:hover {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+.t2-meme-icon-close .material-icons {
+  font-size: 22px;
+}
+
+/* ─── Search ─────────────────────────────────────────────────────── */
+
+.t2-meme-search-wrap {
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.t2-meme-search-wrap:focus-within {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  background: #fff;
+}
+
+.t2-meme-search-icon {
+  flex: 0 0 auto;
+  color: #6b7280;
+  font-size: 20px;
+  pointer-events: none;
+}
+
+.t2-meme-search-wrap:focus-within .t2-meme-search-icon {
+  color: #2563eb;
+}
+
+.t2-meme-search {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  height: 42px;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #1f2937;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.t2-meme-search::placeholder {
+  color: #9ca3af;
+}
+
+/* ─── Body / Grid ────────────────────────────────────────────────── */
+
+.t2-meme-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 16px 20px;
+  background: #fafafa;
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
+}
+
+.t2-meme-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.t2-meme-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.t2-meme-body::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 999px;
+}
+
+.t2-meme-body::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+.t2-meme-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+/* ─── Tile ───────────────────────────────────────────────────────── */
+
+.t2-meme-tile {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.t2-meme-tile:hover {
+  border-color: rgba(37, 99, 235, 0.35);
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.1);
+  transform: translateY(-1px);
+}
+
+.t2-meme-tile:focus-visible {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.t2-meme-tile:active {
+  transform: translateY(0);
+}
+
+.t2-meme-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+}
+
+.t2-meme-img-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(229, 231, 235, 0.5), rgba(249, 250, 251, 0.75));
+  opacity: 1;
+  pointer-events: none;
+}
+
+.t2-meme-img-wrap img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.t2-meme-img-wrap img[data-src] {
+  opacity: 0;
+}
+
+.t2-meme-img-wrap img:not([data-src]) {
+  opacity: 1;
+}
+
+.t2-meme-tile:hover .t2-meme-img-wrap img:not([data-src]) {
+  transform: scale(1.035);
+}
+
+.t2-meme-tile-err .t2-meme-img-wrap::after {
+  content: 'broken_image';
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Material Icons';
+  font-size: 30px;
+  color: #cbd5e1;
+}
+
+.t2-meme-meta {
+  min-height: 34px;
+  padding: 9px 10px;
+  background: #fff;
+}
+
+.t2-meme-poster {
+  overflow: hidden;
+  color: #6b7280;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ─── States ─────────────────────────────────────────────────────── */
+
+.t2-meme-loader {
+  display: flex;
+  justify-content: center;
+  padding: 28px 0;
+}
+
+.t2-meme-spin {
+  color: #2563eb;
+  font-size: 24px;
+  animation: t2MemeSpin 0.8s linear infinite;
+}
+
+@keyframes t2MemeSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.t2-meme-empty {
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 40px 16px;
+  color: #9ca3af;
+  text-align: center;
+}
+
+.t2-meme-empty .material-icons {
+  font-size: 42px;
+  opacity: 0.45;
+}
+
+.t2-meme-empty p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.t2-meme-sentinel {
+  width: 100%;
+  height: 1px;
+}
+
+/* ─── Footer ─────────────────────────────────────────────────────── */
+
+.t2-meme-footer {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--t2-border, #e5e7eb);
+  background: var(--t2-bg, #fff);
+}
+
+.t2-meme-reg-btn,
+.t2-meme-close-btn {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border-radius: 8px;
+  padding: 0 14px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.t2-meme-reg-btn {
+  border: 0;
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.t2-meme-reg-btn:hover {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.t2-meme-reg-btn .material-icons {
+  font-size: 18px;
+}
+
+.t2-meme-close-btn {
+  border: 0;
+  background: #f3f4f6;
+  color: #4b5563;
+}
+
+.t2-meme-close-btn:hover {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+/* ─── Dark Mode ──────────────────────────────────────────────────── */
+
+html[data-t2editor-theme="dark"] .t2-meme-modal,
+[data-t2editor-theme="dark"] .t2-meme-modal {
+  background: #2d2d2d;
+  border-color: #444;
+  color: #e0e0e0;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-header,
+html[data-t2editor-theme="dark"] .t2-meme-footer,
+[data-t2editor-theme="dark"] .t2-meme-header,
+[data-t2editor-theme="dark"] .t2-meme-footer {
+  background: #2d2d2d;
+  border-color: #444;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-title,
+[data-t2editor-theme="dark"] .t2-meme-title {
+  color: #e5e7eb;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-title-icon,
+[data-t2editor-theme="dark"] .t2-meme-title-icon {
+  background: rgba(78, 161, 255, 0.14);
+  color: #4ea1ff;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-desc,
+html[data-t2editor-theme="dark"] .t2-meme-powered,
+html[data-t2editor-theme="dark"] .t2-meme-poster,
+[data-t2editor-theme="dark"] .t2-meme-desc,
+[data-t2editor-theme="dark"] .t2-meme-powered,
+[data-t2editor-theme="dark"] .t2-meme-poster {
+  color: #aaa;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-powered:hover,
+html[data-t2editor-theme="dark"] .t2-meme-powered b,
+[data-t2editor-theme="dark"] .t2-meme-powered:hover,
+[data-t2editor-theme="dark"] .t2-meme-powered b {
+  color: #d1d5db;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-icon-close,
+html[data-t2editor-theme="dark"] .t2-meme-close-btn,
+[data-t2editor-theme="dark"] .t2-meme-icon-close,
+[data-t2editor-theme="dark"] .t2-meme-close-btn {
+  background: #444;
+  color: #e5e7eb;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-icon-close:hover,
+html[data-t2editor-theme="dark"] .t2-meme-close-btn:hover,
+[data-t2editor-theme="dark"] .t2-meme-icon-close:hover,
+[data-t2editor-theme="dark"] .t2-meme-close-btn:hover {
+  background: #555;
+  color: #fff;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-search-wrap,
+[data-t2editor-theme="dark"] .t2-meme-search-wrap {
+  background: #1e1e1e;
+  border-color: #444;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-search-wrap:focus-within,
+[data-t2editor-theme="dark"] .t2-meme-search-wrap:focus-within {
+  border-color: #0187fe;
+  box-shadow: 0 0 0 3px rgba(1, 135, 254, 0.2);
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-search,
+[data-t2editor-theme="dark"] .t2-meme-search {
+  color: #e0e0e0;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-search::placeholder,
+html[data-t2editor-theme="dark"] .t2-meme-search-icon,
+[data-t2editor-theme="dark"] .t2-meme-search::placeholder,
+[data-t2editor-theme="dark"] .t2-meme-search-icon {
+  color: #9ca3af;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-search-wrap:focus-within .t2-meme-search-icon,
+[data-t2editor-theme="dark"] .t2-meme-search-wrap:focus-within .t2-meme-search-icon {
+  color: #4ea1ff;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-body,
+[data-t2editor-theme="dark"] .t2-meme-body {
+  background: #242424;
+  scrollbar-color: #555 transparent;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-body::-webkit-scrollbar-thumb,
+[data-t2editor-theme="dark"] .t2-meme-body::-webkit-scrollbar-thumb {
+  background: #555;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-tile,
+[data-t2editor-theme="dark"] .t2-meme-tile {
+  background: #2d2d2d;
+  border-color: #444;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-tile:hover,
+[data-t2editor-theme="dark"] .t2-meme-tile:hover {
+  border-color: rgba(78, 161, 255, 0.4);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.32);
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-img-wrap,
+[data-t2editor-theme="dark"] .t2-meme-img-wrap {
+  background: #1e1e1e;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-img-wrap::before,
+[data-t2editor-theme="dark"] .t2-meme-img-wrap::before {
+  background: linear-gradient(135deg, rgba(56, 56, 56, 0.55), rgba(30, 30, 30, 0.75));
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-tile-err .t2-meme-img-wrap::after,
+[data-t2editor-theme="dark"] .t2-meme-tile-err .t2-meme-img-wrap::after {
+  color: #555;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-meta,
+[data-t2editor-theme="dark"] .t2-meme-meta {
+  background: #2d2d2d;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-spin,
+[data-t2editor-theme="dark"] .t2-meme-spin {
+  color: #4ea1ff;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-empty,
+[data-t2editor-theme="dark"] .t2-meme-empty {
+  color: #777;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-reg-btn,
+[data-t2editor-theme="dark"] .t2-meme-reg-btn {
+  background: rgba(78, 161, 255, 0.14);
+  color: #4ea1ff;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-reg-btn:hover,
+[data-t2editor-theme="dark"] .t2-meme-reg-btn:hover {
+  background: rgba(78, 161, 255, 0.22);
+  color: #7bbdff;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .t2-meme-overlay {
+    padding: 12px;
+  }
+
+  .t2-meme-modal {
+    width: calc(100vw - 24px);
+    height: min(82vh, 660px);
+    max-height: calc(100vh - 24px);
+  }
+
+  .t2-meme-header {
+    padding: 18px 16px 14px;
+  }
+
+  .t2-meme-body {
+    padding: 14px 16px;
+  }
+
+  .t2-meme-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .t2-meme-footer {
+    padding: 12px 16px;
+  }
+}
+
+@media (max-width: 420px) {
+  .t2-meme-modal {
+    width: calc(100vw - 20px);
+    height: min(84vh, 640px);
+  }
+
+  .t2-meme-title {
+    font-size: 19px;
+  }
+
+  .t2-meme-title-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .t2-meme-desc,
+  .t2-meme-powered {
+    padding-left: 44px;
+    margin-left: 0;
+  }
+
+  .t2-meme-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .t2-meme-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .t2-meme-reg-btn,
+  .t2-meme-close-btn {
+    width: 100%;
+  }
+}
+
+/* ─── Reduced motion ─────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .t2-meme-modal,
+  .t2-meme-tile,
+  .t2-meme-img-wrap img,
+  .t2-meme-reg-btn,
+  .t2-meme-close-btn,
+  .t2-meme-icon-close,
+  .t2-meme-search-wrap {
+    transition: none;
+  }
+
+  .t2-meme-tile:hover,
+  .t2-meme-tile:active {
+    transform: none;
+  }
+
+  .t2-meme-spin {
+    animation: none;
+  }
+}
+
+
+/* ── Layout correction / premium neutral refinement ─────────────────────────
+   Fixes observed issues:
+   - grid visually colliding with the header divider
+   - scroll content sitting under the footer
+   - oversized header/footer controls on iPad preview
+   - overly blue, app-like accent treatment
+*/
+
+.t2-meme-overlay {
+  padding: 16px !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.t2-meme-modal {
+  width: min(560px, calc(100vw - 32px)) !important;
+  height: min(76vh, 660px) !important;
+  max-height: calc(100vh - 32px) !important;
+  border-radius: 12px !important;
+  border-color: rgba(17, 24, 39, 0.12) !important;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22) !important;
+}
+
+.t2-meme-header {
+  padding: 16px 20px 14px !important;
+}
+
+.t2-meme-header-top {
+  margin-bottom: 12px !important;
+  gap: 12px !important;
+}
+
+.t2-meme-title {
+  font-size: 19px !important;
+  letter-spacing: -0.15px !important;
+}
+
+.t2-meme-title-icon {
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 10px !important;
+  background: linear-gradient(180deg, #f8fafc 0%, #eef0f3 100%) !important;
+  color: #4b5563 !important;
+  box-shadow: inset 0 0 0 1px rgba(17, 24, 39, 0.06) !important;
+}
+
+.t2-meme-desc {
+  padding-left: 44px !important;
+  font-size: 13px !important;
+  line-height: 1.45 !important;
+}
+
+.t2-meme-powered {
+  margin-left: 44px !important;
+  color: #8b929e !important;
+}
+
+.t2-meme-icon-close {
+  width: 34px !important;
+  height: 34px !important;
+  background: #f3f4f6 !important;
+  color: #6b7280 !important;
+}
+
+.t2-meme-icon-close:hover {
+  background: #e5e7eb !important;
+  color: #374151 !important;
+}
+
+.t2-meme-search-wrap {
+  height: 42px !important;
+  border: 2px solid #d1d5db !important;
+  border-radius: 10px !important;
+  background: #fbfbfc !important;
+}
+
+.t2-meme-search-wrap:focus-within {
+  border-color: #9ca3af !important;
+  box-shadow: 0 0 0 3px rgba(156, 163, 175, 0.16) !important;
+  background: #fff !important;
+}
+
+.t2-meme-search-wrap:focus-within .t2-meme-search-icon {
+  color: #6b7280 !important;
+}
+
+.t2-meme-search {
+  height: 40px !important;
+  font-size: 14px !important;
+}
+
+.t2-meme-body {
+  position: relative !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  padding: 18px 20px 22px !important;
+  background: #f7f7f8 !important;
+}
+
+.t2-meme-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  gap: 14px !important;
+  align-items: start !important;
+}
+
+.t2-meme-tile {
+  border-radius: 10px !important;
+  border-color: #dedede !important;
+  background: #fff !important;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04) !important;
+}
+
+.t2-meme-tile:hover {
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 5px 14px rgba(15, 23, 42, 0.10) !important;
+  transform: translateY(-1px) !important;
+}
+
+.t2-meme-tile:focus-visible {
+  border-color: #9ca3af !important;
+  box-shadow: 0 0 0 3px rgba(156, 163, 175, 0.16) !important;
+}
+
+.t2-meme-img-wrap {
+  background: #f3f4f6 !important;
+}
+
+.t2-meme-meta {
+  min-height: 30px !important;
+  padding: 7px 10px !important;
+  background: #fff !important;
+}
+
+.t2-meme-poster {
+  font-size: 11px !important;
+  line-height: 1.35 !important;
+  color: #6b7280 !important;
+}
+
+.t2-meme-footer {
+  position: relative !important;
+  z-index: 2 !important;
+  flex: 0 0 auto !important;
+  padding: 12px 20px !important;
+  background: var(--t2-bg, #fff) !important;
+  box-shadow: 0 -1px 0 rgba(17, 24, 39, 0.04) !important;
+}
+
+.t2-meme-reg-btn,
+.t2-meme-close-btn {
+  min-height: 38px !important;
+  height: 38px !important;
+  border-radius: 8px !important;
+  padding: 0 14px !important;
+  font-size: 13px !important;
+}
+
+.t2-meme-reg-btn {
+  background: #eef0f3 !important;
+  color: #4b5563 !important;
+  border: 1px solid #e5e7eb !important;
+}
+
+.t2-meme-reg-btn:hover {
+  background: #e5e7eb !important;
+  color: #374151 !important;
+}
+
+.t2-meme-close-btn {
+  background: #f3f4f6 !important;
+  color: #4b5563 !important;
+}
+
+.t2-meme-close-btn:hover {
+  background: #e5e7eb !important;
+  color: #374151 !important;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-modal,
+[data-t2editor-theme="dark"] .t2-meme-modal {
+  border-color: #444 !important;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.46) !important;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-title-icon,
+[data-t2editor-theme="dark"] .t2-meme-title-icon {
+  background: linear-gradient(180deg, #3a3a3a 0%, #303030 100%) !important;
+  color: #d1d5db !important;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04) !important;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-icon-close,
+[data-t2editor-theme="dark"] .t2-meme-icon-close {
+  background: #3a3a3a !important;
+  color: #d1d5db !important;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-icon-close:hover,
+[data-t2editor-theme="dark"] .t2-meme-icon-close:hover {
+  background: #4a4a4a !important;
+  color: #fff !important;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-search-wrap,
+[data-t2editor-theme="dark"] .t2-meme-search-wrap {
+  background: #1f1f1f !important;
+  border-color: #4b5563 !important;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-search-wrap:focus-within,
+[data-t2editor-theme="dark"] .t2-meme-search-wrap:focus-within {
+  background: #242424 !important;
+  border-color: #6b7280 !important;
+  box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.24) !important;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-search-wrap:focus-within .t2-meme-search-icon,
+[data-t2editor-theme="dark"] .t2-meme-search-wrap:focus-within .t2-meme-search-icon {
+  color: #d1d5db !important;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-body,
+[data-t2editor-theme="dark"] .t2-meme-body {
+  background: #242424 !important;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-tile,
+[data-t2editor-theme="dark"] .t2-meme-tile {
+  background: #2d2d2d !important;
+  border-color: #444 !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.22) !important;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-tile:hover,
+[data-t2editor-theme="dark"] .t2-meme-tile:hover {
+  border-color: #5a5a5a !important;
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.34) !important;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-tile:focus-visible,
+[data-t2editor-theme="dark"] .t2-meme-tile:focus-visible {
+  border-color: #6b7280 !important;
+  box-shadow: 0 0 0 3px rgba(107, 114, 128, 0.24) !important;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-img-wrap,
+[data-t2editor-theme="dark"] .t2-meme-img-wrap {
+  background: #1f1f1f !important;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-meta,
+[data-t2editor-theme="dark"] .t2-meme-meta {
+  background: #2d2d2d !important;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-footer,
+[data-t2editor-theme="dark"] .t2-meme-footer {
+  box-shadow: 0 -1px 0 rgba(255, 255, 255, 0.04) !important;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-reg-btn,
+[data-t2editor-theme="dark"] .t2-meme-reg-btn {
+  background: #374151 !important;
+  border-color: #4b5563 !important;
+  color: #e5e7eb !important;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-reg-btn:hover,
+[data-t2editor-theme="dark"] .t2-meme-reg-btn:hover,
+html[data-t2editor-theme="dark"] .t2-meme-close-btn:hover,
+[data-t2editor-theme="dark"] .t2-meme-close-btn:hover {
+  background: #4b5563 !important;
+  color: #fff !important;
+}
+
+html[data-t2editor-theme="dark"] .t2-meme-close-btn,
+[data-t2editor-theme="dark"] .t2-meme-close-btn {
+  background: #3a3a3a !important;
+  color: #d1d5db !important;
+}
+
+@media (min-width: 700px) {
+  .t2-meme-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .t2-meme-overlay {
+    padding: 12px !important;
+  }
+
+  .t2-meme-modal {
+    width: calc(100vw - 24px) !important;
+    height: min(78vh, 640px) !important;
+    max-height: calc(100vh - 24px) !important;
+  }
+
+  .t2-meme-header {
+    padding: 14px 16px 12px !important;
+  }
+
+  .t2-meme-body {
+    padding: 16px 16px 20px !important;
+  }
+
+  .t2-meme-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+  }
+
+  .t2-meme-footer {
+    padding: 10px 16px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .t2-meme-title {
+    font-size: 18px !important;
+  }
+
+  .t2-meme-title-icon {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  .t2-meme-desc,
+  .t2-meme-powered {
+    padding-left: 42px !important;
+    margin-left: 0 !important;
+  }
+
+  .t2-meme-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .t2-meme-footer {
+    flex-direction: row !important;
+    align-items: center !important;
+  }
+
+  .t2-meme-reg-btn,
+  .t2-meme-close-btn {
+    width: auto !important;
+  }
+}
+
+@media (max-width: 340px) {
+  .t2-meme-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+}
+
+
+/* ── Icon grid + dark footer hard fix ───────────────────────────────────────
+   적용 이유:
+   1) body에 붙는 모달은 일부 환경에서 [data-t2editor-theme] 상속이 끊길 수 있어
+      JS가 .t2-meme-dark / .t2-meme-light 클래스를 overlay에 직접 부여한다.
+   2) Material Icons는 glyph별 optical bounds가 달라 부모 flex 중심과 시각 중심이
+      어긋나 보이므로, 모든 icon parent/child의 박스 치수를 명시한다.
+*/
+
+.t2-meme-modal .material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  line-height: 1 !important;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  font-feature-settings: 'liga';
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  vertical-align: middle !important;
+}
+
+.t2-meme-title {
+  align-items: center !important;
+}
+
+.t2-meme-title-icon {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  min-height: 34px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border-radius: 9px !important;
+  font-size: 22px !important;
+  line-height: 1 !important;
+  flex: 0 0 34px !important;
+}
+
+.t2-meme-icon-close {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  min-height: 34px !important;
+  padding: 0 !important;
+  border-radius: 999px !important;
+}
+
+.t2-meme-icon-close .material-icons {
+  width: 20px !important;
+  height: 20px !important;
+  min-width: 20px !important;
+  font-size: 20px !important;
+}
+
+.t2-meme-search-wrap {
+  align-items: center !important;
+}
+
+.t2-meme-search-icon {
+  width: 22px !important;
+  height: 22px !important;
+  min-width: 22px !important;
+  font-size: 22px !important;
+  margin: 0 !important;
+  flex: 0 0 22px !important;
+}
+
+.t2-meme-reg-btn,
+.t2-meme-close-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+  line-height: 1 !important;
+}
+
+.t2-meme-reg-btn .material-icons,
+.t2-meme-close-btn .material-icons {
+  width: 18px !important;
+  height: 18px !important;
+  min-width: 18px !important;
+  font-size: 18px !important;
+  line-height: 1 !important;
+  margin: 0 !important;
+}
+
+/* 라이트모드는 기존 장점 유지: 밝고 절제된 surface만 정렬 */
+.t2-meme-light .t2-meme-footer,
+html[data-t2editor-theme="light"] .t2-meme-footer {
+  background: #ffffff !important;
+}
+
+.t2-meme-light .t2-meme-reg-btn {
+  background: #eef0f3 !important;
+  border-color: #dcdfe4 !important;
+  color: #4f5660 !important;
+}
+
+.t2-meme-light .t2-meme-close-btn {
+  background: #f4f4f5 !important;
+  border-color: #ececec !important;
+  color: #555b64 !important;
+}
+
+/* 다크모드 강제 보정: footer가 흰색으로 떨어지는 문제 차단 */
+.t2-meme-overlay.t2-meme-dark .t2-meme-modal {
+  background: #2b2b2b !important;
+  border-color: #464646 !important;
+  color: #e5e5e5 !important;
+}
+
+.t2-meme-overlay.t2-meme-dark .t2-meme-header {
+  background: #2b2b2b !important;
+  border-color: #454545 !important;
+}
+
+.t2-meme-overlay.t2-meme-dark .t2-meme-body {
+  background: #303030 !important;
+}
+
+.t2-meme-overlay.t2-meme-dark .t2-meme-footer {
+  background: #242424 !important;
+  border-top-color: #444444 !important;
+  box-shadow: none !important;
+}
+
+.t2-meme-overlay.t2-meme-dark .t2-meme-title {
+  color: #f1f1f1 !important;
+}
+
+.t2-meme-overlay.t2-meme-dark .t2-meme-title-icon {
+  background: #363636 !important;
+  color: #d2d2d2 !important;
+  box-shadow: inset 0 0 0 1px #4a4a4a !important;
+}
+
+.t2-meme-overlay.t2-meme-dark .t2-meme-desc,
+.t2-meme-overlay.t2-meme-dark .t2-meme-powered {
+  color: #b6b6b6 !important;
+}
+
+.t2-meme-overlay.t2-meme-dark .t2-meme-powered b {
+  color: #d0d0d0 !important;
+}
+
+.t2-meme-overlay.t2-meme-dark .t2-meme-icon-close {
+  background: #383838 !important;
+  color: #d0d0d0 !important;
+}
+
+.t2-meme-overlay.t2-meme-dark .t2-meme-icon-close:hover {
+  background: #444444 !important;
+  color: #ffffff !important;
+}
+
+.t2-meme-overlay.t2-meme-dark .t2-meme-search-wrap {
+  background: #222222 !important;
+  border-color: #505050 !important;
+  box-shadow: none !important;
+}
+
+.t2-meme-overlay.t2-meme-dark .t2-meme-search-wrap:focus-within {
+  background: #242424 !important;
+  border-color: #6a6a6a !important;
+  box-shadow: none !important;
+}
+
+.t2-meme-overlay.t2-meme-dark .t2-meme-search,
+.t2-meme-overlay.t2-meme-dark .t2-meme-search-icon {
+  color: #d8d8d8 !important;
+}
+
+.t2-meme-overlay.t2-meme-dark .t2-meme-search::placeholder {
+  color: #969696 !important;
+}
+
+.t2-meme-overlay.t2-meme-dark .t2-meme-tile {
+  background: #2a2a2a !important;
+  border-color: #484848 !important;
+  box-shadow: none !important;
+}
+
+.t2-meme-overlay.t2-meme-dark .t2-meme-tile:hover {
+  background: #2e2e2e !important;
+  border-color: #5a5a5a !important;
+  box-shadow: none !important;
+}
+
+.t2-meme-overlay.t2-meme-dark .t2-meme-img-wrap {
+  background: #252525 !important;
+}
+
+.t2-meme-overlay.t2-meme-dark .t2-meme-meta {
+  background: #2a2a2a !important;
+}
+
+.t2-meme-overlay.t2-meme-dark .t2-meme-poster {
+  color: #b6b6b6 !important;
+}
+
+.t2-meme-overlay.t2-meme-dark .t2-meme-reg-btn {
+  background: #343434 !important;
+  border: 1px solid #505050 !important;
+  color: #e0e0e0 !important;
+}
+
+.t2-meme-overlay.t2-meme-dark .t2-meme-reg-btn:hover {
+  background: #3d3d3d !important;
+  border-color: #5c5c5c !important;
+  color: #ffffff !important;
+}
+
+.t2-meme-overlay.t2-meme-dark .t2-meme-close-btn {
+  background: #3a3a3a !important;
+  border: 1px solid #525252 !important;
+  color: #dedede !important;
+}
+
+.t2-meme-overlay.t2-meme-dark .t2-meme-close-btn:hover {
+  background: #444444 !important;
+  border-color: #606060 !important;
+  color: #ffffff !important;
+}

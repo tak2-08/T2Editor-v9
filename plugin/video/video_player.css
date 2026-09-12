@@ -1,0 +1,1164 @@
+/* Path: T2Editor/plugin/video/video_player.css */
+
+:root {
+    --t2vp-bg:          #0a0a0a;
+    --t2vp-ctrl-bg:     #181818;
+    --t2vp-surface:     #141414;
+    --t2vp-border:      rgba(255,255,255,0.07);
+    --t2vp-text:        #e8e8e8;
+    --t2vp-muted:       rgba(255,255,255,0.34);
+    --t2vp-accent:      #60a5fa;
+    --t2vp-accent-dim:  rgba(96,165,250,0.18);
+    --t2vp-control-h:   36px;
+    --t2vp-radius:      10px;
+    --t2vp-focus:       rgba(96,165,250,0.65);
+    --t2vp-chrome-grad: linear-gradient(to top,
+                            rgba(8,8,8,0.98) 0%,
+                            rgba(8,8,8,0.55) 52%,
+                            transparent 100%);
+    --t2vp-ease:        cubic-bezier(.25,.46,.45,.94);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    background: var(--t2vp-bg);
+    color: var(--t2vp-text);
+    font-family: "Pretendard", "Apple SD Gothic Neo", system-ui, -apple-system,
+                 BlinkMacSystemFont, "Segoe UI", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+button, select, input { font: inherit; }
+
+/* ── 임베드 body ──────────────────────────────── */
+.t2vp-embed-body { overflow: hidden; }
+
+/* ── 플레이어 루트 ────────────────────────────── */
+.t2vp-player {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    min-height: 160px;
+    background: #000;
+    overflow: hidden;
+    isolation: isolate;
+    outline: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.t2vp-player:focus-visible {
+    box-shadow: inset 0 0 0 2px var(--t2vp-focus);
+}
+
+/* ── 비디오 엘리먼트 ──────────────────────────── */
+.t2vp-video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    object-fit: contain;
+    /* [LAYER 3] 드래그 방지 — 파일 관리자로 끌어다 놓기 불가 */
+    -webkit-user-drag: none;
+    user-drag: none;
+    -moz-user-select: none;
+    pointer-events: auto; /* JS에서 클릭/터치 이벤트는 필요 */
+    /*
+     * [LAYER 3 – GPU] 별도 컴포지터 레이어 승격
+     * GPU overlay 레이어로 렌더링되면 일부 OS/드라이버 스크린샷 API가
+     * 해당 레이어를 캡처하지 못해 검은 화면으로 처리됩니다.
+     * (ChromeOS, Linux Wayland, Windows 일부 환경에서 유효)
+     */
+    transform: translateZ(0);
+    will-change: transform;
+    /* 색 공간 격리 — 혼합 캡처 도구에서 색상 추출 방해 */
+    isolation: isolate;
+}
+
+/* ── [LAYER 2] 워터마크 캔버스 오버레이 ──────────
+   - video와 chrome 사이의 z-index(6)에 위치
+   - pointer-events: none으로 일반 인터랙션 차단 없음
+   - 화면 녹화 영상에 식별 정보 노출
+   ──────────────────────────────────────────────── */
+.t2vp-watermark {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;   /* 클릭/터치 이벤트 통과 */
+    user-select: none;
+    -webkit-user-select: none;
+    display: block;
+}
+
+/* ── 큰 재생 버튼 (일시정지 상태) ────────────── */
+.t2vp-big-play {
+    position: absolute;
+    inset: 50% auto auto 50%;
+    z-index: 4;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    padding: 0;
+    border: 1.5px solid rgba(255,255,255,0.22);
+    border-radius: 50%;
+    background: rgba(0,0,0,0.46);
+    color: #fff;
+    cursor: pointer;
+    transform: translate(-50%,-50%) scale(1);
+    transition:
+        background 0.18s var(--t2vp-ease),
+        border-color 0.18s var(--t2vp-ease),
+        transform 0.18s var(--t2vp-ease),
+        opacity 0.20s var(--t2vp-ease);
+}
+
+.t2vp-big-play:hover {
+    background: rgba(0,0,0,0.64);
+    border-color: rgba(255,255,255,0.40);
+    transform: translate(-50%,-50%) scale(1.07);
+}
+
+.t2vp-big-play:active {
+    transform: translate(-50%,-50%) scale(0.93);
+    transition-duration: 0.08s;
+}
+
+.t2vp-player.is-playing .t2vp-big-play {
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%,-50%) scale(0.82);
+    transition-duration: 0.18s;
+}
+
+/* ── 크롬 (컨트롤 영역) ──────────────────────── */
+.t2vp-chrome {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 5;
+    padding: 56px 12px 10px;
+    background: var(--t2vp-chrome-grad);
+    transition: opacity 0.24s var(--t2vp-ease);
+}
+
+.t2vp-player.is-idle.is-playing .t2vp-chrome {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.t2vp-player.is-idle.is-playing,
+.t2vp-player.is-idle.is-playing * { cursor: none; }
+
+/* ── 프로그레스바 ─────────────────────────────── */
+.t2vp-progress {
+    position: relative;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 4px;
+    cursor: pointer;
+}
+
+.t2vp-progress-track {
+    position: absolute;
+    left: 0; right: 0;
+    height: 3px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.14);
+    transition: height 0.15s var(--t2vp-ease);
+}
+
+.t2vp-progress:hover .t2vp-progress-track,
+.t2vp-progress:focus-within .t2vp-progress-track { height: 5px; }
+
+.t2vp-progress-buffer {
+    position: absolute;
+    left: 0;
+    height: 3px;
+    width: 0;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.22);
+    transition: height 0.15s var(--t2vp-ease);
+}
+
+.t2vp-progress:hover .t2vp-progress-buffer,
+.t2vp-progress:focus-within .t2vp-progress-buffer { height: 5px; }
+
+.t2vp-progress-fill {
+    position: absolute;
+    left: 0;
+    height: 3px;
+    width: 0;
+    border-radius: 100px;
+    background: var(--t2vp-accent);
+    transition: height 0.15s var(--t2vp-ease);
+    will-change: width;
+}
+
+.t2vp-progress:hover .t2vp-progress-fill,
+.t2vp-progress:focus-within .t2vp-progress-fill { height: 5px; }
+
+.t2vp-progress-thumb {
+    position: absolute;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.45);
+    left: 0;
+    margin-left: -6.5px;
+    pointer-events: none;
+    transform: scale(0);
+    transition: transform 0.18s var(--t2vp-ease);
+    z-index: 1;
+    top: 50%;
+    margin-top: -6.5px;
+}
+
+.t2vp-progress:hover .t2vp-progress-thumb,
+.t2vp-progress:focus-within .t2vp-progress-thumb { transform: scale(1); }
+
+.t2vp-progress-input {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.t2vp-progress-input:focus-visible {
+    outline: 2px solid var(--t2vp-focus);
+    outline-offset: 4px;
+    border-radius: 2px;
+}
+
+/* ── 컨트롤 열 — 플랫 솔리드 바 ─────────────── */
+.t2vp-controls {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    min-height: 44px;
+    background: var(--t2vp-ctrl-bg);
+    border-radius: var(--t2vp-radius);
+    padding: 4px 6px;
+    border: 1px solid rgba(255,255,255,0.06);
+}
+
+/* ── 개별 버튼 ────────────────────────────────── */
+.t2vp-control {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--t2vp-control-h);
+    min-width: var(--t2vp-control-h);
+    padding: 0 7px;
+    border: none;
+    border-radius: 7px;
+    background: transparent;
+    color: var(--t2vp-text);
+    cursor: pointer;
+    transition:
+        background 0.13s var(--t2vp-ease),
+        transform 0.10s var(--t2vp-ease);
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.t2vp-control:hover { background: rgba(255,255,255,0.08); }
+
+.t2vp-control:active {
+    background: rgba(255,255,255,0.05);
+    transform: scale(0.93);
+}
+
+.t2vp-control:focus-visible {
+    outline: 2px solid var(--t2vp-focus);
+    outline-offset: 1px;
+}
+
+/* 아이콘 전환 */
+.t2vp-icon-pause,
+.t2vp-icon-fs-exit,
+.t2vp-icon-mute { display: none; }
+
+.t2vp-player.is-playing .t2vp-icon-play  { display: none; }
+.t2vp-player.is-playing .t2vp-icon-pause { display: inline; }
+
+.t2vp-player.is-fullscreen .t2vp-icon-fs-enter { display: none; }
+.t2vp-player.is-fullscreen .t2vp-icon-fs-exit  { display: inline; }
+
+.t2vp-player.is-muted .t2vp-icon-vol  { display: none; }
+.t2vp-player.is-muted .t2vp-icon-mute { display: inline; }
+
+/* ── 볼륨 래퍼 ────────────────────────────────── */
+.t2vp-volume-wrap {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.t2vp-volume-panel {
+    display: flex;
+    align-items: center;
+    max-width: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-width 0.2s var(--t2vp-ease), opacity 0.2s var(--t2vp-ease);
+    pointer-events: none;
+}
+
+.t2vp-volume-panel.is-open {
+    max-width: 96px;
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* ── 볼륨 슬라이더 — 풀 커스텀 (크로스브라우저) ── */
+.t2vp-volume-panel input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 80px;
+    height: 4px;
+    margin: 0 6px;
+    border-radius: 100px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    flex-shrink: 0;
+    /* fill + track: JS가 --vol 속성을 업데이트 */
+    background: linear-gradient(to right,
+        var(--t2vp-accent) var(--vol, 100%),
+        rgba(255,255,255,0.18) var(--vol, 100%)
+    );
+}
+
+.t2vp-volume-panel input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+    cursor: pointer;
+    transition: transform 0.12s var(--t2vp-ease);
+}
+
+.t2vp-volume-panel input[type="range"]:hover::-webkit-slider-thumb {
+    transform: scale(1.18);
+}
+
+/* Firefox */
+.t2vp-volume-panel input[type="range"]::-moz-range-track {
+    height: 4px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.18);
+    border: none;
+}
+
+.t2vp-volume-panel input[type="range"]::-moz-range-progress {
+    height: 4px;
+    border-radius: 100px;
+    background: var(--t2vp-accent);
+}
+
+.t2vp-volume-panel input[type="range"]::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: none;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+    cursor: pointer;
+}
+
+.t2vp-volume-panel input[type="range"]:focus-visible {
+    outline: 2px solid var(--t2vp-focus);
+    outline-offset: 3px;
+    border-radius: 3px;
+}
+
+/* ── select 드롭다운 (화질) ──────────────────── */
+.t2vp-select {
+    height: var(--t2vp-control-h);
+    border: 1px solid rgba(255,255,255,0.09);
+    border-radius: 7px;
+    background: rgba(255,255,255,0.05);
+    color: var(--t2vp-text);
+    padding: 0 10px;
+    cursor: pointer;
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: background 0.13s var(--t2vp-ease);
+    -webkit-appearance: none;
+    appearance: none;
+    max-width: 76px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.t2vp-select:hover { background: rgba(255,255,255,0.10); }
+
+.t2vp-select:focus-visible {
+    outline: 2px solid var(--t2vp-focus);
+    outline-offset: 1px;
+}
+
+.t2vp-select:disabled { opacity: 0.30; cursor: default; }
+
+.t2vp-select-label { display: inline-flex; align-items: center; flex-shrink: 0; }
+
+/* ── 확장자 레이블 — 완전 정적, 무반응 ─────── */
+.t2vp-ext-label {
+    display: inline-flex;
+    align-items: center;
+    height: var(--t2vp-control-h);
+    padding: 0 4px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--t2vp-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+    pointer-events: none;
+    cursor: default;
+    user-select: none;
+}
+
+/* ── 배속 드롭다운 ────────────────────────────── */
+.t2vp-speed-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.t2vp-speed-btn {
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    min-width: 42px;
+    padding: 0 7px;
+}
+
+.t2vp-speed-btn[aria-expanded="true"] {
+    background: rgba(255,255,255,0.08);
+    color: var(--t2vp-accent);
+}
+
+.t2vp-speed-menu {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    right: 0;
+    z-index: 20;
+    min-width: 82px;
+    padding: 4px 0;
+    border-radius: 10px;
+    background: rgba(20,20,20,0.76);
+    backdrop-filter: blur(14px) saturate(1.4);
+    -webkit-backdrop-filter: blur(14px) saturate(1.4);
+    border: 1px solid rgba(255,255,255,0.09);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.55);
+    overflow: hidden;
+    animation: t2vp-menu-in 0.14s var(--t2vp-ease) forwards;
+}
+
+@keyframes t2vp-menu-in {
+    from { opacity: 0; transform: translateY(5px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.t2vp-speed-option {
+    display: block;
+    width: 100%;
+    padding: 8px 14px;
+    background: transparent;
+    border: 0;
+    color: var(--t2vp-text);
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.10s var(--t2vp-ease);
+    letter-spacing: 0.02em;
+}
+
+.t2vp-speed-option:hover { background: rgba(255,255,255,0.07); }
+
+.t2vp-speed-option.is-active {
+    color: var(--t2vp-accent);
+    font-weight: 700;
+}
+
+/* ── 시간 표시 ────────────────────────────────── */
+.t2vp-time {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    min-width: 84px;
+    color: var(--t2vp-muted);
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    padding-left: 2px;
+    flex-shrink: 0;
+}
+
+.t2vp-time-divider { opacity: 0.45; margin: 0 1px; }
+
+.t2vp-spacer { flex: 1 1 auto; }
+
+/* ── 배속 뱃지 (long press 2×) ──────────────── */
+.t2vp-speed-badge {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 8;
+    transform: translate(-50%,-50%);
+    padding: 8px 20px;
+    border-radius: 50px;
+    background: rgba(18,18,18,0.90);
+    border: 1px solid rgba(255,255,255,0.10);
+    box-shadow: 0 4px 18px rgba(0,0,0,0.50);
+    color: rgba(255,255,255,0.94);
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    pointer-events: none;
+    animation: t2vp-badge-in 0.14s var(--t2vp-ease) forwards;
+}
+
+@keyframes t2vp-badge-in {
+    from { opacity: 0; transform: translate(-50%,-50%) scale(0.84); }
+    to   { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+}
+
+/* ── 스킵 피드백 — 작은 플로팅 뱃지 ────────── */
+.t2vp-skip-feedback {
+    position: absolute;
+    top: 40%;
+    transform: translateY(-50%);
+    z-index: 7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+    gap: 7px;
+    opacity: 0;
+    width: auto;
+}
+
+.t2vp-skip-left  { left: 18px; }
+.t2vp-skip-right { right: 18px; }
+
+.t2vp-skip-feedback.is-active {
+    animation: t2vp-skip-show 0.62s ease forwards;
+}
+
+@keyframes t2vp-skip-show {
+    0%   { opacity: 0; }
+    14%  { opacity: 1; }
+    62%  { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.t2vp-skip-ripple {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(18,18,18,0.82);
+    border: 1px solid rgba(255,255,255,0.14);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.42);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.t2vp-skip-seconds {
+    color: rgba(255,255,255,0.88);
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    background: rgba(18,18,18,0.82);
+    padding: 2px 8px;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.10);
+    white-space: nowrap;
+}
+
+/* ── 토스트 ───────────────────────────────────── */
+.t2vp-toast {
+    position: absolute;
+    bottom: 76px;
+    left: 50%;
+    z-index: 9;
+    max-width: min(460px, calc(100vw - 32px));
+    padding: 9px 18px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 100px;
+    background: rgba(16,16,16,0.96);
+    color: var(--t2vp-text);
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.5;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    animation: t2vp-toast-in 0.18s var(--t2vp-ease);
+}
+
+@keyframes t2vp-toast-in {
+    from { opacity: 0; transform: translateX(-50%) translateY(8px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* ── 에러 화면 ────────────────────────────────── */
+.t2vp-error-frame {
+    display: grid;
+    min-height: 100vh;
+    padding: 20px;
+    place-items: center;
+    background: var(--t2vp-bg);
+}
+
+.t2vp-error-card {
+    width: min(500px, 100%);
+    padding: 30px 26px;
+    border: 1px solid rgba(255,255,255,0.07);
+    border-left: 3px solid var(--t2vp-accent);
+    border-radius: 12px;
+    background: var(--t2vp-surface);
+}
+
+.t2vp-error-card h1 {
+    margin: 0 0 10px;
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+.t2vp-error-card p {
+    margin: 0;
+    color: var(--t2vp-muted);
+    line-height: 1.8;
+    font-size: 13.5px;
+}
+
+.t2vp-error-card .t2vp-eyebrow {
+    margin: 0 0 10px;
+    color: var(--t2vp-accent);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+/* ── 스크린리더 전용 ──────────────────────────── */
+.t2vp-sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ── 컴팩트 모드 ──────────────────────────────── */
+.t2vp-player.is-compact .t2vp-ext-label { display: none; }
+
+.t2vp-player.is-compact .t2vp-control--fs {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+    background: rgba(16,16,16,0.84);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 7px;
+}
+
+.t2vp-player.is-compact .t2vp-control--fs:hover {
+    background: rgba(16,16,16,0.96);
+}
+
+.t2vp-player.is-compact .t2vp-controls { justify-content: flex-end; }
+
+.t2vp-player.is-compact .t2vp-chrome { padding: 38px 8px 8px; }
+
+.t2vp-player.is-compact .t2vp-volume-panel.is-open {
+    max-width: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ── 반응형 (모바일) ──────────────────────────── */
+@media (max-width: 560px) {
+    .t2vp-chrome { padding: 44px 8px 8px; }
+
+    .t2vp-controls { gap: 0; padding: 4px; border-radius: 8px; }
+
+    [data-pip] { display: none !important; }
+
+    .t2vp-time { min-width: 66px; font-size: 11px; }
+
+    .t2vp-select { max-width: 58px; font-size: 12px; padding: 0 7px; }
+
+    .t2vp-speed-btn { min-width: 36px; font-size: 12px; padding: 0 4px; }
+
+    .t2vp-volume-panel.is-open { max-width: 74px; }
+
+    .t2vp-volume-panel input[type="range"] { width: 62px; }
+
+    .t2vp-big-play { width: 50px; height: 50px; }
+
+    .t2vp-skip-left  { left: 12px; }
+    .t2vp-skip-right { right: 12px; }
+
+    .t2vp-skip-ripple { width: 40px; height: 40px; }
+
+    .t2vp-toast { bottom: 64px; }
+}
+
+/* ── 도움말 버튼 ──────────────────────────────── */
+.t2vp-help-btn {
+    opacity: 0.70;
+    transition:
+        background 0.13s var(--t2vp-ease),
+        opacity    0.13s var(--t2vp-ease),
+        transform  0.10s var(--t2vp-ease);
+}
+.t2vp-help-btn:hover { opacity: 1; }
+
+/* ── 도움말 오버레이 ──────────────────────────── */
+.t2vp-help-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(0,0,0,0.62);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    animation: t2vp-help-in 0.18s var(--t2vp-ease) forwards;
+}
+
+.t2vp-help-overlay[hidden] { display: none; }
+
+@keyframes t2vp-help-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.t2vp-help-card {
+    width: min(440px, 100%);
+    max-height: calc(100% - 8px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    background: rgba(18,18,18,0.96);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.10);
+    border-radius: 14px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.70);
+    animation: t2vp-help-card-in 0.20s var(--t2vp-ease) forwards;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.14) transparent;
+}
+
+@keyframes t2vp-help-card-in {
+    from { transform: translateY(10px) scale(0.97); opacity: 0; }
+    to   { transform: translateY(0)    scale(1);    opacity: 1; }
+}
+
+.t2vp-help-header {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    gap: 8px;
+}
+
+.t2vp-help-logo {
+    font-size: 13.5px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--t2vp-text);
+    flex: 1;
+}
+.t2vp-help-logo em {
+    font-style: normal;
+    color: var(--t2vp-accent);
+}
+
+.t2vp-help-close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--t2vp-muted);
+    cursor: pointer;
+    transition: background 0.12s var(--t2vp-ease), color 0.12s var(--t2vp-ease);
+    flex-shrink: 0;
+}
+.t2vp-help-close:hover {
+    background: rgba(255,255,255,0.09);
+    color: var(--t2vp-text);
+}
+.t2vp-help-close:focus-visible {
+    outline: 2px solid var(--t2vp-focus);
+    outline-offset: 1px;
+}
+
+.t2vp-help-body {
+    padding: 10px 16px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.t2vp-help-section { display: flex; flex-direction: column; gap: 7px; }
+
+.t2vp-help-sec-title {
+    margin: 0;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--t2vp-accent);
+}
+
+.t2vp-help-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+}
+
+.t2vp-help-list li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 8px;
+    border-radius: 7px;
+    font-size: 12.5px;
+    color: var(--t2vp-muted);
+    transition: background 0.10s;
+}
+.t2vp-help-list li:hover { background: rgba(255,255,255,0.04); }
+
+.t2vp-help-list li > span:last-child { color: var(--t2vp-text); margin-left: auto; text-align: right; }
+
+kbd, .t2vp-help-key {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 7px;
+    border-radius: 5px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    font-size: 11.5px;
+    font-family: inherit;
+    font-weight: 600;
+    color: var(--t2vp-text);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.t2vp-help-key { padding: 2px 8px; }
+
+/* ── 도움말 플레이어 모형 (작동X / 시각 가이드) ───────── */
+.t2vp-help-guide { gap: 10px; }
+
+.t2vp-help-mockup {
+    position: relative;
+    width: 100%;
+    border-radius: 9px;
+    overflow: visible; /* 넘치는 핀 배지 잘림 방지 시 안으로 커판 */
+    user-select: none;
+    -webkit-user-select: none;
+    /* 핀이 밖으로 나가도 잘리지 않도록 여백 확보 */
+    margin: 4px 0 2px;
+    isolation: isolate;
+}
+
+.t2vp-help-mock-screen {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background:
+        radial-gradient(120% 80% at 30% 25%, rgba(96,165,250,0.22), transparent 60%),
+        radial-gradient(100% 70% at 80% 80%, rgba(168,85,247,0.18), transparent 65%),
+        linear-gradient(135deg, #1a1a24 0%, #0a0a10 100%);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 9px 9px 0 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.t2vp-help-mock-watermark {
+    position: absolute;
+    top: 8px;
+    left: 10px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: rgba(255,255,255,0.55);
+    text-shadow: 0 1px 4px rgba(0,0,0,0.55);
+    pointer-events: none;
+}
+.t2vp-help-mock-watermark em {
+    font-style: normal;
+    color: var(--t2vp-accent);
+}
+
+.t2vp-help-mock-bigplay {
+    position: relative;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.92);
+    color: #111;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+}
+.t2vp-help-mock-bigplay svg {
+    margin-left: 2px; /* 재생 아이콘 시각 중앙 보정 */
+}
+
+.t2vp-help-mock-chrome {
+    background: linear-gradient(to top, rgba(8,8,8,0.98) 0%, rgba(8,8,8,0.88) 100%);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-top: none;
+    border-radius: 0 0 9px 9px;
+    padding: 8px 10px 9px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.t2vp-help-mock-progress {
+    position: relative;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255,255,255,0.14);
+    margin: 2px 0 0;
+}
+.t2vp-help-mock-progress-fill {
+    position: absolute;
+    inset: 0 65% 0 0;
+    background: var(--t2vp-accent);
+    border-radius: 2px;
+}
+.t2vp-help-mock-progress-thumb {
+    position: absolute;
+    top: 50%;
+    left: 35%;
+    width: 10px;
+    height: 10px;
+    margin: -5px 0 0 -5px;
+    border-radius: 50%;
+    background: var(--t2vp-accent);
+    box-shadow: 0 0 0 3px rgba(96,165,250,0.25);
+}
+
+.t2vp-help-mock-row {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 22px;
+}
+
+.t2vp-help-mock-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 22px;
+    height: 22px;
+    padding: 0 5px;
+    border-radius: 5px;
+    background: rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.85);
+    font-size: 10.5px;
+    font-weight: 700;
+    line-height: 1;
+    flex-shrink: 0;
+}
+.t2vp-help-mock-btn--rel { position: relative; }
+.t2vp-help-mock-btn--speed { padding: 0 6px; }
+.t2vp-help-mock-btn--active { color: var(--t2vp-accent); background: rgba(96,165,250,0.14); }
+
+.t2vp-help-mock-time {
+    font-size: 10px;
+    font-variant-numeric: tabular-nums;
+    color: rgba(255,255,255,0.75);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.t2vp-help-mock-spacer { flex: 1 1 auto; min-width: 0; }
+
+/* ─ 번호 핀 (모형 위의 동그라미 번호) ─ */
+.t2vp-help-pin {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--t2vp-accent);
+    color: #0a0a10;
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 16px;
+    text-align: center;
+    box-shadow: 0 0 0 2px rgba(10,10,16,0.95), 0 2px 6px rgba(0,0,0,0.5);
+    pointer-events: none;
+    z-index: 2;
+}
+/* 기본값: 버튼의 우측 상단 모서리 */
+.t2vp-help-mock-btn--rel > .t2vp-help-pin {
+    top: -7px;
+    right: -7px;
+}
+.t2vp-help-pin--tl {
+    top: -7px;
+    right: -7px;
+}
+.t2vp-help-pin--above {
+    top: -7px;
+    right: -7px;
+}
+/* 프로그레스바 위의 핀: 프로그레스 숨프 위치 근처 */
+.t2vp-help-mock-progress > .t2vp-help-pin--above {
+    top: -9px;
+    left: 35%;
+    right: auto;
+    transform: translateX(-50%);
+}
+/* 화면 자체를 가리키는 핀 (우측 상단 각) */
+.t2vp-help-pin--screen {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+}
+
+/* 범례(legend) - 번호·이름·설명 3열 */
+.t2vp-help-legend li {
+    gap: 10px;
+    align-items: flex-start;
+    padding: 6px 8px;
+}
+.t2vp-help-legend li > span:nth-child(2) {
+    color: var(--t2vp-text);
+    font-weight: 600;
+    flex-shrink: 0;
+}
+.t2vp-help-legend li > span:last-child {
+    color: var(--t2vp-muted);
+    font-weight: 400;
+    font-size: 12px;
+    text-align: right;
+    margin-left: auto;
+    line-height: 1.35;
+}
+
+.t2vp-help-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--t2vp-accent);
+    color: #0a0a10;
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+/* ─ 좌은 화면 대응 (짧림 방지) ─ */
+@media (max-width: 380px) {
+    .t2vp-help-card { width: 100%; border-radius: 12px; }
+    .t2vp-help-body { padding: 8px 12px 14px; gap: 12px; }
+    .t2vp-help-mock-row { gap: 5px; }
+    .t2vp-help-mock-btn { min-width: 20px; height: 20px; padding: 0 4px; font-size: 10px; }
+    .t2vp-help-mock-time { font-size: 9.5px; }
+    .t2vp-help-mock-bigplay { width: 36px; height: 36px; }
+    .t2vp-help-mock-watermark { font-size: 9px; }
+    .t2vp-help-pin { width: 14px; height: 14px; font-size: 9px; line-height: 14px; }
+    .t2vp-help-mock-btn--rel > .t2vp-help-pin,
+    .t2vp-help-pin--tl,
+    .t2vp-help-pin--above { top: -6px; right: -6px; }
+    .t2vp-help-legend li > span:last-child { font-size: 11.5px; }
+}
+
+/* ─ 매우 짧은 화면(가로 폭 320~360px) 추가 안전망 ─ */
+@media (max-width: 340px) {
+    .t2vp-help-mock-btn--speed { padding: 0 3px; }
+    .t2vp-help-mock-row { gap: 4px; }
+}
+
+/* ─ 가로 모드(낮은 화면) 대응: 모달이 세로로 잘리지 않도록 ─ */
+@media (max-height: 480px) {
+    .t2vp-help-overlay { padding: 8px; }
+    .t2vp-help-card { max-height: calc(100% - 4px); }
+    .t2vp-help-mock-screen { aspect-ratio: 16 / 8; }
+    .t2vp-help-mock-bigplay { width: 34px; height: 34px; }
+    .t2vp-help-body { padding: 8px 14px 12px; gap: 10px; }
+}
+/* ── [LAYER 3] 인쇄 보호 @media print ────────────────────────────────────
+   JS beforeprint 핸들러와 이중 보호합니다.
+   PDF 내보내기 / 프린터 드라이버 / 스크린 캡처 등 인쇄 경로를 모두 차단합니다. */
+@media print {
+    .t2vp-player,
+    .t2vp-video,
+    .t2vp-watermark,
+    .t2vp-chrome,
+    .t2vp-big-play {
+        display:    none !important;
+        visibility: hidden !important;
+    }
+
+    .t2vp-embed-body::before {
+        content:    "이 콘텐츠는 인쇄할 수 없습니다.";
+        display:    block;
+        padding:    40px;
+        font-size:  16px;
+        color:      #333;
+        text-align: center;
+    }
+}

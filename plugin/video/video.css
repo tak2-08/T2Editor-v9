@@ -1,0 +1,626 @@
+/* Path: T2Editor/plugin/video/video.css */
+
+.t2-video-editor-modal { background: #fff; border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,.12); padding: 24px; width: min(480px, calc(100vw - 32px)); max-width: calc(100vw - 32px); box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui; }
+.t2-video-editor-modal h3 { font-size: 20px; font-weight: 600; color: #1a1a1a; margin: 0 0 20px 0; }
+
+/* Modal-local reset: 외부 테마/공통 버튼 CSS가 비디오 모달 레이아웃을 밀어내지 않도록 격리 */
+.t2-video-editor-modal button {
+    appearance: none;
+    -webkit-appearance: none;
+    font: inherit;
+    box-shadow: none;
+}
+.t2-video-editor-modal .t2-tab-content { width: 100%; }
+.t2-video-editor-modal .t2-tab-pane { display: none; }
+.t2-video-editor-modal .t2-tab-pane.active { display: block; }
+.t2-video-editor-modal .t2-tab {
+    border: 0;
+    border-bottom: 3px solid transparent;
+    border-radius: 0;
+    background: transparent;
+    color: #6b7280;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    min-width: 130px;
+    height: 44px;
+    padding: 0 12px;
+    margin: 0 0 -11px 0;
+    font-size: 15px;
+    line-height: 1;
+    white-space: nowrap;
+    text-align: center;
+}
+.t2-video-editor-modal .t2-tab.active {
+    color: #2563eb;
+    border-bottom-color: #2563eb;
+}
+.t2-video-editor-modal .t2-tab:hover {
+    color: #2563eb;
+}
+
+.t2-video-editor-modal .t2-tab:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: -2px;
+    border-radius: 4px;
+}
+
+.t2-video-editor-modal .t2-youtube-url { box-sizing: border-box; width: 100%; padding: 12px 16px; border: 2px solid #e5e7eb; border-radius: 8px; font-size: 15px; transition: all 0.2s; margin-bottom: 8px; }
+.t2-video-editor-modal .t2-youtube-url:focus { border-color: #2563eb; outline: none; box-shadow: 0 0 0 3px rgba(37,99,235,.1); }
+.t2-video-editor-modal .t2-video-type-info { font-size: 13px; color: #6b7280; margin-bottom: 20px; }
+.t2-video-editor-modal .t2-btn-group {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    margin-top: 24px;
+}
+.t2-video-editor-modal .t2-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: auto;
+    min-width: 64px;
+    height: 40px;
+    padding: 0 16px;
+    border: 0;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    gap: 0;
+}
+.t2-video-editor-modal .t2-btn[data-action="cancel"] { color: #4b5563; background: #f3f4f6; }
+.t2-video-editor-modal .t2-btn[data-action="cancel"]:hover { background: #e5e7eb; color: #374151; }
+.t2-video-editor-modal .t2-btn[data-action="insert"] { color: #fff; background: #2563eb; min-width: 80px; }
+.t2-video-editor-modal .t2-btn[data-action="insert"]:hover:not(:disabled) { background: #1d4ed8; color: #fff; }
+/* 해상도 분석 중 버튼 상태 */
+.t2-video-editor-modal .t2-btn[data-action="insert"]:disabled, .t2-video-editor-modal .t2-btn[data-action="insert"]:disabled:hover { background: #93c5fd; color: #fff; cursor: wait; opacity: 1; }
+
+.t2-video-tabs { display: flex; align-items: flex-end; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid #e5e7eb; padding-bottom: 10px; }
+.t2-video-upload-area { border: 2px dashed #e5e7eb; border-radius: 8px; padding: 32px 16px; text-align: center; cursor: pointer; transition: all 0.2s; margin-bottom: 20px; position: relative; }
+.t2-video-upload-area:hover, .t2-video-upload-area.drag-over { border-color: #2563eb; background: rgba(37,99,235,.05); }
+.t2-video-upload-area .material-icons { font-size: 48px; color: #6b7280; margin-bottom: 12px; }
+.t2-video-upload-text { font-size: 15px; color: #4b5563; margin-bottom: 4px; }
+.t2-video-upload-hint { font-size: 13px; color: #6b7280; }
+.t2-video-upload-area input[type="file"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+.t2-video-preview-container { margin-bottom: 20px; }
+.t2-video-preview { background: #f9fafb; border-radius: 8px; padding: 10px; }
+.t2-video-preview video { border-radius: 6px; margin-bottom: 10px; }
+.t2-video-info { display: flex; justify-content: space-between; font-size: 13px; color: #6b7280; gap: 10px; }
+.t2-video-file-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 70%; }
+.t2-video-file-size { flex-shrink: 0; }
+.t2-upload-progress { margin-top: 15px; padding: 10px; }
+.t2-progress-bar { width: 100%; height: 20px; background: #f0f0f0; border-radius: 10px; overflow: hidden; }
+.t2-progress-fill { height: 100%; background: #4a86e8; width: 0; transition: width 0.3s ease; }
+.t2-progress-text { text-align: center; margin-top: 5px; font-size: 14px; }
+
+/* ── fallback anchor (저장 HTML 내 URL 보존용, 화면에서 완전히 숨김) ── */
+.t2-video-source {
+    position: absolute !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+    user-select: none !important;
+    display: block !important; /* display:none 은 일부 CMS 가 삭제하므로 block 유지 */
+}
+
+/* Dark Mode */
+html[data-t2editor-theme="dark"] .t2-video-editor-modal { background-color: #2d2d2d; color: #e0e0e0; box-shadow: 0 4px 24px rgba(0,0,0,.3); border-color: #444; }
+html[data-t2editor-theme="dark"] .t2-video-editor-modal h3 { color: #e0e0e0; }
+html[data-t2editor-theme="dark"] .t2-video-editor-modal .t2-tab { color: #bdbdbd; }
+html[data-t2editor-theme="dark"] .t2-video-editor-modal .t2-tab.active,
+html[data-t2editor-theme="dark"] .t2-video-editor-modal .t2-tab:hover { color: #4ea1ff; border-bottom-color: #4ea1ff; }
+html[data-t2editor-theme="dark"] .t2-youtube-url { background-color: #1e1e1e; border-color: #444; color: #e0e0e0; }
+html[data-t2editor-theme="dark"] .t2-youtube-url:focus { border-color: #0187fe; box-shadow: 0 0 0 3px rgba(1,135,254,.2); }
+html[data-t2editor-theme="dark"] .t2-upload-progress { background-color: #383838; }
+html[data-t2editor-theme="dark"] .t2-progress-bar { background-color: #444; }
+html[data-t2editor-theme="dark"] .t2-progress-text { color: #aaa; }
+html[data-t2editor-theme="dark"] .t2-video-editor-modal .t2-btn[data-action="cancel"] { background: #444; color: #e5e7eb; }
+html[data-t2editor-theme="dark"] .t2-video-editor-modal .t2-btn[data-action="cancel"]:hover { background: #555; color: #fff; }
+html[data-t2editor-theme="dark"] .t2-video-editor-modal .t2-btn[data-action="insert"]:disabled,
+html[data-t2editor-theme="dark"] .t2-video-editor-modal .t2-btn[data-action="insert"]:disabled:hover { background: #1e40af; color: #dbeafe; }
+
+@media (max-width: 480px) {
+    .t2-video-editor-modal {
+        padding: 20px;
+        width: calc(100vw - 32px);
+        max-width: calc(100vw - 32px);
+    }
+
+    .t2-video-editor-modal .t2-video-tabs {
+        gap: 6px;
+    }
+
+    .t2-video-editor-modal .t2-tab {
+        min-width: 0;
+        flex: 1 1 0;
+        padding: 0 8px;
+        font-size: 14px;
+    }
+
+    .t2-video-editor-modal .t2-btn-group {
+        gap: 8px;
+    }
+
+    .t2-video-editor-modal .t2-btn {
+        height: 42px;
+        min-width: 64px;
+        padding: 0 14px;
+    }
+
+    .t2-video-editor-modal .t2-btn[data-action="insert"] {
+        min-width: 76px;
+    }
+}
+/* ═══════════════════════════════════════════════════════════════════════
+   T2 Video Edit Module  —  인스타그램 / 틱톡 스타일 동영상 편집 UI
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── 전체 오버레이 ──────────────────────────────────────────────────── */
+.t2ve-overlay {
+    position: fixed; inset: 0;
+    background: #0d0d0d;
+    z-index: 999999;
+    display: flex;
+    flex-direction: column;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    color: #fff;
+    overflow: hidden;
+}
+
+/* ── 헤더 ───────────────────────────────────────────────────────────── */
+.t2ve-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 16px;
+    background: #111;
+    border-bottom: 1px solid #1e1e1e;
+    flex-shrink: 0;
+    min-height: 52px;
+}
+
+.t2ve-title {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: #fff;
+}
+
+.t2ve-btn-icon {
+    width: 36px; height: 36px;
+    border: none; background: transparent;
+    color: #888; cursor: pointer;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.15s, color 0.15s;
+    flex-shrink: 0;
+}
+.t2ve-btn-icon:hover { background: rgba(255,255,255,0.08); color: #fff; }
+
+.t2ve-btn-apply {
+    border: none;
+    background: #3b82f6;
+    color: #fff;
+    font-size: 14px; font-weight: 600;
+    padding: 7px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    flex-shrink: 0;
+}
+.t2ve-btn-apply:hover  { background: #2563eb; }
+.t2ve-btn-apply:active { transform: scale(0.96); }
+
+/* ── 프리뷰 영역 ────────────────────────────────────────────────────── */
+.t2ve-preview-wrap {
+    flex: 1; min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #0a0a0a;
+    padding: 12px 16px 8px;
+    overflow: hidden;
+}
+
+.t2ve-preview-stage {
+    position: relative;
+    max-width: 100%;
+    max-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #111;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+}
+
+.t2ve-preview-video {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 14px;
+    transition: filter 0.25s ease, transform 0.25s ease;
+    background: #000;
+    min-height: 80px;
+    min-width: 120px;
+}
+
+/* ── 재생 컨트롤 ────────────────────────────────────────────────────── */
+.t2ve-playback {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px;
+    background: #111;
+    flex-shrink: 0;
+}
+
+.t2ve-play-btn {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    border: none;
+    background: #3b82f6;
+    color: #fff;
+    font-size: 0;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s, transform 0.1s;
+}
+.t2ve-play-btn:hover  { background: #2563eb; }
+.t2ve-play-btn:active { transform: scale(0.92); }
+.t2ve-play-btn .material-icons { font-size: 20px; }
+
+.t2ve-seek-bar {
+    flex: 1;
+    -webkit-appearance: none; appearance: none;
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(to right, #3b82f6 var(--pct, 0%), #333 var(--pct, 0%));
+    outline: none;
+    cursor: pointer;
+    transition: height 0.1s;
+}
+.t2ve-seek-bar:hover { height: 6px; }
+.t2ve-seek-bar::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+.t2ve-seek-bar::-moz-range-thumb {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: none;
+    background: #fff;
+    cursor: pointer;
+}
+
+.t2ve-time-display {
+    color: #666;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-width: 80px;
+    text-align: right;
+}
+
+/* ── 트림 섹션 ──────────────────────────────────────────────────────── */
+.t2ve-trim-section {
+    background: #111;
+    padding: 10px 16px 12px;
+    border-top: 1px solid #1e1e1e;
+    flex-shrink: 0;
+}
+
+.t2ve-trim-label {
+    color: #555;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.t2ve-trim-track {
+    position: relative;
+    height: 36px;
+    background: #1e1e1e;
+    border-radius: 6px;
+    overflow: visible;
+}
+
+.t2ve-trim-fill {
+    position: absolute;
+    top: 2px; bottom: 2px;
+    background: rgba(59,130,246,0.22);
+    border-top: 2px solid #3b82f6;
+    border-bottom: 2px solid #3b82f6;
+    pointer-events: none;
+    transition: left 0.05s, width 0.05s;
+}
+
+.t2ve-trim-handle {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 14px;
+    background: #3b82f6;
+    cursor: ew-resize;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 2;
+    touch-action: none;
+    transition: background 0.15s;
+}
+.t2ve-trim-handle:hover { background: #2563eb; }
+.t2ve-trim-handle::after {
+    content: '';
+    display: block;
+    width: 2px; height: 12px;
+    background: rgba(255,255,255,0.8);
+    border-radius: 1px;
+}
+.t2ve-trim-handle-start {
+    left: 0;
+    transform: translateX(-50%);
+    border-radius: 4px 0 0 4px;
+}
+.t2ve-trim-handle-end {
+    right: 0;
+    transform: translateX(50%);
+    border-radius: 0 4px 4px 0;
+}
+
+.t2ve-trim-playhead {
+    position: absolute;
+    top: -3px; bottom: -3px;
+    width: 2px;
+    background: #fff;
+    border-radius: 1px;
+    pointer-events: none;
+    z-index: 3;
+    box-shadow: 0 0 4px rgba(255,255,255,0.5);
+}
+
+.t2ve-trim-time {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    font-size: 11px;
+    color: #555;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ── 탭 바 ──────────────────────────────────────────────────────────── */
+.t2ve-tabs {
+    display: flex;
+    background: #111;
+    border-top: 1px solid #1e1e1e;
+    flex-shrink: 0;
+}
+
+.t2ve-tab {
+    flex: 1;
+    padding: 10px 8px 8px;
+    border: none;
+    background: transparent;
+    color: #555;
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    border-top: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    line-height: 1;
+}
+.t2ve-tab-icon { font-size: 22px !important; }
+.t2ve-tab-label { font-size: 10px; letter-spacing: 0.3px; }
+
+.t2ve-tab.active {
+    color: #3b82f6;
+    border-top-color: #3b82f6;
+}
+.t2ve-tab:hover:not(.active) { color: #bbb; }
+
+/* ── 패널 공통 ──────────────────────────────────────────────────────── */
+.t2ve-panels {
+    background: #111;
+    flex-shrink: 0;
+    min-height: 112px;
+}
+.t2ve-panel        { display: none; }
+.t2ve-panel.active { display: block; }
+
+/* ── 필터 패널 ──────────────────────────────────────────────────────── */
+.t2ve-filter-strip {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding: 14px 16px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+.t2ve-filter-strip::-webkit-scrollbar { display: none; }
+
+.t2ve-filter-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: transform 0.15s;
+}
+.t2ve-filter-item:hover { transform: translateY(-2px); }
+.t2ve-filter-item:active { transform: scale(0.94); }
+
+.t2ve-filter-thumb {
+    width: 64px; height: 64px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2.5px solid transparent;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    background: #222;
+    flex-shrink: 0;
+}
+.t2ve-filter-item.active .t2ve-filter-thumb {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59,130,246,0.25);
+}
+
+/* 썸네일 로드 전 플레이스홀더 */
+.t2ve-filter-thumb-ph {
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #1e3a5f 100%);
+    border-radius: 8px;
+}
+
+.t2ve-filter-name {
+    font-size: 10px;
+    color: #555;
+    letter-spacing: 0.2px;
+    transition: color 0.2s;
+}
+.t2ve-filter-item.active .t2ve-filter-name { color: #3b82f6; }
+.t2ve-filter-item:hover .t2ve-filter-name  { color: #aaa; }
+
+/* ── 조정 패널 ──────────────────────────────────────────────────────── */
+.t2ve-adjust-panel {
+    padding: 12px 16px;
+}
+
+.t2ve-adjust-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+.t2ve-adjust-row:last-child { margin-bottom: 0; }
+
+.t2ve-adjust-icon {
+    width: 24px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+.t2ve-adjust-icon .material-icons {
+    font-size: 18px !important;
+    color: #555;
+}
+
+.t2ve-adjust-label {
+    color: #888;
+    font-size: 12px;
+    min-width: 30px;
+    flex-shrink: 0;
+}
+
+.t2ve-adjust-slider {
+    flex: 1;
+    -webkit-appearance: none; appearance: none;
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(to right, #3b82f6 var(--pct, 50%), #2a2a2a var(--pct, 50%));
+    outline: none;
+    cursor: pointer;
+}
+.t2ve-adjust-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+    transition: transform 0.1s;
+}
+.t2ve-adjust-slider:hover::-webkit-slider-thumb { transform: scale(1.15); }
+.t2ve-adjust-slider::-moz-range-thumb {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    border: none;
+    background: #fff;
+    cursor: pointer;
+}
+
+.t2ve-adjust-value {
+    color: #555;
+    font-size: 11px;
+    min-width: 36px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    flex-shrink: 0;
+}
+
+/* ── 변형 패널 ──────────────────────────────────────────────────────── */
+.t2ve-transform-panel {
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.t2ve-transform-row {
+    display: flex;
+    gap: 8px;
+}
+
+.t2ve-transform-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 8px;
+    border-radius: 10px;
+    border: 1.5px solid #222;
+    background: #161616;
+    color: #888;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s;
+    line-height: 1;
+    font-family: inherit;
+}
+.t2ve-transform-btn .material-icons { font-size: 20px !important; }
+.t2ve-transform-btn:hover  { background: #1e1e1e; border-color: #444; color: #ccc; }
+.t2ve-transform-btn:active { transform: scale(0.95); }
+.t2ve-transform-btn.active {
+    border-color: #3b82f6;
+    color: #3b82f6;
+    background: rgba(59,130,246,0.1);
+}
+
+/* ── 반응형 ─────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+    .t2ve-filter-thumb { width: 56px; height: 56px; }
+    .t2ve-filter-strip { gap: 8px; padding: 12px; }
+    .t2ve-tab-icon     { font-size: 20px !important; }
+    .t2ve-adjust-label { display: none; }
+    .t2ve-adjust-icon  { display: flex; }
+    .t2ve-transform-btn { padding: 8px 6px; font-size: 10px; }
+}
+
+/* 가로 모드 최적화 */
+@media (max-height: 500px) and (orientation: landscape) {
+    .t2ve-trim-section { display: none; }
+    .t2ve-preview-wrap { padding: 8px; }
+}

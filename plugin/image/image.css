@@ -1,0 +1,2223 @@
+/* T2Editor/plugin/image/image.css  */
+
+/* ===== 이미지 에디터 모달 ===== */
+.t2-image-editor-modal {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  width: 94%;
+  max-width: 440px;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.t2-image-editor-modal h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.3px;
+}
+
+/* ===== 업로드 영역 ===== */
+.t2-image-editor-modal .t2-image-upload-area {
+  border: 1.5px dashed #d1d5db;
+  border-radius: 12px;
+  padding: 24px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 12px;
+  position: relative;
+  flex-shrink: 0;
+  background: #fafafa;
+}
+
+.t2-image-editor-modal .t2-image-upload-area:active {
+  transform: scale(0.99);
+}
+
+.t2-image-editor-modal .t2-image-upload-area:hover {
+  border-color: #0187FE;
+  background: #f8fbff;
+}
+
+.t2-image-editor-modal .t2-image-upload-area.drag-over {
+  border-color: #0187FE;
+  background: #f0f8ff;
+  border-style: solid;
+}
+
+.t2-image-editor-modal .t2-image-upload-area .material-icons {
+  font-size: 34px;
+  color: #c4cdd8;
+  margin-bottom: 9px;
+  display: block;
+}
+
+.t2-image-editor-modal .t2-image-upload-text {
+  font-size: 13.5px;
+  color: #374151;
+  font-weight: 500;
+  margin-bottom: 5px;
+  letter-spacing: -0.15px;
+}
+
+.t2-image-editor-modal .t2-image-upload-hint {
+  font-size: 11.5px;
+  color: #adb5c8;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+.t2-image-editor-modal input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* ===== 드래그 힌트 ===== */
+.t2-preview-drag-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  color: #5a5a5a;
+  font-size: 12px;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #f3f4f6;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: all 0.25s ease;
+}
+
+.t2-preview-drag-hint.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.t2-preview-drag-hint .material-icons {
+  font-size: 16px;
+  color: #7a7a7a;
+}
+
+/* ===== 미리보기 그리드 ===== */
+.t2-image-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: min-content;
+  align-content: start;
+  gap: 8px;
+  padding: 0;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  max-height: 420px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+  contain: layout style;
+}
+
+.t2-image-preview-grid:empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+  background: #fafafa;
+  border: 1px solid #f3f4f6;
+}
+
+.t2-image-preview-grid:empty::before {
+  content: '이미지 추가';
+  color: #d1d5db;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.t2-image-preview-grid::-webkit-scrollbar {
+  width: 6px;
+}
+
+.t2-image-preview-grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.t2-image-preview-grid::-webkit-scrollbar-thumb {
+  background: #e5e7eb;
+  border-radius: 3px;
+}
+
+.t2-image-preview-grid::-webkit-scrollbar-thumb:hover {
+  background: #d1d5db;
+}
+
+/* ===== 미리보기 아이템 ===== */
+.t2-preview-item {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
+  background: #ffffff;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  min-width: 0;
+  min-height: 0;
+  isolation: isolate;
+}
+
+.t2-preview-item:active {
+  cursor: grabbing;
+}
+.t2-preview-item.is-drag-intent {
+  cursor: grab;
+}
+
+.t2-preview-item:hover,
+.t2-preview-item:focus-within {
+  border-color: #0187FE;
+  box-shadow: 0 4px 12px rgba(1, 135, 254, 0.15);
+}
+
+.t2-preview-item.dragging {
+  opacity: 0.5;
+  transform: scale(0.95);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  cursor: grabbing;
+}
+
+.t2-preview-item.drag-over {
+  border-color: #0187FE;
+  border-width: 2px;
+  background: rgba(1, 135, 254, 0.03);
+}
+
+.t2-preview-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  /* 모바일 브라우저 이미지 상호작용 메뉴(저장·공유·복사 등) 방지.
+     pointer-events:none → 터치가 img 대신 부모 div에 전달되므로
+     브라우저가 이미지 요소 전용 컨텍스트 메뉴를 띄우지 않음.
+     -webkit-touch-callout:none → iOS Safari 롱프레스 콜아웃 차단.
+     -webkit-user-drag:none    → 크롬/사파리 네이티브 이미지 드래그 차단. */
+  pointer-events: none;
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ===== 순서 배지 ===== */
+.t2-preview-order {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  z-index: 2;
+  pointer-events: none;
+  letter-spacing: -0.2px;
+}
+
+/* ===== 삭제 버튼 ===== */
+.t2-preview-remove {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 26px;
+  height: 26px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  border: none;
+  border-radius: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  opacity: 0;
+  z-index: 2;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.t2-preview-item:hover .t2-preview-remove,
+.t2-preview-item:focus-within .t2-preview-remove {
+  opacity: 1;
+}
+
+.t2-preview-remove:hover {
+  background: rgba(239, 68, 68, 0.9);
+  transform: scale(1.05);
+}
+
+.t2-preview-remove:active {
+  transform: scale(0.95);
+}
+
+.t2-preview-remove .material-icons {
+  font-size: 16px;
+}
+
+/* ===== 업로드 인디케이터 ===== */
+.t2-upload-indicator {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+}
+
+.t2-upload-indicator .material-icons {
+  font-size: 14px;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* === NSFW 미리보기 상태 (활성화 시에만 표시) === */
+.t2-nsfw-preview-status {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: auto;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 6px 0 0 0;
+    padding: 3px 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+    z-index: 3;
+    pointer-events: none;
+    min-width: 40px;
+    box-sizing: border-box;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    opacity: 0.7;
+}
+
+/* 안전 상태 - 초록색 */
+.t2-nsfw-preview-status.safe {
+    background: rgba(46, 204, 113, 0.9);
+}
+
+/* 위험/의심 상태 - 빨간색 */
+.t2-nsfw-preview-status.warning {
+    background: rgba(231, 76, 60, 0.9);
+}
+
+/* 로딩 상태 - 회색/노란색 아이콘 */
+.t2-nsfw-preview-status.loading {
+    background: rgba(0, 0, 0, 0.8);
+    color: #f1c40f;
+}
+
+/* 오류 상태 - 노란색/주황색 */
+.t2-nsfw-preview-status.error {
+    background: rgba(243, 156, 18, 0.9);
+    color: #fff;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-preview-status.safe {
+    background: rgba(39, 174, 96, 0.95);
+}
+html[data-t2editor-theme="dark"] .t2-nsfw-preview-status.warning {
+    background: rgba(192, 57, 43, 0.95);
+}
+html[data-t2editor-theme="dark"] .t2-nsfw-preview-status.loading {
+    background: rgba(0, 0, 0, 0.85);
+    color: #f39c12;
+}
+html[data-t2editor-theme="dark"] .t2-nsfw-preview-status.error {
+    background: rgba(211, 84, 0, 0.95);
+}
+
+.t2-nsfw-preview-status .material-icons {
+    font-size: 11px;
+}
+.t2-nsfw-preview-status .material-icons.loading {
+    animation: spin 1s linear infinite;
+}
+
+@media (max-width: 480px) {
+    .t2-nsfw-preview-status {
+        padding: 2px 6px;
+        font-size: 9px;
+        min-width: 36px;
+        border-radius: 5px 0 0 0;
+        gap: 3px;
+    }
+    .t2-nsfw-preview-status .material-icons {
+        font-size: 10px;
+    }
+}
+
+/* ===== NSFW 상태바 ===== */
+.t2-nsfw-status-bar-simple {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 6px 10px;
+  margin-top: 8px;
+  background: transparent;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  overflow: hidden;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-status-bar-simple {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* 메인 행 (아이콘 + 텍스트 + 배지) */
+.t2-nsfw-sb-main-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.t2-nsfw-status-icon-simple {
+  font-size: 13px;
+  color: #b0b8c4;
+  flex-shrink: 0;
+  transition: color 0.2s ease;
+}
+
+/* 스피닝 상태 */
+.t2-nsfw-status-icon-simple.t2-nsfw-sb-spinning {
+  animation: t2NsfwIconSpin 0.9s linear infinite;
+  color: #0187FE;
+}
+
+/* 완료 상태 */
+.t2-nsfw-status-icon-simple.t2-nsfw-sb-ready {
+  color: #16a34a;
+  animation: t2NsfwIconPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes t2NsfwIconSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes t2NsfwIconPop {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.t2-nsfw-status-text-simple {
+  flex: 1;
+  color: #9ca3af;
+  font-size: 11px;
+  transition: color 0.2s ease;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-status-text-simple {
+  color: #6b7280;
+}
+
+.t2-nsfw-status-badge-simple {
+  background: #f3f4f6;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 500;
+  color: #9ca3af;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-status-badge-simple {
+  background: #333;
+  color: #888;
+}
+
+/* 로딩 배지 (모델 로드 퍼센트) */
+.t2-nsfw-status-badge-simple.t2-nsfw-sb-badge--loading {
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-variant-numeric: tabular-nums;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-status-badge-simple.t2-nsfw-sb-badge--loading {
+  background: #1e3a5f;
+  color: #93c5fd;
+}
+
+/* 이미지 검사 로딩 */
+.t2-nsfw-status-badge-simple.loading {
+  background: #fef9e7;
+  color: #b7950b;
+  animation: pulse 1.2s infinite;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-status-badge-simple.loading {
+  background: #665c00;
+  color: #ffecb3;
+}
+
+/* 안전 상태 */
+.t2-nsfw-status-badge-simple.safe {
+  background: #dcfce7;
+  color: #166534;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-status-badge-simple.safe {
+  background: #14532d;
+  color: #86efac;
+}
+
+/* 위험/의심 상태 */
+.t2-nsfw-status-badge-simple.warning {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-status-badge-simple.warning {
+  background: #5a1e1e;
+  color: #ffab91;
+}
+
+/* 오류 상태 */
+.t2-nsfw-status-badge-simple.error {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-status-badge-simple.error {
+  background: #6c5a1e;
+  color: #fef3c7;
+  border: 1px solid #b45309;
+}
+
+/* ===== 모델 로드 프로그레스 바 ===== */
+.t2-nsfw-model-bar {
+  height: 0;
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.06);
+  margin-top: 0;
+  transition: height 0.25s ease, margin-top 0.25s ease, opacity 0.35s ease;
+  opacity: 1;
+}
+
+.t2-nsfw-model-bar--active {
+  height: 3px;
+  margin-top: 7px;
+}
+
+.t2-nsfw-model-bar--complete {
+  opacity: 0;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-model-bar {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.t2-nsfw-model-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: #0187FE;
+  border-radius: 2px;
+  transition: width 0.4s ease, background 0.5s ease;
+}
+
+.t2-nsfw-model-bar--done .t2-nsfw-model-bar-fill {
+  background: #34c759;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+@media (max-width: 480px) {
+  .t2-nsfw-status-text-simple {
+    width: 100%;
+  }
+}
+
+/* ===== 다크모드 ===== */
+html[data-t2editor-theme="dark"] .t2-image-editor-modal {
+  background: #1f1f1f;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+html[data-t2editor-theme="dark"] .t2-image-editor-modal h3 {
+  color: #f5f5f5;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-editor-modal .t2-image-upload-area {
+  border-color: #404040;
+  background: #2a2a2a;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-editor-modal .t2-image-upload-area:hover {
+  border-color: #0187FE;
+  background: #1a2332;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-editor-modal .t2-image-upload-area.drag-over {
+  border-color: #0187FE;
+  background: #1a2838;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-editor-modal .t2-image-upload-area .material-icons {
+  color: #6b7280;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-editor-modal .t2-image-upload-text {
+  color: #d1d5db;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-editor-modal .t2-image-upload-hint {
+  color: #6b7280;
+}
+
+html[data-t2editor-theme="dark"] .t2-preview-drag-hint {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+  color: #9a9a9a;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-preview-grid:empty {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-preview-grid:empty::before {
+  color: #4b5563;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-preview-grid::-webkit-scrollbar-thumb {
+  background: #404040;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-preview-grid::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;
+}
+
+html[data-t2editor-theme="dark"] .t2-preview-item {
+  border-color: #3a3a3a;
+  background: #2a2a2a;
+}
+
+html[data-t2editor-theme="dark"] .t2-preview-item:hover {
+  border-color: #0187FE;
+  box-shadow: 0 4px 12px rgba(1, 135, 254, 0.25);
+}
+
+html[data-t2editor-theme="dark"] .t2-preview-item.drag-over {
+  background: rgba(1, 135, 254, 0.08);
+}
+
+html[data-t2editor-theme="dark"] .t2-preview-order {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+html[data-t2editor-theme="dark"] .t2-preview-remove {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+html[data-t2editor-theme="dark"] .t2-preview-remove:hover {
+  background: rgba(239, 68, 68, 0.9);
+}
+
+html[data-t2editor-theme="dark"] .t2-upload-indicator {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ===== 모바일 최적화 ===== */
+@media (max-width: 480px) {
+  .t2-image-editor-modal {
+    width: 96%;
+    padding: 16px;
+    border-radius: 20px;
+    max-height: 92vh;
+  }
+
+  .t2-image-editor-modal h3 {
+    font-size: 17px;
+    margin-bottom: 14px;
+  }
+
+  .t2-image-editor-modal .t2-image-upload-area {
+    padding: 20px 12px;
+    margin-bottom: 10px;
+  }
+
+  .t2-image-editor-modal .t2-image-upload-area .material-icons {
+    font-size: 32px;
+    margin-bottom: 6px;
+  }
+
+  .t2-image-editor-modal .t2-image-upload-text {
+    font-size: 13px;
+  }
+
+  .t2-image-editor-modal .t2-image-upload-hint {
+    font-size: 11px;
+  }
+
+  .t2-preview-drag-hint {
+    font-size: 11px;
+    padding: 6px 10px;
+    margin-bottom: 8px;
+  }
+
+  .t2-preview-drag-hint .material-icons {
+    font-size: 14px;
+  }
+
+  .t2-image-preview-grid {
+    gap: 6px;
+    max-height: calc(92vh - 240px);
+    min-height: 160px;
+    margin-bottom: 14px;
+  }
+
+  .t2-preview-order {
+    min-width: 20px;
+    height: 20px;
+    padding: 0 5px;
+    border-radius: 10px;
+    font-size: 10px;
+    top: 5px;
+    left: 5px;
+  }
+
+  .t2-preview-remove {
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    top: 5px;
+    right: 5px;
+    opacity: 1;
+  }
+
+  .t2-preview-remove .material-icons {
+    font-size: 15px;
+  }
+
+  .t2-upload-indicator {
+    padding: 3px 7px;
+    font-size: 10px;
+    border-radius: 10px;
+  }
+
+  .t2-upload-indicator .material-icons {
+    font-size: 13px;
+  }
+}
+
+/* ===== 모바일 Medium ===== */
+@media (min-width: 481px) and (max-width: 640px) {
+  .t2-image-editor-modal {
+    width: 95%;
+    padding: 18px;
+  }
+
+  .t2-preview-remove {
+    opacity: 1;
+  }
+}
+
+/* ===== 터치 디바이스 최적화 ===== */
+@media (hover: none) and (pointer: coarse) {
+  .t2-preview-item {
+    border-width: 1px;
+  }
+
+  .t2-preview-item:active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease;
+  }
+
+  .t2-preview-remove {
+    opacity: 1;
+    width: 28px;
+    height: 28px;
+  }
+
+  .t2-image-upload-area:active {
+    transform: scale(0.985);
+  }
+}
+
+/* ===== 데스크톱 최적화 ===== */
+@media (min-width: 768px) {
+  .t2-image-editor-modal {
+    max-width: 480px;
+    padding: 24px;
+  }
+
+  .t2-image-editor-modal h3 {
+    font-size: 19px;
+    margin-bottom: 18px;
+  }
+
+  .t2-image-preview-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    max-height: 450px;
+  }
+
+  .t2-preview-order {
+    min-width: 24px;
+    height: 24px;
+    padding: 0 7px;
+    font-size: 12px;
+  }
+
+  .t2-preview-remove {
+    width: 28px;
+    height: 28px;
+  }
+
+  .t2-preview-remove .material-icons {
+    font-size: 17px;
+  }
+}
+
+/* ===== 가로 모드 모바일 ===== */
+@media (max-width: 896px) and (orientation: landscape) {
+  .t2-image-editor-modal {
+    max-height: 96vh;
+  }
+
+  .t2-image-preview-grid {
+    max-height: calc(96vh - 200px);
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .t2-image-editor-modal .t2-image-upload-area {
+    padding: 16px 12px;
+  }
+
+  .t2-preview-drag-hint {
+    padding: 6px 10px;
+    margin-bottom: 8px;
+  }
+}
+
+/* ===== 접근성 개선 ===== */
+@media (prefers-reduced-motion: reduce) {
+  .t2-preview-item,
+  .t2-preview-drag-hint,
+  .t2-preview-remove,
+  .t2-image-upload-area {
+    transition: none;
+  }
+  
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(0deg); }
+  }
+}
+
+/* ===== 고대비 모드 지원 ===== */
+@media (prefers-contrast: high) {
+  .t2-preview-item {
+    border-width: 2px;
+  }
+  
+  .t2-image-upload-area {
+    border-width: 2px;
+  }
+  
+  html[data-t2editor-theme="dark"] .t2-preview-order,
+  html[data-t2editor-theme="dark"] .t2-preview-remove,
+  html[data-t2editor-theme="dark"] .t2-upload-indicator {
+    background: rgba(255, 255, 255, 0.25);
+  }
+}
+
+
+/* ===== 추가 접근성 / 상태 구분 ===== */
+.t2-preview-remove:focus-visible {
+  outline: 2px solid #0187FE;
+  outline-offset: 2px;
+}
+
+.t2-nsfw-preview-status.suspect {
+    background: rgba(243, 156, 18, 0.92);
+    color: #fff;
+}
+
+.t2-nsfw-preview-status.unsafe {
+    background: rgba(231, 76, 60, 0.96);
+    color: #fff;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-preview-status.suspect {
+    background: rgba(243, 156, 18, 0.96);
+}
+html[data-t2editor-theme="dark"] .t2-nsfw-preview-status.unsafe {
+    background: rgba(192, 57, 43, 0.98);
+}
+
+.t2-nsfw-status-bar-simple {
+  flex-wrap: wrap;
+}
+
+.t2-nsfw-status-badge-simple.suspect {
+  background: #fff3cd;
+  color: #8a5a00;
+}
+
+.t2-nsfw-status-badge-simple.unsafe {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-status-badge-simple.suspect {
+  background: #66521a;
+  color: #ffd978;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-status-badge-simple.unsafe {
+  background: #5a1e1e;
+  color: #ffb4a9;
+}
+
+@media (max-width: 480px) {
+  .t2-nsfw-status-text-simple {
+    width: 100%;
+  }
+}
+
+/* ===== SafeAI 법적 고지 버튼 (모달 외부 하단 우측) ===== */
+.t2-safeai-notice-btn {
+  position: fixed;
+  bottom: 12px;
+  right: 14px;
+  z-index: 999995;
+  display: none;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 10px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 400;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  letter-spacing: 0;
+  line-height: 1;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+.t2-safeai-notice-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.72);
+  border-color: rgba(255, 255, 255, 0.24);
+}
+.t2-safeai-notice-btn:active {
+  transform: scale(0.97);
+}
+.t2-safeai-notice-btn .material-icons {
+  font-size: 11px;
+  opacity: 0.8;
+}
+
+body.t2-image-upload-modal-open .t2-safeai-notice-btn {
+  display: inline-flex;
+}
+
+
+/* ===== SafeAI 법적 고지 모달 ===== */
+@keyframes t2LegalOverlayIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes t2LegalModalIn {
+  from { opacity: 0; transform: translate(-50%, -46%) scale(0.95); }
+  to   { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+.t2-safeai-legal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(4px) saturate(120%);
+  -webkit-backdrop-filter: blur(4px) saturate(120%);
+  z-index: 999996;
+  animation: t2LegalOverlayIn 0.20s ease forwards;
+}
+
+.t2-safeai-legal-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999997;
+  width: min(520px, 90vw);
+  max-height: 82vh;
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.22), 0 4px 16px rgba(0, 0, 0, 0.10);
+  display: flex;
+  flex-direction: column;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans KR', 'Apple SD Gothic Neo', sans-serif;
+  animation: t2LegalModalIn 0.28s cubic-bezier(0.34, 1.40, 0.64, 1) forwards;
+  overflow: hidden;
+}
+
+html[data-t2editor-theme="dark"] .t2-safeai-legal-modal {
+  background: #1e1e1e;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.50), 0 4px 16px rgba(0, 0, 0, 0.30);
+}
+
+.t2-safeai-legal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid #f0f0f0;
+  flex-shrink: 0;
+}
+
+html[data-t2editor-theme="dark"] .t2-safeai-legal-header {
+  border-bottom-color: #2e2e2e;
+}
+
+.t2-safeai-legal-header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.t2-safeai-legal-icon {
+  width: 34px;
+  height: 34px;
+  background: linear-gradient(135deg, #e8f4fd 0%, #d0eafa 100%);
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+html[data-t2editor-theme="dark"] .t2-safeai-legal-icon {
+  background: linear-gradient(135deg, #1a3a50 0%, #0e2a40 100%);
+}
+
+.t2-safeai-legal-icon .material-icons {
+  font-size: 18px;
+  color: #0187FE;
+}
+
+.t2-safeai-legal-title {
+  font-size: 14px;
+  font-weight: 650;
+  color: #1a1a1a;
+  letter-spacing: -0.3px;
+  line-height: 1.2;
+}
+
+html[data-t2editor-theme="dark"] .t2-safeai-legal-title {
+  color: #f0f0f0;
+}
+
+.t2-safeai-legal-version {
+  font-size: 10px;
+  color: #9ca3af;
+  font-weight: 400;
+  margin-top: 2px;
+  letter-spacing: 0;
+}
+
+.t2-safeai-legal-close {
+  width: 28px;
+  height: 28px;
+  background: #f3f4f6;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.16s;
+  color: #6b7280;
+}
+
+.t2-safeai-legal-close:hover {
+  background: #e5e7eb;
+  color: #374151;
+}
+
+html[data-t2editor-theme="dark"] .t2-safeai-legal-close {
+  background: #2a2a2a;
+  color: #9ca3af;
+}
+
+html[data-t2editor-theme="dark"] .t2-safeai-legal-close:hover {
+  background: #333;
+  color: #e0e0e0;
+}
+
+.t2-safeai-legal-close .material-icons {
+  font-size: 16px;
+}
+
+.t2-safeai-legal-body {
+  overflow-y: auto;
+  padding: 16px 20px 20px;
+  flex: 1;
+  color: #374151;
+  font-size: 12.5px;
+  line-height: 1.75;
+}
+
+html[data-t2editor-theme="dark"] .t2-safeai-legal-body {
+  color: #c0c0c0;
+}
+
+.t2-safeai-legal-body::-webkit-scrollbar { width: 5px; }
+.t2-safeai-legal-body::-webkit-scrollbar-track { background: transparent; }
+.t2-safeai-legal-body::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 3px; }
+html[data-t2editor-theme="dark"] .t2-safeai-legal-body::-webkit-scrollbar-thumb { background: #333; }
+
+.t2-safeai-legal-section {
+  margin-bottom: 16px;
+}
+
+.t2-safeai-legal-section:last-child {
+  margin-bottom: 0;
+}
+
+.t2-safeai-legal-section-title {
+  font-size: 12px;
+  font-weight: 660;
+  color: #111827;
+  letter-spacing: -0.2px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+html[data-t2editor-theme="dark"] .t2-safeai-legal-section-title {
+  color: #e5e7eb;
+}
+
+.t2-safeai-legal-section-title::before {
+  content: '';
+  display: inline-block;
+  width: 3px;
+  height: 13px;
+  background: #0187FE;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.t2-safeai-legal-section p {
+  margin: 0 0 6px;
+}
+
+.t2-safeai-legal-section p:last-child {
+  margin-bottom: 0;
+}
+
+.t2-safeai-legal-section ul {
+  margin: 4px 0;
+  padding-left: 16px;
+}
+
+.t2-safeai-legal-section li {
+  margin-bottom: 3px;
+}
+
+.t2-safeai-legal-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.t2-safeai-legal-chip {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 7px 12px;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 9px;
+  font-size: 11px;
+}
+
+html[data-t2editor-theme="dark"] .t2-safeai-legal-chip {
+  background: #2a2a2a;
+  border-color: #333;
+}
+
+.t2-safeai-legal-chip-name {
+  font-weight: 640;
+  color: #1a1a1a;
+  font-size: 11.5px;
+}
+
+html[data-t2editor-theme="dark"] .t2-safeai-legal-chip-name {
+  color: #e5e7eb;
+}
+
+.t2-safeai-legal-chip-meta {
+  color: #9ca3af;
+  font-size: 10px;
+}
+
+.t2-safeai-legal-divider {
+  height: 1px;
+  background: #f3f4f6;
+  margin: 14px 0;
+}
+
+html[data-t2editor-theme="dark"] .t2-safeai-legal-divider {
+  background: #2a2a2a;
+}
+
+.t2-safeai-legal-footer {
+  padding: 10px 20px 12px;
+  border-top: 1px solid #f0f0f0;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+html[data-t2editor-theme="dark"] .t2-safeai-legal-footer {
+  border-top-color: #2e2e2e;
+}
+
+.t2-safeai-legal-footer-note {
+  font-size: 11px;
+  font-weight: 500;
+  color: #0187FE;
+  flex: 1;
+  letter-spacing: -0.1px;
+}
+
+html[data-t2editor-theme="dark"] .t2-safeai-legal-footer-note {
+  color: #4fa8f7;
+}
+
+.t2-safeai-legal-confirm-btn {
+  padding: 7px 18px;
+  background: #0187FE;
+  color: #fff;
+  border: none;
+  border-radius: 9px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  letter-spacing: -0.2px;
+  transition: background 0.16s, transform 0.1s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.t2-safeai-legal-confirm-btn:hover {
+  background: #006ee0;
+}
+
+.t2-safeai-legal-confirm-btn:active {
+  transform: scale(0.97);
+}
+
+@media (max-width: 480px) {
+  .t2-safeai-notice-btn {
+    bottom: 8px;
+    right: 10px;
+    font-size: 9px;
+    padding: 3px 7px;
+  }
+  .t2-safeai-legal-modal {
+    width: 92vw;
+    border-radius: 14px;
+  }
+  .t2-safeai-legal-header {
+    padding: 14px 16px 12px;
+  }
+  .t2-safeai-legal-body {
+    padding: 12px 16px 16px;
+    font-size: 12px;
+  }
+  .t2-safeai-legal-footer {
+    padding: 8px 16px 10px;
+    flex-direction: column-reverse;
+    gap: 6px;
+    align-items: stretch;
+  }
+  .t2-safeai-legal-confirm-btn {
+    text-align: center;
+  }
+}
+/* ===== 이미지 블록 레이아웃 보정 =====
+   core.css 의 공통 .t2-media-block 패딩/라인박스가 이미지 상하 공백으로
+   보이는 문제를 image 플러그인 블록에만 제한해서 제거한다. */
+.t2-editor .t2-media-block.t2-image-block {
+  padding: 0;
+  line-height: 0;
+  font-size: 0;
+  overflow: visible;
+}
+
+.t2-editor .t2-media-block.t2-image-block > .t2-image-container {
+  display: block;
+  max-width: 100%;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  line-height: 0;
+  font-size: 0;
+}
+
+.t2-editor .t2-media-block.t2-image-block > .t2-image-container > img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  margin: 0;
+  vertical-align: top;
+}
+
+.t2-editor .t2-media-block.t2-image-block .t2-media-controls,
+.t2-editor .t2-media-block.t2-image-block .t2-move-controls,
+.t2-editor .t2-media-block.t2-image-block .t2-upload-indicator {
+  font-size: 12px;
+  line-height: normal;
+}
+
+/* ===== 미리보기 확대 힌트 아이콘 ===== */
+.t2-preview-zoom-hint {
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  width: 22px;
+  height: 22px;
+  background: rgba(0, 0, 0, 0.60);
+  border-radius: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  opacity: 0;
+  -webkit-transition: opacity 0.18s ease;
+          transition: opacity 0.18s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+.t2-preview-item:hover .t2-preview-zoom-hint,
+.t2-preview-item:focus-within .t2-preview-zoom-hint {
+  opacity: 1;
+}
+/* 터치 환경: 상시 약하게 표시 */
+@media (hover: none) {
+  .t2-preview-zoom-hint {
+    opacity: 0.55;
+  }
+}
+.t2-preview-zoom-hint .material-icons {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.92);
+}
+html[data-t2editor-theme="dark"] .t2-preview-zoom-hint {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* ===== 이미지 전체보기(확대 뷰) ===== */
+.t2-image-full-view {
+  display: none;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  min-height: 0;
+  min-width: 0;
+  margin-bottom: 16px;
+}
+.t2-image-full-view.active {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+/* 전체보기 상단 조작 바 */
+.t2-fv-topbar {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 8px;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+.t2-fv-back-btn {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 3px;
+  padding: 5px 10px 5px 7px;
+  background: #f5f5f5;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 500;
+  color: #374151;
+  font-family: inherit;
+  -webkit-transition: background 0.15s, -webkit-transform 0.1s;
+          transition: background 0.15s, transform 0.1s;
+  white-space: nowrap;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+.t2-fv-back-btn:hover { background: #e8e8e8; }
+.t2-fv-back-btn:active { background: #e0e0e0; -webkit-transform: scale(0.97); transform: scale(0.97); }
+.t2-fv-back-btn .material-icons { font-size: 15px; line-height: 1; }
+
+.t2-fv-counter {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  text-align: center;
+  font-size: 12px;
+  color: #6b7280;
+  white-space: nowrap;
+  pointer-events: none;
+  font-variant-numeric: tabular-nums;
+}
+.t2-fv-nav {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 4px;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+.t2-fv-nav-btn {
+  width: 30px;
+  height: 30px;
+  background: #f5f5f5;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  color: #374151;
+  -webkit-transition: background 0.15s, -webkit-transform 0.1s;
+          transition: background 0.15s, transform 0.1s;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+.t2-fv-nav-btn:hover:not(:disabled) { background: #e8e8e8; }
+.t2-fv-nav-btn:active:not(:disabled) { -webkit-transform: scale(0.94); transform: scale(0.94); }
+.t2-fv-nav-btn:disabled { opacity: 0.32; cursor: default; pointer-events: none; }
+.t2-fv-nav-btn .material-icons { font-size: 18px; line-height: 1; }
+
+/* 이미지 표시 영역 */
+.t2-fv-image-area {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  min-height: 0;
+  min-width: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background: #f3f4f6;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+.t2-fv-image-area img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  -o-object-fit: contain;
+     object-fit: contain;
+  border-radius: 4px;
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
+  -webkit-touch-callout: none;
+}
+
+/* 이미지 정보 바 (얇은 띠) */
+.t2-fv-info-bar {
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  margin-top: 7px;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  padding: 6px 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  gap: 4px 10px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  min-width: 0;
+  overflow: hidden;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+.t2-fv-info-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 4px;
+  min-width: 0;
+  max-width: 100%;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+.t2-fv-info-label {
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #6b7280;
+  background: #e9ecef;
+  padding: 1px 5px;
+  border-radius: 4px;
+  white-space: nowrap;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  letter-spacing: 0.2px;
+  text-transform: uppercase;
+  line-height: 1.6;
+}
+.t2-fv-info-value {
+  font-size: 11px;
+  color: #374151;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  line-height: 1.4;
+  font-weight: 500;
+}
+/* 파일명은 최대 너비 제한 (말줄임) */
+.t2-fv-info-name {
+  max-width: 140px;
+}
+
+/* 모바일: 정보 바 아이템 줄바꿈 최적화 */
+@media (max-width: 400px) {
+  .t2-fv-info-bar {
+    padding: 5px 8px;
+    gap: 4px 8px;
+  }
+  .t2-fv-info-label {
+    font-size: 8.5px;
+    padding: 1px 4px;
+  }
+  .t2-fv-info-value {
+    font-size: 10px;
+  }
+  .t2-fv-info-name {
+    max-width: 110px;
+  }
+}
+@media (max-width: 320px) {
+  .t2-fv-info-item {
+    width: calc(50% - 4px);
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 calc(50% - 4px);
+            flex: 0 0 calc(50% - 4px);
+  }
+  .t2-fv-info-name {
+    max-width: 90px;
+  }
+}
+
+/* 다크모드 - 전체보기 */
+html[data-t2editor-theme="dark"] .t2-fv-back-btn {
+  background: #383838;
+  border-color: #555;
+  color: #e0e0e0;
+}
+html[data-t2editor-theme="dark"] .t2-fv-back-btn:hover { background: #505050; }
+html[data-t2editor-theme="dark"] .t2-fv-nav-btn {
+  background: #383838;
+  border-color: #555;
+  color: #e0e0e0;
+}
+html[data-t2editor-theme="dark"] .t2-fv-nav-btn:hover:not(:disabled) { background: #505050; }
+html[data-t2editor-theme="dark"] .t2-fv-counter { color: #9ca3af; }
+
+/* ── 전체보기 편집 버튼 ──────────────────────────────────────────── */
+.t2-fv-edit-btn {
+  width: 30px;
+  height: 30px;
+  background: #f5f5f5;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  color: #374151;
+  -webkit-transition: background 0.15s, -webkit-transform 0.1s;
+          transition: background 0.15s, transform 0.1s;
+  padding: 0;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+.t2-fv-edit-btn:hover { background: #dbeafe; color: #1d4ed8; border-color: #bfdbfe; }
+.t2-fv-edit-btn:active { -webkit-transform: scale(0.94); transform: scale(0.94); }
+.t2-fv-edit-btn .material-icons { font-size: 18px; line-height: 1; }
+html[data-t2editor-theme="dark"] .t2-fv-edit-btn {
+  background: #383838;
+  border-color: #555;
+  color: #e0e0e0;
+}
+html[data-t2editor-theme="dark"] .t2-fv-edit-btn:hover {
+  background: #1e3a5f;
+  color: #93c5fd;
+  border-color: #2563eb;
+}
+html[data-t2editor-theme="dark"] .t2-fv-image-area { background: #252525; }
+html[data-t2editor-theme="dark"] .t2-fv-info-bar {
+  background: #2d2d2d;
+  border-color: #444;
+}
+html[data-t2editor-theme="dark"] .t2-fv-info-label {
+  background: #383838;
+  color: #9ca3af;
+}
+/* ===== 편집 버튼 (미리보기 아이템 하단 우측) ===== */
+.t2-preview-edit {
+  position: absolute;
+  bottom: 6px;
+  right: 6px;
+  width: 26px;
+  height: 26px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  border: none;
+  border-radius: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  opacity: 0;
+  z-index: 2;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.t2-preview-item:hover .t2-preview-edit,
+.t2-preview-item:focus-within .t2-preview-edit {
+  opacity: 1;
+}
+
+.t2-preview-edit:hover {
+  background: rgba(10, 132, 255, 0.9);
+  transform: scale(1.08);
+}
+
+.t2-preview-edit:active {
+  transform: scale(0.93);
+}
+
+.t2-preview-edit .material-icons {
+  font-size: 14px;
+}
+
+/* 터치 환경: 항상 약하게 표시 */
+@media (hover: none) {
+  .t2-preview-edit {
+    opacity: 0.65;
+  }
+}
+
+/* 다크모드 */
+html[data-t2editor-theme="dark"] .t2-preview-edit {
+  background: rgba(255, 255, 255, 0.18);
+}
+html[data-t2editor-theme="dark"] .t2-preview-edit:hover {
+  background: rgba(10, 132, 255, 0.85);
+}
+
+/* ===== 이미지 에디터 풀스크린 (JS inline에서 주입) ===== */
+/* image editor styles are injected via JS showImageEditorModal for encapsulation */
+
+/* =====================================================================
+   T2Editor / image plugin — Cross-device & cross-browser refinements
+   (appended block: 모바일 주소창/홈인디케이터 회피, 태블릿/데스크톱 사용성,
+    WebKit/Blink/Gecko/EdgeLegacy(IE) 호환, Powered by T2Editor 워터마크)
+   ===================================================================== */
+
+/* ---------- 1. Viewport height: 100vh 모바일 버그 회피 ----------------
+   iOS Safari / Android Chrome 의 상·하단 동적 툴바가 100vh 를 침범하여
+   모달 상단/하단이 잘리는 문제. dvh(동적), svh(small), lvh(large) 순으로
+   점진적 폴백. 구형 WebKit 은 -webkit-fill-available, 그 외엔 90vh 유지. */
+.t2-image-editor-modal {
+  /* 1순위 폴백 (모든 구형 브라우저)  */
+  max-height: 90vh;
+  /* 2순위: iOS 12+ 사파리에서만 인식 */
+  max-height: -webkit-fill-available;
+  /* 3순위: 모던 브라우저 (Chrome 108+, Safari 15.4+, FF 101+) */
+  max-height: min(90dvh, 92svh);
+  /* 노치/홈인디케이터 영역만큼 안쪽 패딩 자동 보정 */
+  padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  /* IE 11 / Edge Legacy: flex 박스 shrink 버그 회피 */
+  -ms-flex-negative: 1;
+  /* 텍스트 자동 확대 방지 (iOS Safari 가로↔세로 회전 시) */
+  -webkit-text-size-adjust: 100%;
+     -moz-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+          text-size-adjust: 100%;
+}
+
+/* 모달 오버레이가 떠 있는 동안 본문 스크롤 잠금이 미흡한 환경 보완.
+   iOS Safari 의 rubber-band(고무줄) 튕김으로 모달이 시각적으로 흔들리는
+   현상을 줄이고, Android Chrome 의 pull-to-refresh 도 차단한다. */
+body.t2-image-upload-modal-open {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ---------- 2. 미리보기 그리드 스크롤 & 모멘텀 ------------------------ */
+.t2-image-preview-grid {
+  /* iOS 의 부드러운 관성 스크롤 */
+  -webkit-overflow-scrolling: touch;
+  /* 그리드 내부 스크롤이 부모(모달/페이지)까지 전파되지 않게 */
+  overscroll-behavior: contain;
+  /* IE/Edge Legacy 스크롤바 자동 숨김 */
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+  /* Firefox 얇은 스크롤바 */
+  scrollbar-width: thin;
+  scrollbar-color: #d1d5db transparent;
+  /* aspect-ratio 미지원 구형 WebKit 폴백 (자식이 처리) */
+  scroll-behavior: smooth;
+}
+
+/* aspect-ratio 미지원 브라우저 (iOS 14 이하, Edge 18 등) 폴백.
+   1:1 정사각형을 padding-top trick 으로 유지. */
+@supports not (aspect-ratio: 1 / 1) {
+  .t2-preview-item {
+    height: 0;
+    padding-top: 100%;
+    position: relative;
+  }
+  .t2-preview-item > img,
+  .t2-preview-item > video {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+}
+
+/* ---------- 3. 버튼/입력 — WebKit/IE 외관 정규화 ---------------------- */
+/* 주의: 기존에 명시된 .t2-btn / .t2-preview-remove 등 디자인을 깨지 않도록
+   border-radius / font-size 는 건드리지 않고, 일관된 탭 하이라이트만 정리. */
+.t2-image-editor-modal button,
+.t2-image-editor-modal select,
+.t2-image-editor-modal textarea {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+     -moz-osx-font-smoothing: grayscale;
+}
+
+/* 텍스트 입력 계열만 — iOS 자동 확대(16px 미만 입력 포커스 시 페이지가
+   확대되는 버그) 차단. 디자인용 input[type=file] 는 제외. */
+.t2-image-editor-modal input:not([type="file"]):not([type="hidden"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
+.t2-image-editor-modal textarea {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  font-size: max(16px, 1em);   /* iOS 줌 방지 최저 16px, 단 더 클 수 있음 */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* select 의 OS 기본 화살표 제거(필요한 곳만) */
+.t2-image-editor-modal select {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+
+/* 액션 버튼류는 빠른 응답을 위해 더블탭 줌 비활성화 */
+.t2-image-editor-modal .t2-btn,
+.t2-image-editor-modal button[data-action],
+.t2-preview-remove,
+.t2-preview-edit,
+.t2-image-upload-area {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+/* 터치 디바이스의 최소 적중 영역(Apple HIG 44pt / Material 48dp) */
+@media (hover: none) and (pointer: coarse) {
+  .t2-image-editor-modal .t2-btn,
+  .t2-image-editor-modal button[data-action] {
+    min-height: 44px;
+    min-width: 64px;
+  }
+  .t2-preview-remove,
+  .t2-preview-edit {
+    min-width: 32px;
+    min-height: 32px;
+  }
+}
+
+/* ---------- 4. 파일 input — 크로스 브라우저 숨김 -------------------- */
+/* IE/Edge Legacy 는 input[type=file] 의 "찾아보기" 텍스트가
+   부모를 비집고 나오는 버그가 있다. 완전히 가리되 클릭은 살린다. */
+.t2-image-editor-modal input[type="file"] {
+  position: absolute !important;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  opacity: 0 !important;
+  cursor: pointer;
+  /* IE 11 */
+  filter: alpha(opacity=0);
+  font-size: 0;
+  color: transparent;
+}
+.t2-image-editor-modal input[type="file"]::-webkit-file-upload-button {
+  visibility: hidden;
+  display: none;
+}
+
+/* ---------- 5. 작은 화면(좁은 폰, 폴더블 접힘) ------------------------ */
+@media (max-width: 360px) {
+  .t2-image-editor-modal {
+    width: 98%;
+    padding: 14px;
+    border-radius: 16px;
+  }
+  .t2-image-editor-modal h3 {
+    font-size: 16px;
+    margin-bottom: 12px;
+  }
+  .t2-image-preview-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+  }
+  .t2-image-editor-modal .t2-image-upload-area {
+    padding: 16px 10px;
+  }
+}
+
+/* ---------- 6. 일반 모바일 가로 모드(낮은 높이) 추가 안전 ------------- */
+@media (max-height: 480px) {
+  .t2-image-editor-modal {
+    /* 키보드/주소창 모두 떠도 모달이 잘리지 않도록 */
+    max-height: min(96dvh, 96svh);
+    padding-top: 14px;
+    padding-bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  }
+  .t2-image-editor-modal h3 {
+    font-size: 15px;
+    margin-bottom: 10px;
+  }
+  .t2-image-editor-modal .t2-image-upload-area {
+    padding: 12px 10px;
+  }
+  .t2-image-editor-modal .t2-image-upload-area .material-icons {
+    font-size: 24px;
+    margin-bottom: 2px;
+  }
+  .t2-preview-drag-hint {
+    padding: 4px 8px;
+    margin-bottom: 6px;
+    font-size: 10px;
+  }
+  .t2-image-preview-grid {
+    grid-template-columns: repeat(6, 1fr);
+    max-height: calc(96dvh - 180px);
+  }
+}
+
+/* ---------- 7. 태블릿 (포트레이트 ~ 일반) ----------------------------- */
+/* 7-인치~13-인치 태블릿: 작은 폰처럼 가로폭만 좁히지 말고
+   콘텐츠 밀도를 늘려 한 번에 더 많은 미리보기가 보이도록. */
+@media (min-width: 641px) and (max-width: 1024px) {
+  .t2-image-editor-modal {
+    max-width: 620px;
+    width: 92%;
+    padding: 22px 24px;
+    border-radius: 18px;
+    /* 태블릿은 키보드가 차지하는 비중이 크지 않으므로 88dvh 적정 */
+    max-height: min(88dvh, 90svh);
+  }
+  .t2-image-editor-modal h3 {
+    font-size: 20px;
+    margin-bottom: 18px;
+    letter-spacing: -0.4px;
+  }
+  .t2-image-preview-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    max-height: calc(88dvh - 280px);
+  }
+  .t2-image-editor-modal .t2-image-upload-area {
+    padding: 28px 18px;
+  }
+  .t2-image-editor-modal .t2-image-upload-area .material-icons {
+    font-size: 36px;
+  }
+  .t2-image-editor-modal .t2-image-upload-text {
+    font-size: 15px;
+  }
+  .t2-image-editor-modal .t2-image-upload-hint {
+    font-size: 12px;
+  }
+}
+
+/* 태블릿 가로 모드 (iPad Pro, Galaxy Tab 등) */
+@media (min-width: 900px) and (max-width: 1366px) and (orientation: landscape) and (hover: none) {
+  .t2-image-editor-modal {
+    max-width: 720px;
+  }
+  .t2-image-preview-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* ---------- 8. 큰 데스크톱 (1280px+) --------------------------------- */
+@media (min-width: 1280px) and (hover: hover) and (pointer: fine) {
+  .t2-image-editor-modal {
+    max-width: 560px;
+    padding: 26px 28px;
+    border-radius: 18px;
+  }
+  .t2-image-editor-modal h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  .t2-image-preview-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    max-height: 520px;
+  }
+  /* 데스크톱에서만 호버 상태 강조 */
+  .t2-image-editor-modal .t2-image-upload-area:hover {
+    box-shadow: 0 0 0 4px rgba(1, 135, 254, 0.06);
+  }
+}
+
+/* 4K / 초광폭 모니터 */
+@media (min-width: 1920px) and (hover: hover) {
+  .t2-image-editor-modal {
+    max-width: 640px;
+  }
+  .t2-image-preview-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* ---------- 9. iOS 노치/Dynamic Island 안전영역 ---------------------- */
+/* 풀스크린 이미지 에디터(JS 인젝션) 측에서도 동일한 보호를 위해
+   t2-image-full-view 가 떠 있을 때 본문 safe-area 도 함께 적용. */
+@supports (padding: env(safe-area-inset-top)) {
+  .t2-image-editor-modal,
+  .t2-image-full-view,
+  .t2-safeai-legal-modal {
+    padding-top: max(env(safe-area-inset-top, 0px), 14px);
+    padding-left:  max(env(safe-area-inset-left,  0px), 14px);
+    padding-right: max(env(safe-area-inset-right, 0px), 14px);
+  }
+}
+
+/* SafeAI 하단 고지 버튼도 홈인디케이터 위로 끌어올림 */
+.t2-safeai-notice-btn {
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  right:  calc(14px + env(safe-area-inset-right, 0px));
+}
+
+/* ---------- 10. 호버 가능 환경 vs 터치 분리 강화 --------------------- */
+/* WebKit 의 -webkit-touch-callout: none 으로 길게 누름 시 컨텍스트 메뉴
+   (이미지 저장 등) 방지. 편집 UX 가 손상되는 것을 막는다. */
+.t2-image-editor-modal img,
+.t2-preview-item,
+.t2-preview-item img {
+  -webkit-touch-callout: none;
+}
+
+/* 스타일러스 등 정밀 입력 환경에서만 호버 그림자 강조 */
+@media (hover: hover) and (pointer: fine) {
+  .t2-preview-item:hover {
+    transform: translateY(-1px);
+  }
+}
+
+/* ---------- 11. IE 11 / Edge Legacy 안전망 --------------------------- */
+/* @supports 를 인식하지 못하는 IE 11 은 아래 블록 전체를 무시한다.
+   반대로 모든 모던 브라우저에서만 적용되어 IE 의 깨진 grid 가 노출되지
+   않도록, IE 가 이해 가능한 단순 폴백을 별도로 둔다. */
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  .t2-image-editor-modal {
+    /* IE 는 dvh/svh/min() 미지원 → 안전한 vh 로 */
+    max-height: 90vh;
+    /* IE flex 박스 height 0 이슈 회피 */
+    height: auto;
+  }
+  .t2-image-preview-grid {
+    /* IE 는 grid 부분지원이라 flex 폴백으로 대체 */
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+  .t2-image-preview-grid > .t2-preview-item {
+    -ms-flex: 0 0 calc(33.333% - 8px);
+        flex: 0 0 calc(33.333% - 8px);
+    margin: 4px;
+  }
+  /* IE 는 backdrop-filter 미지원 → 불투명 배경으로 대체 */
+  .t2-safeai-legal-overlay {
+    background: rgba(0, 0, 0, 0.55);
+  }
+}
+
+/* ---------- 12. Powered by T2Editor 워터마크 ------------------------- */
+.t2-image-editor-poweredby {
+  /* 모달 본문 영역 마지막에 살짝 자리. 버튼 그룹과 시각적 분리.    */
+  margin-top: 10px;
+  margin-bottom: -2px;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+               'Helvetica Neue', 'Apple SD Gothic Neo', 'Noto Sans KR',
+               Arial, sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  color: #b8bcc4;
+  /* 눈에 덜 띄게 — 살짝 투명 */
+  opacity: 0.55;
+  user-select: none;
+  -webkit-user-select: none;
+  pointer-events: none;
+  line-height: 1;
+  /* 다크모드/저전력 모드에서도 자연스럽게 */
+  transition: opacity 0.2s ease;
+  /* IE 11: opacity 폴백 */
+  filter: alpha(opacity=55);
+}
+.t2-image-editor-poweredby:hover {
+  opacity: 0.85;
+}
+.t2-image-editor-poweredby .t2-pb-t2 {
+  color: #ff6600;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+.t2-image-editor-poweredby .t2-pb-editor {
+  color: #9aa0a8;
+  font-weight: 500;
+  margin-left: 1px;
+}
+
+/* 다크 테마 대응 */
+html[data-t2editor-theme="dark"] .t2-image-editor-poweredby {
+  color: #5a5f6a;
+  opacity: 0.5;
+}
+html[data-t2editor-theme="dark"] .t2-image-editor-poweredby .t2-pb-t2 {
+  color: #ff7a1a;
+}
+html[data-t2editor-theme="dark"] .t2-image-editor-poweredby .t2-pb-editor {
+  color: #6b7280;
+}
+
+/* 작은 화면에서는 더 작게 */
+@media (max-width: 480px) {
+  .t2-image-editor-poweredby {
+    font-size: 9px;
+    margin-top: 8px;
+    opacity: 0.5;
+  }
+}
+/* 가로 모드에서는 공간 절약을 위해 더 옅게 */
+@media (max-height: 480px) {
+  .t2-image-editor-poweredby {
+    font-size: 9px;
+    margin-top: 4px;
+    opacity: 0.4;
+  }
+}
+/* 데스크톱은 약간 더 또렷 */
+@media (min-width: 1024px) and (hover: hover) {
+  .t2-image-editor-poweredby {
+    font-size: 11px;
+    margin-top: 12px;
+  }
+}
+
+/* 고대비/접근성 모드에서는 충분히 보이게 */
+@media (prefers-contrast: high) {
+  .t2-image-editor-poweredby {
+    opacity: 1;
+    color: #4b5563;
+  }
+}
+/* 모션 줄임 환경 */
+@media (prefers-reduced-motion: reduce) {
+  .t2-image-editor-poweredby {
+    transition: none;
+  }
+}
+
+/* ---------- 13. 풀스크린 이미지 편집기에도 노출 ---------------------- */
+/* showImageEditorModal 가 만드는 풀스크린 컨테이너 우측 하단에 동일 표기
+   (JS 측 수정 없이 CSS 만으로 가능하도록 ::after 사용) */
+.t2-image-full-view.active::after {
+  content: 'Powered by T2Editor';
+  position: absolute;
+  right: calc(10px + env(safe-area-inset-right, 0px));
+  bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  color: rgba(255, 255, 255, 0.32);
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+               'Apple SD Gothic Neo', 'Noto Sans KR', Arial, sans-serif;
+  z-index: 5;
+}
+
+/* ---------- 14. Firefox-only 보정 ------------------------------------ */
+/* Firefox 는 flex shrink 자식의 max-height 계산이 다르다. */
+@-moz-document url-prefix() {
+  .t2-image-editor-modal {
+    min-height: 0;
+  }
+  .t2-image-preview-grid {
+    min-height: 0;
+  }
+}
+
+/* ---------- 15. 인쇄 시 워터마크/모달 숨김 --------------------------- */
+@media print {
+  .t2-image-editor-modal,
+  .t2-image-full-view,
+  .t2-safeai-notice-btn,
+  .t2-safeai-legal-overlay,
+  .t2-safeai-legal-modal,
+  .t2-image-editor-poweredby {
+    display: none !important;
+  }
+}

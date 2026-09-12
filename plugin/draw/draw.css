@@ -1,0 +1,570 @@
+/* Path: T2Editor/plugin/draw/draw.css */
+
+/* Drawing Modal */
+.t2-draw-modal-v2 {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  width: 95%;
+  max-width: 1200px;
+  height: 90vh;
+  height: 90svh;
+  max-height: 900px;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.t2-draw-header-v2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.t2-draw-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.t2-draw-close-v2 {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: none;
+  border: none;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.t2-draw-close-v2:hover {
+  background: #f3f4f6;
+}
+
+.t2-draw-close-v2 .material-icons {
+  font-size: 20px;
+}
+
+/* Mobile Toolbar */
+.t2-draw-toolbar-mobile {
+  display: flex;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 12px;
+  overflow-x: auto;
+}
+
+.t2-draw-toolbar-scroll {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: min-content;
+}
+
+.t2-draw-tools-mobile {
+  display: flex;
+  gap: 8px;
+}
+
+.t2-draw-tool-v2 {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.t2-draw-tool-v2:hover {
+  background: #f3f4f6;
+  transform: translateY(-1px);
+}
+
+.t2-draw-tool-v2.active {
+  background: #1e90ff;
+  border-color: #1e90ff;
+  color: #fff;
+}
+
+.t2-draw-tool-v2 .material-icons {
+  font-size: 20px;
+}
+
+.t2-draw-brush-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.t2-brush-preview {
+  border-radius: 50%;
+  background-color: #000;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.t2-draw-size-slider {
+  width: 80px;
+  height: 8px;
+  border-radius: 4px;
+  background: #e5e7eb;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.t2-draw-size-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #1e90ff;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.t2-draw-size-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #1e90ff;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.t2-brush-size-text {
+  font-size: 12px;
+  color: #6b7280;
+  min-width: 32px;
+  text-align: center;
+}
+
+.t2-draw-actions-mobile {
+  display: flex;
+  gap: 4px;
+}
+
+.t2-draw-action-v2 {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.t2-draw-action-v2:hover:not(:disabled) {
+  background: #f3f4f6;
+}
+
+.t2-draw-action-v2:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.t2-draw-action-v2 .material-icons {
+  font-size: 18px;
+}
+
+.t2-draw-colors-mobile {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.t2-color-swatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.t2-color-swatch.active {
+  border-color: #1e90ff;
+  transform: scale(1.1);
+}
+
+.t2-draw-color-picker {
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Content Wrapper */
+.t2-draw-content-wrapper {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  min-height: 0;
+}
+
+/* Desktop Sidebar */
+.t2-draw-sidebar-desktop {
+  display: none;
+  width: 64px;
+  background: #f9fafb;
+  border-right: 1px solid #e5e7eb;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 0;
+  gap: 24px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.t2-draw-tools-desktop {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.t2-draw-brush-control-desktop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.t2-brush-preview-desktop {
+  border-radius: 50%;
+  background-color: #000;
+  transition: all 0.2s ease;
+}
+
+.t2-draw-size-slider-desktop {
+  width: 80px;
+  height: 8px;
+  border-radius: 4px;
+  background: #e5e7eb;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  transform: rotate(-90deg);
+  margin: 40px 0;
+}
+
+.t2-draw-size-slider-desktop::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #1e90ff;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.t2-draw-size-slider-desktop::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #1e90ff;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.t2-brush-size-text-desktop {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.t2-draw-actions-desktop {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.t2-draw-colors-desktop {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.t2-draw-colors-desktop .t2-color-swatch {
+  width: 32px;
+  height: 32px;
+}
+
+.t2-draw-colors-desktop .t2-draw-color-picker {
+  width: 32px;
+  height: 32px;
+}
+
+/* Canvas Area */
+.t2-draw-canvas-area {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+  padding: 16px;
+  overflow: auto;
+}
+
+.t2-draw-canvas-v2 {
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  cursor: crosshair;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* Footer */
+.t2-draw-footer-v2 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  /* iOS 홈 인디케이터 영역 보호 */
+  padding-bottom: max(16px, env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid #f0f0f0;
+}
+
+.t2-btn-cancel-v2,
+.t2-btn-primary-v2 {
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.t2-btn-cancel-v2 {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.t2-btn-cancel-v2:hover {
+  background: #e5e7eb;
+}
+
+.t2-btn-primary-v2 {
+  background: #1e90ff;
+  color: #fff;
+}
+
+.t2-btn-primary-v2:hover {
+  background: #1c7fd9;
+}
+
+.t2-drawing-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px 20px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+/* Desktop Layout */
+@media (min-width: 1024px) {
+  .t2-draw-toolbar-mobile {
+    display: none;
+  }
+  
+  .t2-draw-sidebar-desktop {
+    display: flex;
+  }
+  
+  .t2-draw-modal-v2 {
+    max-width: 1400px;
+  }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 1023px) {
+  .t2-draw-modal-v2 {
+    height: 95vh;
+    height: 95svh;
+    border-radius: 12px;
+  }
+  
+  .t2-draw-canvas-area {
+    padding: 8px;
+  }
+}
+
+@media (max-width: 640px) {
+  .t2-draw-header-v2 {
+    padding: 16px;
+  }
+  
+  .t2-draw-title {
+    font-size: 18px;
+  }
+  
+  .t2-draw-toolbar-mobile {
+    padding: 8px;
+  }
+  
+  .t2-draw-toolbar-scroll {
+    gap: 12px;
+  }
+  
+  .t2-draw-footer-v2 {
+    padding: 12px 16px;
+  }
+}
+
+/* Dark Mode */
+html[data-t2editor-theme="dark"] .t2-draw-modal-v2 {
+  background: #2d2d2d;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+html[data-t2editor-theme="dark"] .t2-draw-header-v2 {
+  border-bottom-color: #444;
+}
+
+html[data-t2editor-theme="dark"] .t2-draw-title {
+  color: #e0e0e0;
+}
+
+html[data-t2editor-theme="dark"] .t2-draw-close-v2 {
+  color: #aaa;
+}
+
+html[data-t2editor-theme="dark"] .t2-draw-close-v2:hover {
+  background: #444;
+}
+
+html[data-t2editor-theme="dark"] .t2-draw-toolbar-mobile {
+  background: #383838;
+  border-bottom-color: #444;
+}
+
+html[data-t2editor-theme="dark"] .t2-draw-tool-v2 {
+  background: #2d2d2d;
+  border-color: #555;
+  color: #aaa;
+}
+
+html[data-t2editor-theme="dark"] .t2-draw-tool-v2:hover {
+  background: #444;
+}
+
+html[data-t2editor-theme="dark"] .t2-draw-tool-v2.active {
+  background: #0187fe;
+  border-color: #0187fe;
+  color: #fff;
+}
+
+html[data-t2editor-theme="dark"] .t2-draw-size-slider {
+  background: #444;
+}
+
+html[data-t2editor-theme="dark"] .t2-draw-size-slider::-webkit-slider-thumb {
+  background: #0187fe;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+html[data-t2editor-theme="dark"] .t2-draw-size-slider::-moz-range-thumb {
+  background: #0187fe;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+html[data-t2editor-theme="dark"] .t2-brush-size-text,
+html[data-t2editor-theme="dark"] .t2-brush-size-text-desktop {
+  color: #aaa;
+}
+
+html[data-t2editor-theme="dark"] .t2-draw-action-v2 {
+  background: #2d2d2d;
+  border-color: #555;
+  color: #aaa;
+}
+
+html[data-t2editor-theme="dark"] .t2-draw-action-v2:hover:not(:disabled) {
+  background: #444;
+}
+
+html[data-t2editor-theme="dark"] .t2-color-swatch.active {
+  border-color: #0187fe;
+}
+
+html[data-t2editor-theme="dark"] .t2-draw-sidebar-desktop {
+  background: #383838;
+  border-right-color: #444;
+}
+
+html[data-t2editor-theme="dark"] .t2-draw-size-slider-desktop {
+  background: #444;
+}
+
+html[data-t2editor-theme="dark"] .t2-draw-size-slider-desktop::-webkit-slider-thumb {
+  background: #0187fe;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+html[data-t2editor-theme="dark"] .t2-draw-size-slider-desktop::-moz-range-thumb {
+  background: #0187fe;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+html[data-t2editor-theme="dark"] .t2-draw-canvas-area {
+  background: #1e1e1e;
+}
+
+html[data-t2editor-theme="dark"] .t2-draw-canvas-v2 {
+  border-color: #555;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+html[data-t2editor-theme="dark"] .t2-draw-footer-v2 {
+  border-top-color: #444;
+}
+
+html[data-t2editor-theme="dark"] .t2-btn-cancel-v2 {
+  background: #444;
+  color: #e0e0e0;
+}
+
+html[data-t2editor-theme="dark"] .t2-btn-cancel-v2:hover {
+  background: #555;
+}
+
+html[data-t2editor-theme="dark"] .t2-btn-primary-v2 {
+  background: #0187fe;
+  color: #fff;
+}
+
+html[data-t2editor-theme="dark"] .t2-btn-primary-v2:hover {
+  background: #0069d9;
+}
