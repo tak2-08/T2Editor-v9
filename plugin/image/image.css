@@ -1,0 +1,777 @@
+/* T2Editor/plugin/image/image.css  */
+
+/* ===== 이미지 에디터 모달 ===== */
+.t2-image-editor-modal {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  padding: 20px;
+  width: 94%;
+  max-width: 440px;
+  max-height: 90vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.t2-image-editor-modal h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.3px;
+}
+
+/* ===== 업로드 영역 ===== */
+.t2-image-editor-modal .t2-image-upload-area {
+  border: 1.5px dashed #d1d5db;
+  border-radius: 12px;
+  padding: 24px 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 12px;
+  position: relative;
+  flex-shrink: 0;
+  background: #fafafa;
+}
+
+.t2-image-editor-modal .t2-image-upload-area:active {
+  transform: scale(0.99);
+}
+
+.t2-image-editor-modal .t2-image-upload-area:hover {
+  border-color: #0187FE;
+  background: #f8fbff;
+}
+
+.t2-image-editor-modal .t2-image-upload-area.drag-over {
+  border-color: #0187FE;
+  background: #f0f8ff;
+  border-style: solid;
+}
+
+.t2-image-editor-modal .t2-image-upload-area .material-icons {
+  font-size: 36px;
+  color: #9ca3af;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.t2-image-editor-modal .t2-image-upload-text {
+  font-size: 14px;
+  color: #374151;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.t2-image-editor-modal .t2-image-upload-hint {
+  font-size: 12px;
+  color: #9ca3af;
+  line-height: 1.4;
+}
+
+.t2-image-editor-modal input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* ===== 드래그 힌트 ===== */
+.t2-preview-drag-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  color: #5a5a5a;
+  font-size: 12px;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #f3f4f6;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: all 0.25s ease;
+}
+
+.t2-preview-drag-hint.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.t2-preview-drag-hint .material-icons {
+  font-size: 16px;
+  color: #7a7a7a;
+}
+
+/* ===== 미리보기 그리드 ===== */
+.t2-image-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  padding: 0;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  max-height: 420px;
+  margin-bottom: 16px;
+  border-radius: 8px;
+}
+
+.t2-image-preview-grid:empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+  background: #fafafa;
+  border: 1px solid #f3f4f6;
+}
+
+.t2-image-preview-grid:empty::before {
+  content: '이미지 추가';
+  color: #d1d5db;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.t2-image-preview-grid::-webkit-scrollbar {
+  width: 6px;
+}
+
+.t2-image-preview-grid::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.t2-image-preview-grid::-webkit-scrollbar-thumb {
+  background: #e5e7eb;
+  border-radius: 3px;
+}
+
+.t2-image-preview-grid::-webkit-scrollbar-thumb:hover {
+  background: #d1d5db;
+}
+
+/* ===== 미리보기 아이템 ===== */
+.t2-preview-item {
+  position: relative;
+  aspect-ratio: 1;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: grab;
+  transition: all 0.2s ease;
+  background: #ffffff;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.t2-preview-item:active {
+  cursor: grabbing;
+}
+
+.t2-preview-item:hover {
+  border-color: #0187FE;
+  box-shadow: 0 4px 12px rgba(1, 135, 254, 0.15);
+}
+
+.t2-preview-item.dragging {
+  opacity: 0.5;
+  transform: scale(0.95);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  cursor: grabbing;
+}
+
+.t2-preview-item.drag-over {
+  border-color: #0187FE;
+  border-width: 2px;
+  background: rgba(1, 135, 254, 0.03);
+}
+
+.t2-preview-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ===== 순서 배지 ===== */
+.t2-preview-order {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  z-index: 2;
+  pointer-events: none;
+  letter-spacing: -0.2px;
+}
+
+/* ===== 삭제 버튼 ===== */
+.t2-preview-remove {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  width: 26px;
+  height: 26px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  border: none;
+  border-radius: 13px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  opacity: 0;
+  z-index: 2;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.t2-preview-item:hover .t2-preview-remove {
+  opacity: 1;
+}
+
+.t2-preview-remove:hover {
+  background: rgba(239, 68, 68, 0.9);
+  transform: scale(1.05);
+}
+
+.t2-preview-remove:active {
+  transform: scale(0.95);
+}
+
+.t2-preview-remove .material-icons {
+  font-size: 16px;
+}
+
+/* ===== 업로드 인디케이터 ===== */
+.t2-upload-indicator {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 500;
+}
+
+.t2-upload-indicator .material-icons {
+  font-size: 14px;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* === NSFW 미리보기 상태 (활성화 시에만 표시) === */
+.t2-nsfw-preview-status {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: auto;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 8px 0 0 0;
+    padding: 6px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    z-index: 3;
+    pointer-events: none;
+    min-width: 56px;
+    box-sizing: border-box;
+    white-space: nowrap;
+    box-shadow: -2px -2px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+/* 안전 상태 - 초록색 */
+.t2-nsfw-preview-status.safe {
+    background: rgba(46, 204, 113, 0.9);
+}
+
+/* 위험/의심 상태 - 빨간색 */
+.t2-nsfw-preview-status.warning {
+    background: rgba(231, 76, 60, 0.9);
+}
+
+/* 로딩 상태 - 회색/노란색 아이콘 */
+.t2-nsfw-preview-status.loading {
+    background: rgba(0, 0, 0, 0.8);
+    color: #f1c40f;
+}
+
+/* 오류 상태 - 노란색/주황색 */
+.t2-nsfw-preview-status.error {
+    background: rgba(243, 156, 18, 0.9);
+    color: #fff;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-preview-status.safe {
+    background: rgba(39, 174, 96, 0.95);
+}
+html[data-t2editor-theme="dark"] .t2-nsfw-preview-status.warning {
+    background: rgba(192, 57, 43, 0.95);
+}
+html[data-t2editor-theme="dark"] .t2-nsfw-preview-status.loading {
+    background: rgba(0, 0, 0, 0.85);
+    color: #f39c12;
+}
+html[data-t2editor-theme="dark"] .t2-nsfw-preview-status.error {
+    background: rgba(211, 84, 0, 0.95);
+}
+
+.t2-nsfw-preview-status .material-icons {
+    font-size: 14px;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,0.2));
+}
+.t2-nsfw-preview-status .material-icons.loading {
+    animation: spin 1s linear infinite;
+}
+
+@media (max-width: 480px) {
+    .t2-nsfw-preview-status {
+        padding: 4px 8px;
+        font-size: 10px;
+        min-width: 48px;
+        border-radius: 6px 0 0 0;
+        gap: 4px;
+    }
+    .t2-nsfw-preview-status .material-icons {
+        font-size: 12px;
+    }
+}
+
+/* ===== NSFW 상태바 ===== */
+.t2-nsfw-status-bar-simple {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  margin-top: 12px;
+  background: #f5f5f5;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-status-bar-simple {
+  background: #2a2a2a;
+}
+
+.t2-nsfw-status-icon-simple {
+  font-size: 18px;
+  color: #6c757d;
+}
+
+.t2-nsfw-status-text-simple {
+  flex: 1;
+  color: #495057;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-status-text-simple {
+  color: #e0e0e0;
+}
+
+.t2-nsfw-status-badge-simple {
+  background: #e9ecef;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #495057;
+  transition: all 0.2s;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-status-badge-simple {
+  background: #3a3a3a;
+  color: #cccccc;
+}
+
+/* 로딩 상태 */
+.t2-nsfw-status-badge-simple.loading {
+  background: #fff3cd;
+  color: #856404;
+  animation: pulse 1.2s infinite;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-status-badge-simple.loading {
+  background: #665c00;
+  color: #ffecb3;
+}
+
+/* 안전 상태 */
+.t2-nsfw-status-badge-simple.safe {
+  background: #d4edda;
+  color: #155724;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-status-badge-simple.safe {
+  background: #1e4620;
+  color: #8bc34a;
+}
+
+/* 위험/의심 상태 */
+.t2-nsfw-status-badge-simple.warning {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-status-badge-simple.warning {
+  background: #5a1e1e;
+  color: #ffab91;
+}
+
+/* 오류 상태 - 노란색 계열 */
+.t2-nsfw-status-badge-simple.error {
+  background: #ffeaa7;
+  color: #d68910;
+  border: 1px solid #fdcb6e;
+}
+
+html[data-t2editor-theme="dark"] .t2-nsfw-status-badge-simple.error {
+  background: #6c5a1e;
+  color: #ffeaa7;
+  border: 1px solid #fdcb6e;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+/* ===== 다크모드 ===== */
+html[data-t2editor-theme="dark"] .t2-image-editor-modal {
+  background: #1f1f1f;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+html[data-t2editor-theme="dark"] .t2-image-editor-modal h3 {
+  color: #f5f5f5;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-editor-modal .t2-image-upload-area {
+  border-color: #404040;
+  background: #2a2a2a;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-editor-modal .t2-image-upload-area:hover {
+  border-color: #0187FE;
+  background: #1a2332;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-editor-modal .t2-image-upload-area.drag-over {
+  border-color: #0187FE;
+  background: #1a2838;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-editor-modal .t2-image-upload-area .material-icons {
+  color: #6b7280;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-editor-modal .t2-image-upload-text {
+  color: #d1d5db;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-editor-modal .t2-image-upload-hint {
+  color: #6b7280;
+}
+
+html[data-t2editor-theme="dark"] .t2-preview-drag-hint {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+  color: #9a9a9a;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-preview-grid:empty {
+  background: #2a2a2a;
+  border-color: #3a3a3a;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-preview-grid:empty::before {
+  color: #4b5563;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-preview-grid::-webkit-scrollbar-thumb {
+  background: #404040;
+}
+
+html[data-t2editor-theme="dark"] .t2-image-preview-grid::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;
+}
+
+html[data-t2editor-theme="dark"] .t2-preview-item {
+  border-color: #3a3a3a;
+  background: #2a2a2a;
+}
+
+html[data-t2editor-theme="dark"] .t2-preview-item:hover {
+  border-color: #0187FE;
+  box-shadow: 0 4px 12px rgba(1, 135, 254, 0.25);
+}
+
+html[data-t2editor-theme="dark"] .t2-preview-item.drag-over {
+  background: rgba(1, 135, 254, 0.08);
+}
+
+html[data-t2editor-theme="dark"] .t2-preview-order {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+html[data-t2editor-theme="dark"] .t2-preview-remove {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+html[data-t2editor-theme="dark"] .t2-preview-remove:hover {
+  background: rgba(239, 68, 68, 0.9);
+}
+
+html[data-t2editor-theme="dark"] .t2-upload-indicator {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ===== 모바일 최적화 ===== */
+@media (max-width: 480px) {
+  .t2-image-editor-modal {
+    width: 96%;
+    padding: 16px;
+    border-radius: 20px;
+    max-height: 92vh;
+  }
+
+  .t2-image-editor-modal h3 {
+    font-size: 17px;
+    margin-bottom: 14px;
+  }
+
+  .t2-image-editor-modal .t2-image-upload-area {
+    padding: 20px 12px;
+    margin-bottom: 10px;
+  }
+
+  .t2-image-editor-modal .t2-image-upload-area .material-icons {
+    font-size: 32px;
+    margin-bottom: 6px;
+  }
+
+  .t2-image-editor-modal .t2-image-upload-text {
+    font-size: 13px;
+  }
+
+  .t2-image-editor-modal .t2-image-upload-hint {
+    font-size: 11px;
+  }
+
+  .t2-preview-drag-hint {
+    font-size: 11px;
+    padding: 6px 10px;
+    margin-bottom: 8px;
+  }
+
+  .t2-preview-drag-hint .material-icons {
+    font-size: 14px;
+  }
+
+  .t2-image-preview-grid {
+    gap: 6px;
+    max-height: calc(92vh - 240px);
+    min-height: 160px;
+    margin-bottom: 14px;
+  }
+
+  .t2-preview-order {
+    min-width: 20px;
+    height: 20px;
+    padding: 0 5px;
+    border-radius: 10px;
+    font-size: 10px;
+    top: 5px;
+    left: 5px;
+  }
+
+  .t2-preview-remove {
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    top: 5px;
+    right: 5px;
+    opacity: 1;
+  }
+
+  .t2-preview-remove .material-icons {
+    font-size: 15px;
+  }
+
+  .t2-upload-indicator {
+    padding: 3px 7px;
+    font-size: 10px;
+    border-radius: 10px;
+  }
+
+  .t2-upload-indicator .material-icons {
+    font-size: 13px;
+  }
+}
+
+/* ===== 모바일 Medium ===== */
+@media (min-width: 481px) and (max-width: 640px) {
+  .t2-image-editor-modal {
+    width: 95%;
+    padding: 18px;
+  }
+
+  .t2-preview-remove {
+    opacity: 1;
+  }
+}
+
+/* ===== 터치 디바이스 최적화 ===== */
+@media (hover: none) and (pointer: coarse) {
+  .t2-preview-item {
+    border-width: 1px;
+  }
+
+  .t2-preview-item:active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease;
+  }
+
+  .t2-preview-remove {
+    opacity: 1;
+    width: 28px;
+    height: 28px;
+  }
+
+  .t2-image-upload-area:active {
+    transform: scale(0.985);
+  }
+}
+
+/* ===== 데스크톱 최적화 ===== */
+@media (min-width: 768px) {
+  .t2-image-editor-modal {
+    max-width: 480px;
+    padding: 24px;
+  }
+
+  .t2-image-editor-modal h3 {
+    font-size: 19px;
+    margin-bottom: 18px;
+  }
+
+  .t2-image-preview-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    max-height: 450px;
+  }
+
+  .t2-preview-order {
+    min-width: 24px;
+    height: 24px;
+    padding: 0 7px;
+    font-size: 12px;
+  }
+
+  .t2-preview-remove {
+    width: 28px;
+    height: 28px;
+  }
+
+  .t2-preview-remove .material-icons {
+    font-size: 17px;
+  }
+}
+
+/* ===== 가로 모드 모바일 ===== */
+@media (max-width: 896px) and (orientation: landscape) {
+  .t2-image-editor-modal {
+    max-height: 96vh;
+  }
+
+  .t2-image-preview-grid {
+    max-height: calc(96vh - 200px);
+    grid-template-columns: repeat(5, 1fr);
+  }
+
+  .t2-image-editor-modal .t2-image-upload-area {
+    padding: 16px 12px;
+  }
+
+  .t2-preview-drag-hint {
+    padding: 6px 10px;
+    margin-bottom: 8px;
+  }
+}
+
+/* ===== 접근성 개선 ===== */
+@media (prefers-reduced-motion: reduce) {
+  .t2-preview-item,
+  .t2-preview-drag-hint,
+  .t2-preview-remove,
+  .t2-image-upload-area {
+    transition: none;
+  }
+  
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(0deg); }
+  }
+}
+
+/* ===== 고대비 모드 지원 ===== */
+@media (prefers-contrast: high) {
+  .t2-preview-item {
+    border-width: 2px;
+  }
+  
+  .t2-image-upload-area {
+    border-width: 2px;
+  }
+  
+  html[data-t2editor-theme="dark"] .t2-preview-order,
+  html[data-t2editor-theme="dark"] .t2-preview-remove,
+  html[data-t2editor-theme="dark"] .t2-upload-indicator {
+    background: rgba(255, 255, 255, 0.25);
+  }
+}
