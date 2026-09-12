@@ -1,0 +1,539 @@
+/* T2Editor/plugin/meme/meme.css */
+
+/* ─── 모달 래퍼 ─────────────────────────────────────────────────── */
+.t2-meme-modal {
+  display: flex;
+  flex-direction: column;
+  width: 92vw;
+  max-width: 600px;
+  height: 85vh;
+  max-height: 720px;
+  background: var(--t2-bg, #ffffff);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  margin: 0 auto;
+}
+
+/* ─── 헤더 ──────────────────────────────────────────────────────── */
+.t2-meme-header {
+  flex-shrink: 0;
+  padding: 24px 24px 20px;
+  border-bottom: 1px solid var(--t2-border, #f3f4f6);
+  background: var(--t2-bg, #ffffff);
+}
+
+.t2-meme-title-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 16px;
+}
+
+.t2-meme-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--t2-text, #111827);
+  letter-spacing: -0.3px;
+}
+
+.t2-meme-title .material-icons {
+  font-size: 24px;
+  color: #5B8EE7;
+}
+
+.t2-meme-desc {
+  font-size: 13px;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+/* Powered by - 설명 아래에 위치 */
+.t2-meme-powered {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #9ca3af;
+  text-decoration: none;
+  transition: all 0.2s;
+  margin-top: 2px;
+  width: fit-content;
+}
+
+.t2-meme-powered:hover {
+  color: #6b7280;
+}
+
+.t2-meme-powered .material-icons {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.t2-meme-powered:hover .material-icons {
+  color: #6b7280;
+}
+
+.t2-meme-powered b {
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.t2-meme-search-wrap {
+  display: flex;
+  align-items: center;
+  background: var(--t2-bg-secondary, #f9fafb);
+  border-radius: 12px;
+  padding: 0 14px;
+  gap: 10px;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.t2-meme-search-wrap:focus-within {
+  background: var(--t2-bg, #ffffff);
+  border-color: rgba(91, 142, 231, 0.3);
+  box-shadow: 0 0 0 3px rgba(91, 142, 231, 0.1);
+}
+
+.t2-meme-search-icon {
+  font-size: 18px;
+  color: #9ca3af;
+  pointer-events: none;
+  transition: color 0.2s;
+}
+
+.t2-meme-search-wrap:focus-within .t2-meme-search-icon {
+  color: #5B8EE7;
+}
+
+.t2-meme-search {
+  flex: 1;
+  border: none;
+  background: transparent;
+  height: 44px;
+  font-size: 15px;
+  color: var(--t2-text, #1f2937);
+  outline: none;
+  font-weight: 400;
+}
+
+.t2-meme-search::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+/* ─── 바디 / 그리드 영역 ─────────────────────────────────────────── */
+.t2-meme-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 24px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--t2-border, #e5e7eb) transparent;
+}
+
+.t2-meme-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.t2-meme-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.t2-meme-body::-webkit-scrollbar-thumb {
+  background: var(--t2-border, #e5e7eb);
+  border-radius: 10px;
+}
+
+.t2-meme-body::-webkit-scrollbar-thumb:hover {
+  background: #d1d5db;
+}
+
+/* 타일 그리드 */
+.t2-meme-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+/* ─── 타일 ──────────────────────────────────────────────────────── */
+.t2-meme-tile {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--t2-border, #f3f4f6);
+  cursor: pointer;
+  background: var(--t2-bg, #ffffff);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+  position: relative;
+}
+
+.t2-meme-tile::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  pointer-events: none;
+  transition: box-shadow 0.25s ease;
+}
+
+.t2-meme-tile:hover {
+  transform: translateY(-3px);
+  border-color: rgba(91, 142, 231, 0.3);
+}
+
+.t2-meme-tile:hover::before {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.t2-meme-tile:focus-visible {
+  border-color: #5B8EE7;
+  box-shadow: 0 0 0 2px rgba(91, 142, 231, 0.2);
+}
+
+.t2-meme-tile:active {
+  transform: scale(0.98) translateY(-1px);
+}
+
+.t2-meme-img-wrap {
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--t2-bg-secondary, #f9fafb);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.t2-meme-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.t2-meme-img-wrap img[data-src] {
+  opacity: 0;
+}
+
+.t2-meme-img-wrap img:not([data-src]) {
+  opacity: 1;
+}
+
+.t2-meme-tile:hover .t2-meme-img-wrap img:not([data-src]) {
+  transform: scale(1.05);
+}
+
+/* 이미지 오류 타일 */
+.t2-meme-tile-err .t2-meme-img-wrap {
+  background: var(--t2-bg-secondary, #f9fafb);
+}
+
+.t2-meme-tile-err .t2-meme-img-wrap::after {
+  content: 'broken_image';
+  font-family: 'Material Icons';
+  font-size: 32px;
+  color: #d1d5db;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.t2-meme-meta {
+  padding: 10px 12px;
+  background: var(--t2-bg, #ffffff);
+}
+
+.t2-meme-poster {
+  font-size: 11px;
+  color: #6b7280;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 500;
+}
+
+/* ─── 로더 ──────────────────────────────────────────────────────── */
+.t2-meme-loader {
+  display: flex;
+  justify-content: center;
+  padding: 32px 0;
+}
+
+.t2-meme-spin {
+  font-size: 24px;
+  color: #5B8EE7;
+  animation: t2MemeSpin 0.8s linear infinite;
+}
+
+@keyframes t2MemeSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ─── 빈 결과 ────────────────────────────────────────────────────── */
+.t2-meme-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 60px 20px;
+  color: #9ca3af;
+}
+
+.t2-meme-empty .material-icons {
+  font-size: 48px;
+  opacity: 0.3;
+}
+
+.t2-meme-empty p {
+  font-size: 14px;
+  margin: 0;
+  font-weight: 500;
+}
+
+/* sentinel: 1px 높이로 IntersectionObserver 트리거 */
+.t2-meme-sentinel {
+  height: 1px;
+  width: 100%;
+}
+
+/* ─── 푸터 ─────────────────────────────────────────────────────── */
+.t2-meme-footer {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-top: 1px solid var(--t2-border, #f3f4f6);
+  background: var(--t2-bg, #ffffff);
+  gap: 16px;
+}
+
+.t2-meme-reg-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
+  color: #5B8EE7;
+  background: rgba(91, 142, 231, 0.08);
+  border-radius: 8px;
+  padding: 8px 14px;
+  transition: all 0.2s;
+  border: 1px solid transparent;
+}
+
+.t2-meme-reg-btn:hover {
+  background: rgba(91, 142, 231, 0.15);
+  transform: translateY(-1px);
+  border-color: rgba(91, 142, 231, 0.2);
+}
+
+.t2-meme-reg-btn .material-icons {
+  font-size: 16px;
+}
+
+.t2-meme-close-btn {
+  border: 1px solid var(--t2-border, #e5e7eb);
+  background: var(--t2-bg, #ffffff);
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  color: var(--t2-text, #4b5563);
+  transition: all 0.2s;
+}
+
+.t2-meme-close-btn:hover {
+  background: var(--t2-bg-secondary, #f9fafb);
+  border-color: var(--t2-border, #d1d5db);
+  color: var(--t2-text, #374151);
+}
+
+/* ─── 데스크톱 ──────────────────────────────────────────────────── */
+@media (min-width: 640px) {
+  .t2-meme-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  
+  .t2-meme-header {
+    padding: 24px;
+  }
+  
+  .t2-meme-body {
+    padding: 24px;
+  }
+  
+  .t2-meme-footer {
+    padding: 16px 24px;
+  }
+}
+
+/* ─── 다크모드 ─────────────────────────────────────────────────── */
+[data-t2editor-theme="dark"] .t2-meme-modal {
+  background: #1f2937;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+[data-t2editor-theme="dark"] .t2-meme-header,
+[data-t2editor-theme="dark"] .t2-meme-footer {
+  border-color: #374151;
+  background: #1f2937;
+}
+
+[data-t2editor-theme="dark"] .t2-meme-title {
+  color: #f9fafb;
+}
+
+[data-t2editor-theme="dark"] .t2-meme-desc {
+  color: #9ca3af;
+}
+
+[data-t2editor-theme="dark"] .t2-meme-powered {
+  color: #6b7280;
+}
+
+[data-t2editor-theme="dark"] .t2-meme-powered:hover {
+  color: #9ca3af;
+}
+
+[data-t2editor-theme="dark"] .t2-meme-powered .material-icons {
+  color: #6b7280;
+}
+
+[data-t2editor-theme="dark"] .t2-meme-powered:hover .material-icons {
+  color: #9ca3af;
+}
+
+[data-t2editor-theme="dark"] .t2-meme-powered b {
+  color: #9ca3af;
+}
+
+[data-t2editor-theme="dark"] .t2-meme-search-wrap {
+  background: #111827;
+}
+
+[data-t2editor-theme="dark"] .t2-meme-search-wrap:focus-within {
+  background: #1f2937;
+  border-color: rgba(91, 142, 231, 0.4);
+  box-shadow: 0 0 0 3px rgba(91, 142, 231, 0.15);
+}
+
+[data-t2editor-theme="dark"] .t2-meme-search {
+  color: #f9fafb;
+}
+
+[data-t2editor-theme="dark"] .t2-meme-search::placeholder {
+  color: #6b7280;
+}
+
+[data-t2editor-theme="dark"] .t2-meme-body::-webkit-scrollbar-thumb {
+  background: #4b5563;
+}
+
+[data-t2editor-theme="dark"] .t2-meme-body::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
+
+[data-t2editor-theme="dark"] .t2-meme-tile {
+  border-color: #374151;
+  background: #1f2937;
+}
+
+[data-t2editor-theme="dark"] .t2-meme-tile::before {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+}
+
+[data-t2editor-theme="dark"] .t2-meme-tile:hover {
+  border-color: rgba(91, 142, 231, 0.4);
+}
+
+[data-t2editor-theme="dark"] .t2-meme-tile:hover::before {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+}
+
+[data-t2editor-theme="dark"] .t2-meme-img-wrap {
+  background: #111827;
+}
+
+[data-t2editor-theme="dark"] .t2-meme-tile-err .t2-meme-img-wrap::after {
+  color: #4b5563;
+}
+
+[data-t2editor-theme="dark"] .t2-meme-meta {
+  background: #1f2937;
+}
+
+[data-t2editor-theme="dark"] .t2-meme-poster {
+  color: #9ca3af;
+}
+
+[data-t2editor-theme="dark"] .t2-meme-spin {
+  color: #7BA3EB;
+}
+
+[data-t2editor-theme="dark"] .t2-meme-empty {
+  color: #6b7280;
+}
+
+[data-t2editor-theme="dark"] .t2-meme-reg-btn {
+  color: #7BA3EB;
+  background: rgba(91, 142, 231, 0.12);
+}
+
+[data-t2editor-theme="dark"] .t2-meme-reg-btn:hover {
+  background: rgba(91, 142, 231, 0.2);
+  border-color: rgba(91, 142, 231, 0.3);
+}
+
+[data-t2editor-theme="dark"] .t2-meme-close-btn {
+  border-color: #4b5563;
+  background: #1f2937;
+  color: #9ca3af;
+}
+
+[data-t2editor-theme="dark"] .t2-meme-close-btn:hover {
+  background: #374151;
+  border-color: #6b7280;
+  color: #e5e7eb;
+}
+
+/* ─── 접근성 및 애니메이션 축소 ──────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .t2-meme-modal,
+  .t2-meme-tile,
+  .t2-meme-tile::before,
+  .t2-meme-img-wrap img,
+  .t2-meme-reg-btn,
+  .t2-meme-close-btn,
+  .t2-meme-search-wrap {
+    transition: none;
+  }
+  
+  .t2-meme-tile:hover {
+    transform: none;
+  }
+  
+  .t2-meme-tile:active {
+    transform: none;
+  }
+  
+  .t2-meme-spin {
+    animation: none;
+  }
+}

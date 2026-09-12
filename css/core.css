@@ -1,0 +1,91 @@
+/* Path: T2Editor/css/core.css */
+
+/* T2Editor Core Styles */
+.t2-editor-container { margin: 20px auto; border: 1px solid #ccc; border-radius: 10px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; position: relative; }
+.t2-toolbar { padding: 10px; border-bottom: 1px solid #e1e1e1; display: flex; flex-wrap: wrap; gap: 5px; background: #fcfcfc; position: sticky; top: 0; z-index: 100; border-radius: 10px 10px 0 0; }
+
+/* Buttons */
+.t2-btn { border: none; background: #f5f5f5; color: #0187fe; padding: 5px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: all 0.15s ease; }
+.t2-btn:hover { background: #e8e8e8; color: #0187fe; }
+.t2-btn:active { background: #e0e0e0; }
+.t2-btn.active { background: #0187fe; color: #fff; }
+.t2-btn:disabled { opacity: .5; cursor: not-allowed; color: #666; }
+.t2-btn:disabled:hover { background: #f5f5f5; color: #666; box-shadow: none; }
+
+/* Editor Content Area */
+.t2-editor { padding: 15px; outline: none; overflow-y: auto; line-height: 1.5; font-size: 16px; background: #fff; position: relative; border-radius: 0 0 10px 10px; min-height: 350px; max-height: 450px; }
+.t2-editor p { margin: 0; padding: 0; min-height: 1.5em; }
+.t2-editor br { display: block; content: ""; margin-top: .5em; }
+.t2-editor ::selection { background: #b3d4fc; text-shadow: none; }
+
+/* Font Size */
+.t2-font-size-list { position: absolute; background: #fff; border: 1px solid #ccc; border-radius: 4px; padding: 5px 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0, 0, 0, .1); min-width: 120px; user-select: none; -webkit-user-select: none; }
+.t2-font-size-option { padding: 5px 15px; cursor: pointer; background-color: transparent; transition: background-color 0.1s ease; }
+.t2-font-size-option:hover { background: #f5f5f5; }
+
+/* Color Picker (Updated for 7.0.0 to match 5.2.2 functionality) */
+.t2-color-picker-container {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  padding: 16px;
+  width: min(90vw, 400px);
+  max-height: min(85vh, 600px);
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+/* Mobile & Touch */
+@media (max-width: 640px) {
+  .t2-color-picker-container { width: 95vw; padding: 12px; }
+}
+@media (hover: none) and (pointer: coarse) {
+  .t2-color-picker-container { padding: 14px; }
+}
+
+/* Common Media Wrappers & Controls */
+.t2-media-block { position: relative; margin: 10px 0; padding: 10px; border: 1px solid #ccc; border-radius: 4px; background: #fff; }
+.t2-media-block img, .t2-media-block iframe, .t2-media-block video { border-radius: 10px; }
+.t2-media-controls { position: absolute; top: 0; right: 0; background: rgba(255, 255, 255, .9); padding: 5px; border-radius: 4px; display: none; user-select: none; pointer-events: all; z-index: 10; box-shadow: 0 2px 5px rgba(0, 0, 0, .1); }
+.t2-media-block:hover .t2-media-controls { display: flex; gap: 5px; }
+
+/* Shared Modal Overlay */
+.t2-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, .5); display: flex; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(4px); }
+.t2-btn-group { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
+
+/* Status Bar & Footer */
+.t2-editor-status { display: flex; justify-content: space-between; align-items: center; padding: 8px 15px; border-top: 1px solid #e1e1e1; background: #fefefe; font-size: 13px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; border-radius: 0 0 10px 10px; }
+.t2-status-left { display: flex; align-items: center; gap: 5px; }
+
+/* Logo Styles Modified */
+.t2-logo { display: flex; align-items: center; border: none; border-radius: 4px; }
+.t2-logo-prefix { background: #ff6600; color: #fff; padding: 2px 4px; font-weight: 600; border: 1px solid #ff6600; border-radius: 4px 0 0 4px; }
+.t2-logo-suffix { padding: 2px 4px; font-weight: 600; border: 1px solid #ccc; border-left: none; border-radius: 0 4px 4px 0; }
+/* End Modified */
+
+.t2-char-count { color: #666; }
+
+/* Auto Save Toggle */
+.t2-autosave-toggle { display: flex; align-items: center; gap: 5px; margin-left: 5px; user-select: none; cursor: pointer; height: 20px; }
+.t2-switch { position: relative; display: inline-block; width: 40px; height: 20px; }
+.t2-switch input { opacity: 0; width: 0; height: 0; }
+.t2-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 20px; }
+.t2-slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 2px; bottom: 2px; background-color: #fff; transition: .4s; border-radius: 50%; }
+input:checked + .t2-slider { background-color: #2196F3; }
+input:checked + .t2-slider:before { transform: translateX(20px); }
+.t2-autosave-toggle:hover .t2-slider { opacity: .8; }
+.t2-autosave-text { font-size: 13px; color: #666; line-height: 20px; }
+
+/* Dark Mode Toggle */
+.t2-dark-mode-toggle { margin-left: auto; padding-left: 10px; display: flex; align-items: center; }
+.t2-dark-mode-btn { width: 25px; height: 25px; border-radius: 50%; background: #f5f5f5; color: #0187fe; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0,0,0,.1); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; padding: 0; margin: 5px; }
+.t2-dark-mode-btn:hover { background: #e8e8e8; transform: translateY(-1px); box-shadow: 0 2px 5px rgba(0,0,0,.15); }
+.t2-dark-mode-btn:active { transform: translateY(0); box-shadow: 0 1px 2px rgba(0,0,0,.1); }
+.t2-dark-mode-btn .material-icons { font-size: 18px; }
+
+/* Common Utils */
+.t2-bullet-block { margin-left: 20px; padding-left: 10px; border-left: 2px solid #ccc; }
