@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{{TITLE}}</title>
+
+  <!-- Material icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg: #f9f9f9;
+      --card-bg: #fff;
+      --text: #222;
+      --muted: #888;
+      --accent: #ff6600;
+      --max-width: 960px;
+      --radius: 12px;
+      --shadow: 0 6px 20px rgba(16,24,40,0.06);
+      --container-padding-mobile: 20px;
+      --container-padding-desktop: 40px;
+      --content-gap: 24px;
+      --code-bg: #f5f5f5;
+      --mono: "Consolas","SFMono-Regular","Roboto Mono","Courier New",monospace;
+    }
+
+    /* Reset-ish: keep it small and compatible */
+    *, *::before, *::after {box-sizing: border-box;}
+    html,body{height:100%;}
+    body{
+      margin:0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      color:var(--text);
+      background:var(--bg);
+      line-height:1.55;
+      -webkit-text-size-adjust:100%;
+    }
+
+    /* Layout */
+    .page-wrap{
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding: clamp(16px, 3vw, 40px);
+    }
+
+    .container{
+      width:100%;
+      max-width:var(--max-width);
+      background:var(--card-bg);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding: clamp(var(--container-padding-mobile), 3.6vw, var(--container-padding-desktop));
+      margin:0;
+      overflow:hidden;
+    }
+
+    /* Header */
+    header.site-header{
+      border-bottom:1px solid #eee;
+      padding-bottom: 14px;
+      margin-bottom: var(--content-gap);
+    }
+    .title{
+      font-size: clamp(20px, 2.4vw, 28px);
+      margin:0 0 6px 0;
+      font-weight:600;
+      color: #111;
+      letter-spacing: -0.2px;
+    }
+    .meta {
+      color:var(--muted);
+      font-size: 13px;
+    }
+    .meta time { color: inherit; }
+
+    /* Main content */
+    main.content {
+      font-size: clamp(15px, 1.4vw, 17px);
+      color:var(--text);
+      line-height:1.65;
+      word-wrap:break-word;
+    }
+    /* keep original block classes but scope them under .content to reduce conflicts */
+    .content .t2-media-block{position:relative;margin:12px 0;padding:8px}
+    .content .t2-media-block img,
+    .content .t2-media-block iframe,
+    .content .t2-media-block video{border-radius:12px!important;border:0!important;display:block;max-width:100%;height:auto;margin:0 auto}
+    .content .t2-code-block{background:var(--code-bg);padding:14px;border-radius:8px;font-family:var(--mono);position:relative;margin:12px 0;overflow:auto}
+    .content .t2-code-block pre{margin:0;white-space:pre-wrap;word-break:break-word}
+    .content .t2-bullet-block{margin-left:20px;padding-left:10px;border-left:2px solid #e0e0e0}
+    .content .t2-file-block{margin:10px 0}
+    .content .file-container{width:100%;max-width:420px;background:#fff;border-radius:10px;border:1px solid #e0e0e0;padding:12px 16px;display:flex;align-items:center;gap:12px;box-sizing:border-box}
+    .content .file-name{font-size:15px;font-weight:600;color:#111;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .content .file-details{font-size:12px;color:#6b6b6b;display:flex;gap:10px;align-items:center}
+
+    /* Links — 기본적으로 밑줄 제거, 포커스/호버에서 식별 가능하도록 처리 */
+    a{
+      color:var(--accent);
+      text-decoration:none;
+      text-decoration-skip-ink:auto;
+      -webkit-tap-highlight-color: rgba(0,0,0,0.06);
+    }
+    a:hover, a:active{ text-decoration:underline; }
+    a:focus{
+      outline:3px solid rgba(255,102,0,0.18);
+      outline-offset:3px;
+      text-decoration:underline;
+    }
+
+    /* Footer */
+    footer.site-footer{
+      margin-top: 36px;
+      padding-top: 12px;
+      border-top: 1px solid #eee;
+      color:var(--muted);
+      font-size:13px;
+      text-align:center;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      gap:8px;
+    }
+    .site-footer .brand-link{ color:var(--accent); font-weight:600; text-decoration:none; }
+    .material-icons-outlined{vertical-align:middle; font-size:16px; margin-right:4px; opacity:0.9}
+
+    /* Responsive tweaks */
+    @media (min-width:1100px){
+      .container{ padding:48px; border-radius:16px; }
+      .title{ font-size:30px; }
+    }
+    @media (max-width:560px){
+      .container{ border-radius:10px; padding:20px; }
+      .site-footer{ font-size:12px; }
+    }
+
+    /* Print */
+    @media print{
+      body{ background: #fff; color:#000; }
+      .container{ box-shadow:none; border-radius:0; }
+      a{ text-decoration:underline; color:#000; }
+    }
+
+    /* Accessibility: respect reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      * { transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrap">
+    <div class="container" role="article" aria-labelledby="doc-title">
+      <header class="site-header" role="banner">
+        <h1 id="doc-title" class="title">{{TITLE}}</h1>
+        <div class="meta">내보낸 날짜:
+          <!-- ISO 형식(예: 2025-10-06T23:02:00+09:00)을 포함한 datetime 권장 -->
+          <time datetime="{{EXPORT_DATE_ISO}}">{{EXPORT_DATE}}</time>
+        </div>
+      </header>
+
+      <main class="content" role="main" id="main-content" tabindex="-1">
+        <!-- 실제 콘텐츠 삽입 위치 -->
+        {{CONTENT}}
+      </main>
+
+      <footer class="site-footer" role="contentinfo">
+        <i class="material-icons-outlined" aria-hidden="true">info</i>
+        <div>
+          <a class="brand-link" href="https://dsclub.kr/service/editor">T2Editor</a>
+          <span style="color:var(--muted); margin-left:8px; font-weight:500;">로 작성됨</span>
+        </div>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>
