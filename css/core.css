@@ -1,0 +1,221 @@
+/* Path: T2Editor/css/core.css */
+
+/* T2Editor Core Styles */
+.t2-editor-container { margin: 20px auto; border: 1px solid #ccc; border-radius: 10px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; position: relative; }
+.t2-toolbar { padding: 10px; border-bottom: 1px solid #e1e1e1; display: flex; flex-wrap: wrap; gap: 5px; background: #fcfcfc; position: sticky; top: 0; z-index: 100; border-radius: 10px 10px 0 0; }
+
+/* Buttons */
+.t2-btn { border: none; background: #f5f5f5; color: #0187fe; padding: 5px; border-radius: 4px; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: all 0.15s ease; }
+.t2-btn:hover { background: #e8e8e8; color: #0187fe; }
+.t2-btn:active { background: #e0e0e0; }
+.t2-btn.active { background: #0187fe; color: #fff; }
+.t2-btn:disabled { opacity: .5; cursor: not-allowed; color: #666; }
+.t2-btn:disabled:hover { background: #f5f5f5; color: #666; box-shadow: none; }
+
+/* Editor Content Area */
+.t2-editor { padding: 15px; outline: none; overflow-y: auto; line-height: 1.5; font-size: 16px; background: #fff; position: relative; border-radius: 0 0 10px 10px; min-height: 350px; max-height: 450px; }
+.t2-editor p { margin: 0; padding: 0; min-height: 1.5em; }
+.t2-editor br { display: block; content: ""; margin-top: .5em; }
+.t2-editor ::selection { background: #b3d4fc; text-shadow: none; }
+
+/* Font Size */
+.t2-font-size-list { position: absolute; background: #fff; border: 1px solid #ccc; border-radius: 4px; padding: 5px 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0, 0, 0, .1); min-width: 120px; user-select: none; -webkit-user-select: none; }
+.t2-font-size-option { padding: 5px 15px; cursor: pointer; background-color: transparent; transition: background-color 0.1s ease; }
+.t2-font-size-option:hover { background: #f5f5f5; }
+
+/* ─── Color Picker ────────────────────────────────────────────────────────── */
+/* Container is position:fixed; only left/top/z-index come from JS. */
+.t2-color-picker-container {
+    position: fixed;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    padding: 12px;
+    width: 224px;
+    z-index: 10000;
+    animation: t2cpIn 0.14s ease;
+    box-sizing: border-box;
+}
+@keyframes t2cpIn {
+    from { opacity: 0; transform: translateY(-4px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0)   scale(1); }
+}
+
+/* Hue quick-select row */
+.t2-cp-hue-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+}
+.t2-cp-hue-circle {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    cursor: pointer;
+    flex-shrink: 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    transition: transform 0.12s;
+}
+.t2-cp-hue-circle:hover { transform: scale(1.15); }
+
+/* Canvas + lightness-slider row */
+.t2-cp-main {
+    display: flex;
+    gap: 8px;
+    height: 140px;
+    margin-bottom: 8px;
+}
+.t2-cp-canvas {
+    flex: 1;
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: crosshair;
+    touch-action: none;
+}
+.t2-cp-indicator {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+/* Vertical lightness slider */
+.t2-cp-l-slider {
+    width: 20px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    position: relative;
+    cursor: pointer;
+    touch-action: none;
+}
+
+/* Horizontal saturation slider */
+.t2-cp-s-slider {
+    width: 100%;
+    height: 20px;
+    border-radius: 8px;
+    position: relative;
+    cursor: pointer;
+    margin-bottom: 8px;
+    touch-action: none;
+}
+
+/* Shared slider handle */
+.t2-cp-handle {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #ccc;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+/* Preview row: swatch + hex input */
+.t2-cp-preview {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.t2-cp-swatch {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+.t2-cp-hex-input {
+    flex: 1;
+    min-width: 0;
+    padding: 5px 6px;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    font-family: monospace;
+    font-size: 12px;
+    color: #1f2937;
+    outline: none;
+    transition: border-color 0.12s;
+}
+.t2-cp-hex-input:focus { border-color: #0187fe; }
+
+/* Apply button */
+.t2-cp-apply {
+    width: 100%;
+    padding: 8px;
+    background: #0187fe;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s;
+    min-height: 34px;
+}
+.t2-cp-apply:hover { background: #0069d9; }
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+    .t2-color-picker-container {
+        width: min(260px, calc(100vw - 20px));
+        padding: 12px;
+    }
+    .t2-cp-hue-circle  { width: 26px; height: 26px; }
+    .t2-cp-main        { height: 150px; }
+    .t2-cp-handle      { width: 20px; height: 20px; }
+    .t2-cp-apply       { padding: 11px 8px; min-height: 44px; font-size: 14px; }
+}
+
+/* Common Media Wrappers & Controls */
+.t2-media-block { position: relative; margin: 10px 0; padding: 10px; border: 1px solid #ccc; border-radius: 4px; background: #fff; }
+.t2-media-block img, .t2-media-block iframe, .t2-media-block video { border-radius: 10px; }
+.t2-media-controls { position: absolute; top: 0; right: 0; background: rgba(255, 255, 255, .9); padding: 5px; border-radius: 4px; display: none; user-select: none; pointer-events: all; z-index: 10; box-shadow: 0 2px 5px rgba(0, 0, 0, .1); }
+.t2-media-block:hover .t2-media-controls { display: flex; gap: 5px; }
+
+/* Shared Modal Overlay */
+.t2-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, .5); display: flex; align-items: center; justify-content: center; z-index: 1000; backdrop-filter: blur(4px); }
+.t2-btn-group { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
+
+/* Status Bar & Footer */
+.t2-editor-status { display: flex; justify-content: space-between; align-items: center; padding: 8px 15px; border-top: 1px solid #e1e1e1; background: #fefefe; font-size: 13px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; border-radius: 0 0 10px 10px; }
+.t2-status-left { display: flex; align-items: center; gap: 5px; }
+
+/* Logo Styles Modified */
+.t2-logo { display: flex; align-items: center; border: none; border-radius: 4px; }
+.t2-logo-prefix { background: #ff6600; color: #fff; padding: 2px 4px; font-weight: 600; border: 1px solid #ff6600; border-radius: 4px 0 0 4px; }
+.t2-logo-suffix { padding: 2px 4px; font-weight: 600; border: 1px solid #ccc; border-left: none; border-radius: 0 4px 4px 0; }
+/* End Modified */
+
+.t2-char-count { color: #666; }
+
+/* Auto Save Toggle */
+.t2-autosave-toggle { display: flex; align-items: center; gap: 5px; margin-left: 5px; user-select: none; cursor: pointer; height: 20px; }
+.t2-switch { position: relative; display: inline-block; width: 40px; height: 20px; }
+.t2-switch input { opacity: 0; width: 0; height: 0; }
+.t2-slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 20px; }
+.t2-slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 2px; bottom: 2px; background-color: #fff; transition: .4s; border-radius: 50%; }
+input:checked + .t2-slider { background-color: #2196F3; }
+input:checked + .t2-slider:before { transform: translateX(20px); }
+.t2-autosave-toggle:hover .t2-slider { opacity: .8; }
+.t2-autosave-text { font-size: 13px; color: #666; line-height: 20px; }
+
+/* Dark Mode Toggle */
+.t2-dark-mode-toggle { margin-left: auto; padding-left: 10px; display: flex; align-items: center; }
+.t2-dark-mode-btn { width: 25px; height: 25px; border-radius: 50%; background: #f5f5f5; color: #0187fe; border: 1px solid #ddd; box-shadow: 0 1px 3px rgba(0,0,0,.1); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s ease; padding: 0; margin: 5px; }
+.t2-dark-mode-btn:hover { background: #e8e8e8; transform: translateY(-1px); box-shadow: 0 2px 5px rgba(0,0,0,.15); }
+.t2-dark-mode-btn:active { transform: translateY(0); box-shadow: 0 1px 2px rgba(0,0,0,.1); }
+.t2-dark-mode-btn .material-icons { font-size: 18px; }
+
+/* Common Utils */
+.t2-bullet-block { margin-left: 20px; padding-left: 10px; border-left: 2px solid #ccc; }

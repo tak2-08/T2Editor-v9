@@ -1,0 +1,85 @@
+/* Path: T2Editor/plugin/code/code.css */
+
+.t2-code-block {
+    background: #f5f5f5;
+    padding: 15px;
+    border-radius: 4px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    position: relative;
+    margin: 10px 0;
+}
+
+.t2-code-block-copy {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 2px 5px;
+    cursor: pointer;
+    user-select: none;
+    z-index: 10;
+}
+
+.t2-code-block .code-placeholder {
+    color: #888;
+    cursor: text;
+}
+
+.t2-code-block pre {
+    margin: 0;
+    white-space: pre-wrap;
+}
+
+.t2-code-block code {
+    outline: none;
+    display: block;
+    min-height: 1em;
+    font-family: 'Consolas', 'Monaco', monospace;
+    line-height: 1.5;
+    white-space: pre;
+    word-wrap: normal;
+    overflow-wrap: normal;
+}
+
+/* Media Block Wrapper adjustments for Code */
+.t2-media-block.t2-code-block {
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+
+.t2-media-block.t2-code-block > div:first-child {
+    background: #f5f5f5;
+    padding: 15px;
+    border-radius: 4px;
+    font-family: 'Consolas', 'Monaco', monospace;
+}
+
+/* Dark Mode */
+html[data-t2editor-theme="dark"] .t2-code-block {
+    background-color: #1e1e1e;
+    border: 1px solid #444;
+    color: #e0e0e0;
+}
+
+html[data-t2editor-theme="dark"] .t2-media-block.t2-code-block > div:first-child {
+    background-color: #1e1e1e;
+    border: 1px solid #444;
+}
+
+html[data-t2editor-theme="dark"] .t2-code-block pre,
+html[data-t2editor-theme="dark"] .t2-code-block code {
+    color: #e0e0e0;
+}
+
+html[data-t2editor-theme="dark"] .t2-code-block .code-placeholder {
+    color: #777;
+}
+
+html[data-t2editor-theme="dark"] .t2-code-block-copy {
+    background-color: #383838;
+    border-color: #555;
+    color: #e0e0e0;
+}
