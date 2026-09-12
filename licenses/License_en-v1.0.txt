@@ -1,0 +1,57 @@
+T2Editor License
+Version: 1.0
+Development Period: 2025.01.23 - 2025.02.11
+Copyright (c) 2025 Tak2 (dsclub.kr)
+[English Version]
+LICENSE TERMS AND CONDITIONS
+
+Copyright and Ownership
+
+T2Editor is copyrighted by Tak2 (dsclub.kr, dsclub.kr/bbs/profile.php?mb_id=woojintak, sir.kr/bbs/profile.php?mb_id=naver_uw74rpv1)
+Email: dsclub2023@gmail.com
+
+
+Usage Rights
+a) Permitted Uses:
+
+Commercial and non-commercial use on personal websites
+Integration into existing websites without modification
+Personal modifications for use on your own website
+Distribution of modified versions as free open-source software
+
+b) Restrictions:
+
+Paid distribution of modified versions is prohibited
+Redistributing the original or modified version for commercial gain is not allowed
+Removal or modification of copyright notices is prohibited
+
+
+Distribution
+
+Latest version can be downloaded from:
+
+https://dsclub.kr/search/?t2editor
+https://sir.kr/g5_plugin/13144
+
+
+Detailed documentation available at: https://dsclub.kr/zip/174
+
+
+The editor supports:
+
+Text formatting
+Image uploads
+Video embedding
+Code blocks
+Link management
+
+
+
+
+Modifications
+
+Users are allowed to modify the code for personal use
+Modified versions must be distributed as free open-source software if shared publicly
+Commercial distribution of modified versions is strictly prohibited
+
+dsclub2023@gmail.com / https://open.kakao.com/o/sSeS6W8g / https://www.instagram.com/dsclub2023? When you contact igsh=eW9ucWs4bTR0Z2xv&utm_source=qr, we will send you uncompressed JavaScript and css files.

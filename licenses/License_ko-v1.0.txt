@@ -1,0 +1,61 @@
+T2Editor License
+Version: 1.0
+Development Period: 2025.01.23 - 2025.02.11
+Copyright (c) 2025 Tak2 (dsclub.kr)
+[한국어 버전]
+라이선스 약관 및 조건
+
+저작권 및 소유권
+
+T2Editor의 저작권은 Tak2(dsclub.kr, dsclub.kr/bbs/profile.php?mb_id=woojintak, sir.kr/bbs/profile.php?mb_id=naver_uw74rpv1)에게 있습니다
+이메일: dsclub2023@gmail.com
+
+
+사용 권한
+a) 허용된 사용:
+
+개인 웹사이트의 상업적/비상업적 이용
+수정 없이 기존 웹사이트에 통합
+자체 웹사이트 사용을 위한 개인적 수정
+무료 오픈소스로 수정 버전 배포
+
+b) 제한사항:
+
+수정 버전의 유료 배포 금지
+원본 또는 수정 버전의 상업적 재배포 금지
+저작권 고지의 제거 또는 수정 금지
+
+
+배포
+
+최신 버전 다운로드:
+
+https://dsclub.kr/search/?t2editor
+https://sir.kr/g5_plugin/13144
+
+
+상세 사용설명서: https://dsclub.kr/zip/174
+
+
+지원 기능:
+
+텍스트 서식
+이미지 업로드
+비디오 삽입
+코드 블록
+링크 관리
+
+
+
+수정 시
+
+개인(또는 기업 자체) 사용을 위한 코드 수정 허용
+수정 버전 공개 시 무료 오픈소스로 배포 필수
+수정 버전의 상업적 배포 엄격히 금지
+
+
+
+This license is effective as of February 11, 2025.
+이 라이선스는 2025년 2월 11일부터 유효합니다.
+
+*dsclub2023@gmail.com / https://open.kakao.com/o/sSeS6W8g / https://www.instagram.com/dsclub2023?igsh=eW9ucWs4bTR0Z2xv&utm_source=qr 으로 연락 시 압축되지 않은 자바스크립트 및 css 파일 전송해드립니다.
